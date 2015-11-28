@@ -1,0 +1,73 @@
+/**
+ * CLA task code implemented in CLA C language.  Use the following
+ * CLA Tasks/interrupts to add your CLA code.  Only one task can
+ * be executed at a given time and all tasks cannot be interrupted.
+ * The task priority is: lowest task number = highest priority.
+ * 						 highest task number = lowest priority.
+ */
+
+/* Shared header file - describes data shared between CPU and CLA. */
+#include "ProjectName-CLA_Shared.h"
+
+/* Peripherals include - Un-comment when using peripherals in tasks. */
+//#include "DSP2803x_Adc.h"
+//#include "DSP2803x_Comp.h"
+#include "DSP2803x_EPwm.h"
+
+// CLA tasks
+#pragma DATA_SECTION(CLA_Duty1, "CpuToCla1MsgRAM")
+ClaToCpu_volatile float32 CLA_Duty1;
+
+/*
+ * Cla1Task1 - In this project it is triggered by ePWM1.  This task will
+ * update the ePWMs duty cycle using CLA C library macros.
+ */
+interrupt void Cla1Task1(void) {
+#if (CLA_DEBUG)
+	__mdebugstop();
+#endif
+
+	if(INCR_BUILD == 1){
+		// Update PWM duty cycle with value received from CPU.
+		// The CLA_Duty1 variable has the new duty cycle value.
+		PWMDRV_1ch_CLA_C(EPwm1Regs, EPwm1Regs.TBPRD, CLA_Duty1);
+
+		// Clear interrupt flag.
+		EPwm1Regs.ETCLR.all = 1;
+	}
+}
+
+/**
+ * Cla1Task2 - Not used.
+ */
+interrupt void Cla1Task2(void) {}
+
+/**
+ * Cla1Task3 - Not used.
+ */
+interrupt void Cla1Task3(void) {}
+
+/**
+ * Cla1Task4 - Not used.
+ */
+interrupt void Cla1Task4(void) {}
+
+/**
+ * Cla1Task5 - Not used.
+ */
+interrupt void Cla1Task5(void) {}
+
+/**
+ * Cla1Task6 - Not used.
+ */
+interrupt void Cla1Task6(void) {}
+
+/**
+ * Cla1Task7 - Not used.
+ */
+interrupt void Cla1Task7(void) {}
+
+/**
+ * Cla1Task8 - Not used.
+ */
+interrupt void Cla1Task8(void) {}
