@@ -5,7 +5,7 @@
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROGRAM.Texas Instruments XDS100v2 USB Emulator/C28xx" value="${build_artifact:FlashingLeds-F28035}"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROJECT.Texas Instruments XDS100v2 USB Emulator/C28xx" value="FlashingLeds-F28035"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_TARGET_CONFIG" value="${target_config_active_default:FlashingLeds-F28035}"/>
-<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Texas Instruments XDS100v2 USB Emulator/C28xx" value="C:/Beuth\EPE-MES\02_Software\01_c2000\FlashingLeds-F28035\F2803x_FLASH\FlashingLeds.out"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Texas Instruments XDS100v2 USB Emulator/C28xx" value="C:/Beuth\EPE-MES\02_Software\01_c2000\FlashingLeds-F28035\F2803x_RAM\FlashingLeds.out"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/FlashingLeds-F28035"/>
 </listAttribute>

@@ -4,11 +4,10 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CMD_SRCS += \
-../28035_RAM_lnk.cmd \
 C:/Beuth/device_support/f2803x/v121/DSP2803x_headers/cmd/DSP2803x_Headers_nonBIOS.cmd 
 
 CMD_UPPER_SRCS += \
-../F28035_FLASH_FlashingLeds.CMD 
+../F28035_RAM_FlashingLeds.CMD 
 
 ASM_SRCS += \
 C:/Beuth/device_support/f2803x/v121/DSP2803x_common/source/DSP2803x_CodeStartBranch.asm \

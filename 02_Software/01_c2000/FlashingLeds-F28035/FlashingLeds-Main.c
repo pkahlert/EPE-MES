@@ -217,6 +217,32 @@ void main(void)
 //  Put peripheral initialization here
 
 
+// Initialization Time
+// = = = = = = = = = = = = = = = = = = = = = = = =
+EPwm1Regs.TBPRD = 600; // Period = 601 TBCLK counts
+EPwm1Regs.CMPA.half.CMPA = 350; // Compare A = 350 TBCLK counts
+EPwm1Regs.CMPB = 200; // Compare B = 200 TBCLK counts
+EPwm1Regs.TBPHS.all = 0; // Set Phase register to zero, // .all hinzugefügt
+EPwm1Regs.TBCTR = 0; // clear TB counter
+EPwm1Regs.TBCTL.bit.CTRMODE = 0; // #lt
+EPwm1Regs.TBCTL.bit.PHSEN = 0; // Phase loading disabled, // #lt
+EPwm1Regs.TBCTL.bit.PRDLD = 1; // #lt
+EPwm1Regs.TBCTL.bit.SYNCOSEL = 2; // #lt
+EPwm1Regs.TBCTL.bit.HSPCLKDIV = 0; // TBCLK = SYSCLK, // #lt
+EPwm1Regs.TBCTL.bit.CLKDIV = 0; // #lt
+EPwm1Regs.CMPCTL.bit.SHDWAMODE = 1; // #lt
+EPwm1Regs.CMPCTL.bit.SHDWBMODE = 0; // #lt
+EPwm1Regs.CMPCTL.bit.LOADAMODE = 0; // load on CTR = Zero, // #lt
+EPwm1Regs.CMPCTL.bit.LOADBMODE = 0; // load on CTR = Zero, // #lt
+EPwm1Regs.AQCTLA.bit.ZRO = 1; // #lt
+EPwm1Regs.AQCTLA.bit.CAU = 2; // #lt
+EPwm1Regs.AQCTLB.bit.ZRO = 0; // #lt
+EPwm1Regs.AQCTLB.bit.CBU = 0; // #lt
+//
+// Run Time
+// = = = = = = = = = = = = = = = = = = = = = = = =
+EPwm1Regs.CMPA.half.CMPA = 350; // adjust duty for output EPWM1A
+EPwm1Regs.CMPB = 200; // adjust duty for output EPWM1B
 
 
 //==================================================================================

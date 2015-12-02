@@ -1,10 +1,10 @@
 ******************************************************************************
              TMS320C2000 Linker PC v15.9.0                     
 ******************************************************************************
->> Linked Wed Dec 02 11:18:59 2015
+>> Linked Wed Dec 02 11:09:22 2015
 
 OUTPUT FILE NAME:   <FlashingLeds.out>
-ENTRY POINT SYMBOL: "_c_int00"  address: 00008539
+ENTRY POINT SYMBOL: "_c_int00"  address: 0000852d
 
 
 MEMORY CONFIGURATION
@@ -13,39 +13,18 @@ MEMORY CONFIGURATION
 ----------------------  --------  ---------  --------  --------  ----  --------
 PAGE 0:
   BEGIN                 00000000   00000002  00000002  00000000  RWIX
-  RAMM0                 00000050   000003b0  00000031  0000037f  RWIX
-  RAML0                 00008000   00000800  00000000  00000800  RWIX
-  RAML0L1               00008000   00000c00  00000634  000005cc  RWIX
-  RAML3                 00009000   00001000  00000074  00000f8c  RWIX
-  OTP                   003d7800   00000400  00000000  00000400  RWIX
-  FLASHH                003e8000   00002000  00000000  00002000  RWIX
-  FLASHG                003ea000   00002000  00000000  00002000  RWIX
-  FLASHF                003ec000   00002000  00000000  00002000  RWIX
-  FLASHE                003ee000   00002000  00000000  00002000  RWIX
-  FLASHD                003f0000   00002000  00000000  00002000  RWIX
-  FLASHC                003f2000   00002000  00000074  00001f8c  RWIX
-  FLASHA                003f6000   00001f80  00000000  00001f80  RWIX
-  CSM_RSVD              003f7f80   00000076  00000000  00000076  RWIX
-  BEGIN                 003f7ff6   00000002  00000000  00000002  RWIX
-  CSM_PWL               003f7ff8   00000008  00000000  00000008  RWIX
-  IQTABLES              003fe000   00000b50  00000000  00000b50  RWIX
+  RAMM1                 00000480   00000380  00000016  0000036a  RWIX
+  progRAM               00008000   00000c00  00000628  000005d8  RWIX
+  RAML3                 00009000   00001000  000000e8  00000f18  RWIX
   IQTABLES              003fe000   00000b50  00000000  00000b50  RWIX
   IQTABLES2             003feb50   0000008c  00000000  0000008c  RWIX
-  IQTABLES2             003feb50   0000008c  00000000  0000008c  RWIX
-  IQTABLES3             003febdc   000000aa  00000000  000000aa  RWIX
   IQTABLES3             003febdc   000000aa  00000000  000000aa  RWIX
   BOOTROM               003ff27c   00000d44  00000000  00000d44  RWIX
-  BOOTROM               003ff27c   00000d44  00000000  00000d44  RWIX
   RESET                 003fffc0   00000002  00000000  00000002  RWIX
-  RESET                 003fffc0   00000002  00000000  00000002  RWIX
-  VECTORS               003fffc2   0000003e  00000000  0000003e  RWIX
 
 PAGE 1:
-  BOOT_RSVD             00000000   00000050  00000000  00000050  RWIX
   BOOT_RSVD             00000002   0000004e  00000000  0000004e  RWIX
-  RAMM0                 00000050   000003b0  00000000  000003b0  RWIX
-  RAMM1                 00000400   00000400  00000380  00000080  RWIX
-  RAMM1                 00000480   00000380  00000000  00000380  RWIX
+  RAMM0                 00000050   000003b0  00000380  00000030  RWIX
   DEV_EMU               00000880   00000105  00000004  00000101  RWIX
   SYS_PWR_CTL           00000985   00000003  00000003  00000000  RWIX
   FLASH_REGS            00000a80   00000060  00000008  00000058  RWIX
@@ -88,12 +67,8 @@ PAGE 1:
   ADC                   00007100   00000080  00000050  00000030  RWIX
   SPIB                  00007740   00000010  00000010  00000000  RWIX
   I2CA                  00007900   00000040  00000022  0000001e  RWIX
-  dataRAM               00008800   00000400  00000000  00000400  RWIX
-  RAML2                 00008c00   00000400  000000ba  00000346  RWIX
-  RAML2                 00008c00   00000400  00000000  00000400  RWIX
-  RAML3                 00009000   00001000  00000000  00001000  RWIX
+  dataRAM               00008c00   00000400  000000ba  00000346  RWIX
   PARTID                003d7e80   00000001  00000001  00000000  RWIX
-  FLASHB                003f4000   00002000  00000000  00002000  RWIX
   CSM_PWL               003f7ff8   00000008  00000008  00000000  RWIX
 
 
@@ -106,36 +81,31 @@ codestart
 *          0    00000000    00000002     
                   00000000    00000002     DSP2803x_CodeStartBranch.obj (codestart)
 
-ramfuncs   0    00000050    0000001b     
-                  00000050    0000001b     FlashingLeds-DevInit_F2803x.obj (ramfuncs)
+.cinit     0    00000480    00000016     
+                  00000480    0000000a     rts2800_ml.lib : exit.obj (.cinit)
+                  0000048a    00000005                    : _lock.obj (.cinit:__lock)
+                  0000048f    00000005                    : _lock.obj (.cinit:__unlock)
+                  00000494    00000002     --HOLE-- [fill = 0]
 
-.cinit     0    0000006b    00000016     
-                  0000006b    0000000a     rts2800_ml.lib : exit.obj (.cinit)
-                  00000075    00000005                    : _lock.obj (.cinit:__lock)
-                  0000007a    00000005                    : _lock.obj (.cinit:__unlock)
-                  0000007f    00000002     --HOLE-- [fill = 0]
-
-.text      0    00008000    00000634     
+.text      0    00008000    00000628     
                   00008000    0000024a     SciCommsGui.obj (.text)
                   0000824a    00000211     FlashingLeds-DevInit_F2803x.obj (.text)
-                  0000845b    000000de     FlashingLeds-Main.obj (.text)
-                  00008539    0000004e     rts2800_ml.lib : boot.obj (.text)
-                  00008587    00000046                    : cpy_tbl.obj (.text)
-                  000085cd    0000001a                    : cpy_utils.obj (.text)
-                  000085e7    00000019                    : args_main.obj (.text)
-                  00008600    00000019                    : exit.obj (.text)
-                  00008619    00000009                    : _lock.obj (.text)
-                  00008622    00000008     DSP2803x_CodeStartBranch.obj (.text)
-                  0000862a    00000005     FlashingLeds-CLA.obj (.text)
-                  0000862f    00000005     FlashingLeds-DevInit_F2803x.obj (.text:retain)
+                  0000845b    000000d2     FlashingLeds-Main.obj (.text)
+                  0000852d    0000004e     rts2800_ml.lib : boot.obj (.text)
+                  0000857b    00000046                    : cpy_tbl.obj (.text)
+                  000085c1    0000001a                    : cpy_utils.obj (.text)
+                  000085db    00000019                    : args_main.obj (.text)
+                  000085f4    00000019                    : exit.obj (.text)
+                  0000860d    00000009                    : _lock.obj (.text)
+                  00008616    00000008     DSP2803x_CodeStartBranch.obj (.text)
+                  0000861e    00000005     FlashingLeds-CLA.obj (.text)
+                  00008623    00000005     FlashingLeds-DevInit_F2803x.obj (.text:retain)
 
-ramfuncs   0    00008000    00000000     UNINITIALIZED
+Cla1Prog   0    00009074    00000074     RUN ADDR = 00009000
+                  00009074    00000074     FlashingLeds-CLA.obj (Cla1Prog)
 
-Cla1Prog   0    003f2000    00000074     RUN ADDR = 00009000
-                  003f2000    00000074     FlashingLeds-CLA.obj (Cla1Prog)
-
-.stack     1    00000400    00000380     UNINITIALIZED
-                  00000400    00000380     --HOLE--
+.stack     1    00000050    00000380     UNINITIALIZED
+                  00000050    00000380     --HOLE--
 
 DevEmuRegsFile 
 *          1    00000880    00000004     UNINITIALIZED
@@ -333,18 +303,10 @@ CsmPwlFile
 *          1    003f7ff8    00000008     UNINITIALIZED
                   003f7ff8    00000008     DSP2803x_GlobalVariableDefs.obj (CsmPwlFile)
 
-.pinit     0    00000050    00000000     UNINITIALIZED
+.pinit     0    00000480    00000000     UNINITIALIZED
 
 .reset     0    003fffc0    00000002     DSECT
                   003fffc0    00000002     rts2800_ml.lib : boot.obj (.reset)
-
-.cinit     0    003f6000    00000000     UNINITIALIZED
-
-.pinit     0    003f6000    00000000     UNINITIALIZED
-
-.reset     0    003fffc0    00000000     DSECT
-
-vectors    0    003fffc2    00000000     DSECT
 
 MODULE SUMMARY
 
@@ -353,12 +315,12 @@ MODULE SUMMARY
     .\
        DSP2803x_GlobalVariableDefs.obj   0      0         1909   
        SciCommsGui.obj                   586    0         58     
-       FlashingLeds-DevInit_F2803x.obj   561    0         0      
-       FlashingLeds-Main.obj             222    0         96     
+       FlashingLeds-DevInit_F2803x.obj   534    0         0      
+       FlashingLeds-Main.obj             210    0         96     
        FlashingLeds-CLA.obj              237    0         2      
        DSP2803x_CodeStartBranch.obj      10     0         0      
     +--+---------------------------------+------+---------+---------+
-       Total:                            1616   0         2065   
+       Total:                            1577   0         2065   
                                                                  
     C:\Beuth\ti_motorware\ccs\ccsv6\tools\compiler\ti-cgt-c2000_15.9.0.STS\lib\rts2800_ml.lib
        boot.obj                          78     0         0      
@@ -372,14 +334,14 @@ MODULE SUMMARY
                                                                  
        Stack:                            0      0         896    
     +--+---------------------------------+------+---------+---------+
-       Grand Total:                      1849   0         2989   
+       Grand Total:                      1810   0         2989   
 
 
 GLOBAL DATA SYMBOLS: SORTED BY DATA PAGE
 
 address     data page           name
 --------    ----------------    ----
-00000400      10 (00000400)     __stack
+00000050       1 (00000040)     __stack
 
 00000880      22 (00000880)     _DevEmuRegs
 
@@ -458,20 +420,20 @@ address     data page           name
 
 00007900     1e4 (00007900)     _I2caRegs
 
-00008c00     230 (00008c00)     _SerialCommsTimer
-00008c01     230 (00008c00)     _CommsOKflg
-00008c02     230 (00008c00)     _Gui_LedPrd_ms
-00008c03     230 (00008c00)     _LedBlinkTimer
-00008c04     230 (00008c00)     _B_Task_Ptr
-00008c06     230 (00008c00)     _C_Task_Ptr
-00008c08     230 (00008c00)     _Alpha_State_Ptr
-00008c0a     230 (00008c00)     _A_Task_Ptr
+00008c00     230 (00008c00)     _CommsOKflg
+00008c01     230 (00008c00)     _SerialCommsTimer
+00008c02     230 (00008c00)     _LedBlinkTimer
+00008c03     230 (00008c00)     _Gui_LedPrd_ms
+00008c04     230 (00008c00)     _A_Task_Ptr
+00008c06     230 (00008c00)     _B_Task_Ptr
+00008c08     230 (00008c00)     _C_Task_Ptr
+00008c0a     230 (00008c00)     _Alpha_State_Ptr
 00008c0c     230 (00008c00)     _varSetSldrList
-00008c1c     230 (00008c00)     _varGetList
-00008c2c     230 (00008c00)     _varSetBtnList
+00008c1c     230 (00008c00)     _varSetBtnList
+00008c2c     230 (00008c00)     _varGetList
 
-00008c40     231 (00008c40)     _arrayGetList
-00008c50     231 (00008c40)     _varSetTxtList
+00008c40     231 (00008c40)     _varSetTxtList
+00008c50     231 (00008c40)     _arrayGetList
 00008c60     231 (00008c40)     ___TI_cleanup_ptr
 00008c62     231 (00008c40)     ___TI_dtors_ptr
 00008c64     231 (00008c40)     __lock
@@ -506,25 +468,25 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 page  address   name                 
 ----  -------   ----                 
 0     00008000  .text                
-0     00008600  C$$EXIT              
-0     000084ca  _A0                  
-0     00008506  _A1                  
-0     0000851b  _A2                  
-1     00008c0a  _A_Task_Ptr          
+0     000085f4  C$$EXIT              
+0     000084be  _A0                  
+0     000084fa  _A1                  
+0     0000850f  _A2                  
+1     00008c04  _A_Task_Ptr          
 1     00007100  _AdcRegs             
 1     00000b00  _AdcResult           
-1     00008c08  _Alpha_State_Ptr     
+1     00008c0a  _Alpha_State_Ptr     
 0     000081bd  _ArrayGet            
-0     000084e0  _B0                  
-0     00008521  _B1                  
-0     00008527  _B2                  
-1     00008c04  _B_Task_Ptr          
+0     000084d4  _B0                  
+0     00008515  _B1                  
+0     0000851b  _B2                  
+1     00008c06  _B_Task_Ptr          
 0     0000819c  _ButtonSet           
-0     000084f3  _C0                  
-0     0000852d  _C1                  
-0     00008533  _C2                  
+0     000084e7  _C0                  
+0     00008521  _C1                  
+0     00008527  _C2                  
 0     00008365  _CLA_Init            
-1     00008c06  _C_Task_Ptr          
+1     00008c08  _C_Task_Ptr          
 0     00009000  _Cla1Prog_Start      
 1     00001400  _Cla1Regs            
 0     00009012  _Cla1T1End           
@@ -543,13 +505,13 @@ page  address   name
 0     0000904a  _Cla1Task6           
 0     00009058  _Cla1Task7           
 0     00009066  _Cla1Task8           
-0     003f2074  _Cla1funcsLoadEnd    
-0     003f2000  _Cla1funcsLoadStart  
+0     000090e8  _Cla1funcsLoadEnd    
+0     00009074  _Cla1funcsLoadStart  
 0     00009000  _Cla1funcsRunStart   
 1     00008c9a  _CmdDispatcher       
 0     0000813b  _CmdInterpreter      
 1     00008c94  _CmdPacket           
-1     00008c01  _CommsOKflg          
+1     00008c00  _CommsOKflg          
 1     00006400  _Comp1Regs           
 1     00006420  _Comp2Regs           
 1     00006440  _Comp3Regs           
@@ -558,7 +520,7 @@ page  address   name
 1     00000c10  _CpuTimer2Regs       
 1     003f7ff8  _CsmPwl              
 1     00000ae0  _CsmRegs             
-0     0000862a  _DPL_CLAInit         
+0     0000861e  _DPL_CLAInit         
 0     000081c0  _DataGet             
 1     00000880  _DevEmuRegs          
 0     0000824a  _DeviceInit          
@@ -590,11 +552,10 @@ page  address   name
 1     00006f80  _GpioCtrlRegs        
 1     00006fc0  _GpioDataRegs        
 1     00006fe0  _GpioIntRegs         
-1     00008c02  _Gui_LedPrd_ms       
+1     00008c03  _Gui_LedPrd_ms       
 1     00007900  _I2caRegs            
-0     0000862f  _ISR_ILLEGAL         
-0     00000050  _InitFlash           
-1     00008c03  _LedBlinkTimer       
+0     00008623  _ISR_ILLEGAL         
+1     00008c02  _LedBlinkTimer       
 0     00008161  _LifePulseTsk        
 1     00006c00  _LinaRegs            
 1     00008c8a  _LowByteFlag         
@@ -611,9 +572,6 @@ page  address   name
 1     00000ce0  _PieCtrlRegs         
 1     00000d00  _PieVectTable        
 0     00008429  _PieVectTableInit    
-0     00008000  _RamfuncsLoadEnd     
-0     00008000  _RamfuncsLoadStart   
-0     00008000  _RamfuncsRunStart    
 1     00008c90  _RcvTaskPointer      
 1     00008c83  _RcvTskPtrShdw       
 1     00008c85  _RxChar              
@@ -622,7 +580,7 @@ page  address   name
 1     00007050  _SciaRegs            
 0     000081f1  _SendData            
 1     00008c82  _SendTaskPtr         
-1     00008c00  _SerialCommsTimer    
+1     00008c01  _SerialCommsTimer    
 0     0000805e  _SerialHostComms     
 0     000081ab  _SliderSet           
 0     000081e7  _SpareTsk07          
@@ -637,45 +595,45 @@ page  address   name
 0     000081ba  _VariableGet         
 0     000083c8  _WDogDisable         
 1     00007070  _XIntruptRegs        
-1     00000780  __STACK_END          
+1     000003d0  __STACK_END          
 abs   00000380  __STACK_SIZE         
 1     00008c60  ___TI_cleanup_ptr    
 1     00008c62  ___TI_dtors_ptr      
 abs   ffffffff  ___binit__           
 abs   ffffffff  ___c_args__          
-0     0000006b  ___cinit__           
-0     00008634  ___etext__           
+0     00000480  ___cinit__           
+0     00008628  ___etext__           
 abs   ffffffff  ___pinit__           
 0     00008000  ___text__            
-0     000085e7  __args_main          
+0     000085db  __args_main          
 1     00008c64  __lock               
-0     00008621  __nop                
-0     0000861d  __register_lock      
-0     00008619  __register_unlock    
-1     00000400  __stack              
+0     00008615  __nop                
+0     00008611  __register_lock      
+0     0000860d  __register_unlock    
+1     00000050  __stack              
 1     00008c66  __unlock             
-0     00008600  _abort               
-1     00008c40  _arrayGetList        
-0     00008539  _c_int00             
-0     00008587  _copy_in             
+0     000085f4  _abort               
+1     00008c50  _arrayGetList        
+0     0000852d  _c_int00             
+0     0000857b  _copy_in             
 1     00008c88  _dataOut             
-0     000085cd  _ddcopy              
+0     000085c1  _ddcopy              
 1     00008c8b  _delayer             
-0     000085cd  _dpcopy              
-0     00008602  _exit                
+0     000085c1  _dpcopy              
+0     000085f6  _exit                
 0     0000845b  _main                
 1     00008c8e  _memDataPtr          
-0     000085cd  _pdcopy              
-0     000085cd  _ppcopy              
-1     00008c1c  _varGetList          
-1     00008c2c  _varSetBtnList       
+0     000085c1  _pdcopy              
+0     000085c1  _ppcopy              
+1     00008c2c  _varGetList          
+1     00008c1c  _varSetBtnList       
 1     00008c0c  _varSetSldrList      
-1     00008c50  _varSetTxtList       
+1     00008c40  _varSetTxtList       
 1     00008c81  _wordsLeftToGet      
 abs   ffffffff  binit                
-0     0000006b  cinit                
+0     00000480  cinit                
 0     00000000  code_start           
-0     00008634  etext                
+0     00008628  etext                
 abs   ffffffff  pinit                
 
 
@@ -684,13 +642,9 @@ GLOBAL SYMBOLS: SORTED BY Symbol Address
 page  address   name                 
 ----  -------   ----                 
 0     00000000  code_start           
-0     00000050  _InitFlash           
-0     0000006b  ___cinit__           
-0     0000006b  cinit                
+0     00000480  ___cinit__           
+0     00000480  cinit                
 0     00008000  .text                
-0     00008000  _RamfuncsLoadEnd     
-0     00008000  _RamfuncsLoadStart   
-0     00008000  _RamfuncsRunStart    
 0     00008000  _SCIA_Init           
 0     00008000  ___text__            
 0     0000805e  _SerialHostComms     
@@ -720,32 +674,32 @@ page  address   name
 0     00008429  _PieVectTableInit    
 0     00008448  _MemCopy             
 0     0000845b  _main                
-0     000084ca  _A0                  
-0     000084e0  _B0                  
-0     000084f3  _C0                  
-0     00008506  _A1                  
-0     0000851b  _A2                  
-0     00008521  _B1                  
-0     00008527  _B2                  
-0     0000852d  _C1                  
-0     00008533  _C2                  
-0     00008539  _c_int00             
-0     00008587  _copy_in             
-0     000085cd  _ddcopy              
-0     000085cd  _dpcopy              
-0     000085cd  _pdcopy              
-0     000085cd  _ppcopy              
-0     000085e7  __args_main          
-0     00008600  C$$EXIT              
-0     00008600  _abort               
-0     00008602  _exit                
-0     00008619  __register_unlock    
-0     0000861d  __register_lock      
-0     00008621  __nop                
-0     0000862a  _DPL_CLAInit         
-0     0000862f  _ISR_ILLEGAL         
-0     00008634  ___etext__           
-0     00008634  etext                
+0     000084be  _A0                  
+0     000084d4  _B0                  
+0     000084e7  _C0                  
+0     000084fa  _A1                  
+0     0000850f  _A2                  
+0     00008515  _B1                  
+0     0000851b  _B2                  
+0     00008521  _C1                  
+0     00008527  _C2                  
+0     0000852d  _c_int00             
+0     0000857b  _copy_in             
+0     000085c1  _ddcopy              
+0     000085c1  _dpcopy              
+0     000085c1  _pdcopy              
+0     000085c1  _ppcopy              
+0     000085db  __args_main          
+0     000085f4  C$$EXIT              
+0     000085f4  _abort               
+0     000085f6  _exit                
+0     0000860d  __register_unlock    
+0     00008611  __register_lock      
+0     00008615  __nop                
+0     0000861e  _DPL_CLAInit         
+0     00008623  _ISR_ILLEGAL         
+0     00008628  ___etext__           
+0     00008628  etext                
 0     00009000  _Cla1Prog_Start      
 0     00009000  _Cla1Task1           
 0     00009000  _Cla1funcsRunStart   
@@ -764,10 +718,10 @@ page  address   name
 0     00009066  _Cla1T7End           
 0     00009066  _Cla1Task8           
 0     00009074  _Cla1T8End           
-0     003f2000  _Cla1funcsLoadStart  
-0     003f2074  _Cla1funcsLoadEnd    
-1     00000400  __stack              
-1     00000780  __STACK_END          
+0     00009074  _Cla1funcsLoadStart  
+0     000090e8  _Cla1funcsLoadEnd    
+1     00000050  __stack              
+1     000003d0  __STACK_END          
 1     00000880  _DevEmuRegs          
 1     00000985  _SysPwrCtrlRegs      
 1     00000a80  _FlashRegs           
@@ -812,19 +766,19 @@ page  address   name
 1     00007100  _AdcRegs             
 1     00007740  _SpibRegs            
 1     00007900  _I2caRegs            
-1     00008c00  _SerialCommsTimer    
-1     00008c01  _CommsOKflg          
-1     00008c02  _Gui_LedPrd_ms       
-1     00008c03  _LedBlinkTimer       
-1     00008c04  _B_Task_Ptr          
-1     00008c06  _C_Task_Ptr          
-1     00008c08  _Alpha_State_Ptr     
-1     00008c0a  _A_Task_Ptr          
+1     00008c00  _CommsOKflg          
+1     00008c01  _SerialCommsTimer    
+1     00008c02  _LedBlinkTimer       
+1     00008c03  _Gui_LedPrd_ms       
+1     00008c04  _A_Task_Ptr          
+1     00008c06  _B_Task_Ptr          
+1     00008c08  _C_Task_Ptr          
+1     00008c0a  _Alpha_State_Ptr     
 1     00008c0c  _varSetSldrList      
-1     00008c1c  _varGetList          
-1     00008c2c  _varSetBtnList       
-1     00008c40  _arrayGetList        
-1     00008c50  _varSetTxtList       
+1     00008c1c  _varSetBtnList       
+1     00008c2c  _varGetList          
+1     00008c40  _varSetTxtList       
+1     00008c50  _arrayGetList        
 1     00008c60  ___TI_cleanup_ptr    
 1     00008c62  ___TI_dtors_ptr      
 1     00008c64  __lock               
@@ -856,4 +810,4 @@ abs   ffffffff  ___pinit__
 abs   ffffffff  binit                
 abs   ffffffff  pinit                
 
-[172 symbols]
+[168 symbols]

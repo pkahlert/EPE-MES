@@ -9,4 +9,5 @@
 	<defaultAssemblyOnly value="false"/>
 	<origin value="C:/Beuth/EPE-MES/03_Documentation/FlashingLeds-F28035_v1.0"/>
 	<deviceFamily value="C2000"/>
+	<isTargetManual value="false"/>
 </projectOptions>
