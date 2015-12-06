@@ -51,7 +51,9 @@
 
 #include "FlashingLeds-Settings.h"
 #include "PeripheralHeaderIncludes.h"
-																		 
+
+// #lt imports standard assets
+#include "DSP2803x_common/include/EPwm_defines.h"
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // FUNCTION PROTOTYPES
@@ -222,7 +224,7 @@ void main(void)
 EPwm1Regs.TBPRD = 600; // Period = 601 TBCLK counts
 EPwm1Regs.CMPA.half.CMPA = 350; // Compare A = 350 TBCLK counts
 EPwm1Regs.CMPB = 200; // Compare B = 200 TBCLK counts
-EPwm1Regs.TBPHS.all = 0; // Set Phase register to zero, // .all hinzugefügt
+EPwm1Regs.TBPHS.all = TB_; // Set Phase register to zero, // .all hinzugefügt
 EPwm1Regs.TBCTR = 0; // clear TB counter
 EPwm1Regs.TBCTL.bit.CTRMODE = 0; // #lt
 EPwm1Regs.TBCTL.bit.PHSEN = 0; // Phase loading disabled, // #lt
