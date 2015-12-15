@@ -2,11 +2,11 @@
 %% Allgemeine Parameter
 wb  = 2*pi*50;        % Signalfrequenz
 fHz = 200; 
-
+Vdc = 220;
 
 %% Maschinen Parameter
 p  = 4;
-J  = 0.28;
+J  = 0.028;
 Lr = 0.04e-3;
 Ls = 0.04e-3;
 Lm = 0.42e-3;
