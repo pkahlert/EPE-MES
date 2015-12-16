@@ -1,8 +1,8 @@
 
 %% Allgemeine Parameter
 wb  = 2*pi*50;        % Signalfrequenz
-fHz = 200; 
-Vdc = 220;
+fHz = 2000; 
+Vdc = 220; %/sqrt(3)
 
 %% Maschinen Parameter
 p  = 4;
@@ -19,7 +19,7 @@ Xmlstern = 1/(1/Xls+1/Xm+1/Xlr);
 
 %% Gewollte Parameter
 
-we = 2*pi*(fHz/p);   % Statorfrequenz
+we = 4*pi*fHz/p;   % Statorfrequenz
 
 %% Last Parameter
 
