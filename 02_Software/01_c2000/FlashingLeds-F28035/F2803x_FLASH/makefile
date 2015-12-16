@@ -19,6 +19,7 @@ ORDERED_OBJS += \
 "./SciCommsGui.obj" \
 "../28035_RAM_lnk.cmd" \
 "../F28035_FLASH_FlashingLeds.CMD" \
+"../F28035_RAM_FlashingLeds.CMD" \
 $(GEN_CMDS__FLAG) \
 -l"libc.a" \
 
