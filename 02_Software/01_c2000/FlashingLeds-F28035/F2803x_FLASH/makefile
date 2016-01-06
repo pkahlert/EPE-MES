@@ -4,7 +4,7 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS
+CG_TOOL_ROOT := G:/Beuth/ti/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
@@ -144,13 +144,13 @@ all: FlashingLeds.out
 FlashingLeds.out: $(OBJS) $(CMD_SRCS) $(CMD_UPPER_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: C2000 Linker'
-	"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/bin/cl2000" -v28 -ml -mt --cla_support=cla0 -g --define="_DEBUG" --define="LARGE_MODEL" --define="FLASH" --diag_warning=225 -z -m"FlashingLeds.map" --stack_size=0x380 --warn_sections -i"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/lib" -i"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/include" -i"C:/Beuth/EPE-MES/03_Documentation/FlashingLeds-F28035_v1.0" --reread_libs --xml_link_info="FlashingLeds_linkInfo.xml" --rom_model -o "FlashingLeds.out" $(ORDERED_OBJS)
+	"G:/Beuth/ti/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/bin/cl2000" -v28 -ml -mt --cla_support=cla0 -g --define="_DEBUG" --define="LARGE_MODEL" --define="FLASH" --diag_warning=225 -z -m"FlashingLeds.map" --stack_size=0x380 --warn_sections -i"G:/Beuth/ti/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/lib" -i"G:/Beuth/ti/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/include" -i"C:/Beuth/EPE-MES/03_Documentation/FlashingLeds-F28035_v1.0" --reread_libs --xml_link_info="FlashingLeds_linkInfo.xml" --rom_model -o "FlashingLeds.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 FlashingLeds.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: C2000 Hex Utility'
-	"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/bin/hex2000"  -o "FlashingLeds.hex" $(EXE_OUTPUTS__QUOTED)
+	"G:/Beuth/ti/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/bin/hex2000"  -o "FlashingLeds.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 

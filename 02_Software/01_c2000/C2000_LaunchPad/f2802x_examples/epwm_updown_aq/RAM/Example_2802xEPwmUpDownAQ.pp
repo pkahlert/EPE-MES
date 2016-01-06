@@ -30,6 +30,15 @@ Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_Launc
 Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/F2802x_EPwm_defines.h
 Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/F2802x_I2c_defines.h
 Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/F2802x_DefaultISR.h
+Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/clk.h
+Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/cpu.h
+Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/pwm.h
+Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/flash.h
+Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/gpio.h
+Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/pie.h
+Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/adc.h
+Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/pll.h
+Example_2802xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/wdog.h
 
 ../Example_2802xEPwmUpDownAQ.c: 
 C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/DSP28x_Project.h: 
@@ -61,3 +70,12 @@ C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/F280
 C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/F2802x_EPwm_defines.h: 
 C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/F2802x_I2c_defines.h: 
 C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/F2802x_DefaultISR.h: 
+C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/clk.h: 
+C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/cpu.h: 
+C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/pwm.h: 
+C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/flash.h: 
+C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/gpio.h: 
+C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/pie.h: 
+C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/adc.h: 
+C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/pll.h: 
+C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/include/wdog.h: 

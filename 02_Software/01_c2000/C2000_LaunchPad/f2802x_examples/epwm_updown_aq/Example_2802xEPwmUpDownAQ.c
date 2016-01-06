@@ -36,7 +36,7 @@
 //#############################################################################
 
 #include "DSP28x_Project.h"     // Device Headerfile and Examples Include File
-/*
+
 #include "f2802x_common/include/clk.h"
 #include "f2802x_common/include/flash.h"
 #include "f2802x_common/include/gpio.h"
@@ -44,8 +44,8 @@
 #include "f2802x_common/include/pll.h"
 #include "f2802x_common/include/pwm.h"
 #include "f2802x_common/include/wdog.h"
-*/
 
+/*
 #include "f2803x_common/include/clk.h"
 #include "f2803x_common/include/flash.h"
 #include "f2803x_common/include/gpio.h"
@@ -53,7 +53,7 @@
 #include "f2803x_common/include/pll.h"
 #include "f2803x_common/include/pwm.h"
 #include "f2803x_common/include/wdog.h"
-
+*/
 
 typedef struct
 {

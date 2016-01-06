@@ -51,7 +51,45 @@
 
 #include "FlashingLeds-Settings.h"
 #include "PeripheralHeaderIncludes.h"
-																		 
+
+// #lt imports standard assets
+#include "DSP2803x_headers/include/DSP2803x_Device.h"
+
+// EPWM_INFO wrapper, used for every single configured epwm
+typedef struct
+{
+   volatile struct EPWM_REGS *EPwmRegHandle;
+   Uint16 EPwm_CMPA_Direction;
+   Uint16 EPwm_CMPB_Direction;
+   Uint16 EPwmTimerIntCount;
+   Uint16 EPwmMaxCMPA;
+   Uint16 EPwmMinCMPA;
+   Uint16 EPwmMaxCMPB;
+   Uint16 EPwmMinCMPB;
+}EPWM_INFO;
+
+// Configure the period for each timer
+#define EPWM1_TIMER_TBPRD  2000  // Period register
+#define EPWM1_MAX_CMPA     1950
+#define EPWM1_MIN_CMPA       50
+#define EPWM1_MAX_CMPB     1950
+#define EPWM1_MIN_CMPB       50
+
+#define EPWM2_TIMER_TBPRD  2000  // Period register
+#define EPWM2_MAX_CMPA     1950
+#define EPWM2_MIN_CMPA       50
+#define EPWM2_MAX_CMPB     1950
+#define EPWM2_MIN_CMPB       50
+
+#define EPWM3_TIMER_TBPRD  2000  // Period register
+#define EPWM3_MAX_CMPA      950
+#define EPWM3_MIN_CMPA       50
+#define EPWM3_MAX_CMPB     1950
+#define EPWM3_MIN_CMPB     1050
+
+// To keep track of which way the compare value is moving
+#define EPWM_CMP_UP   1
+#define EPWM_CMP_DOWN 0
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // FUNCTION PROTOTYPES
@@ -69,30 +107,25 @@ void MemCopy();
 //------------------------------------
 // Alpha states
 void A0(void);	//state A0
-void B0(void);	//state B0
-void C0(void);	//state C0
 
 // A branch states
 void A1(void);	//state A1
 void A2(void);	//state A2
 
-// B branch states
-void B1(void);	//state B1
-void B2(void);	//state B2
-
-// C branch states
-void C1(void);	//state C1
-void C2(void);	//state C2
 
 // Variable declarations
 void (*Alpha_State_Ptr)(void);	// Base States pointer
 void (*A_Task_Ptr)(void);		// State pointer A branch
-void (*B_Task_Ptr)(void);		// State pointer B branch
-void (*C_Task_Ptr)(void);		// State pointer C branch
-
 
 // ---------------------------------- USER -----------------------------------------
-
+// Prototype statements for functions found within this file.
+void InitEPwm1Example(void);
+void InitEPwm2Example(void);
+void InitEPwm3Example(void);
+__interrupt void epwm1_isr(void);
+__interrupt void epwm2_isr(void);
+__interrupt void epwm3_isr(void);
+void update_compare(EPWM_INFO*);
 
 
 
@@ -113,22 +146,16 @@ extern Uint16 *RamfuncsLoadStart, *RamfuncsLoadEnd, *RamfuncsRunStart;
 // ---------------------------------- USER -----------------------------------------
 int16	Gui_LedPrd_ms;			// LED Prd in ms
 int16	LedBlinkTimer;			
-	
+
+EPWM_INFO epwm1_info;
+EPWM_INFO epwm2_info;
+EPWM_INFO epwm3_info;
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // VARIABLE DECLARATIONS - CCS WatchWindow / GUI support
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 // -------------------------------- FRAMEWORK --------------------------------------
-
-//GUI support variables
-// sets a limit on the amount of external GUI controls - increase as necessary
-int16 	*varSetTxtList[8];				//8 textbox controlled variables
-int16 	*varSetBtnList[8];				//8 button controlled variables
-int16 	*varSetSldrList[8];				//8 slider controlled variables
-int16 	*varGetList[8];					//8 variables sendable to GUI
-int16 	*arrayGetList[8];				//8 arrays sendable to GUI				
-
 
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -168,44 +195,12 @@ void main(void)
 // Tasks State-machine init
 	Alpha_State_Ptr = &A0;
 	A_Task_Ptr = &A1;
-	B_Task_Ptr = &B1;
-	C_Task_Ptr = &C1;
 
 	CommsOKflg = 0;
 	SerialCommsTimer = 0;
 
 // ---------------------------------- USER -----------------------------------------
 //  put common initialization/variable definitions here
-
-
-
-//=================================================================================
-//	INITIALIZATION - GUI connections
-//=================================================================================
-// Use this section only if you plan to "Instrument" your application using the 
-// Microsoft C# freeware GUI Template provided by TI
-
-	//"Set" variables
-	//---------------------------------------
-	// assign GUI variable Textboxes to desired "setable" parameter addresses
-	//varSetTxtList[0] = &Var1;
-
-	// assign GUI Buttons to desired flag addresses
-	//varSetBtnList[0] = &Var2;
-
-	// assign GUI Sliders to desired "setable" parameter addresses
-	varSetSldrList[0] = &Gui_LedPrd_ms;
-
-
-	//"Get" variables
-	//---------------------------------------
-	// assign a GUI "getable" parameter address
-	//varGetList[0] = &Var3;
-
-	// assign a GUI "getable" parameter array address
-	// 		only need to set initial position of array, program will run through it 
-	//       based on the array length specified in the GUI
-	//arrayGetList[0] = &Var4[0];
 
 
 
@@ -219,30 +214,21 @@ void main(void)
 
 // Initialization Time
 // = = = = = = = = = = = = = = = = = = = = = = = =
-EPwm1Regs.TBPRD = 600; // Period = 601 TBCLK counts
-EPwm1Regs.CMPA.half.CMPA = 350; // Compare A = 350 TBCLK counts
-EPwm1Regs.CMPB = 200; // Compare B = 200 TBCLK counts
-EPwm1Regs.TBPHS.all = 0; // Set Phase register to zero, // .all hinzugefügt
-EPwm1Regs.TBCTR = 0; // clear TB counter
-EPwm1Regs.TBCTL.bit.CTRMODE = 0; // #lt
-EPwm1Regs.TBCTL.bit.PHSEN = 0; // Phase loading disabled, // #lt
-EPwm1Regs.TBCTL.bit.PRDLD = 1; // #lt
-EPwm1Regs.TBCTL.bit.SYNCOSEL = 2; // #lt
-EPwm1Regs.TBCTL.bit.HSPCLKDIV = 0; // TBCLK = SYSCLK, // #lt
-EPwm1Regs.TBCTL.bit.CLKDIV = 0; // #lt
-EPwm1Regs.CMPCTL.bit.SHDWAMODE = 1; // #lt
-EPwm1Regs.CMPCTL.bit.SHDWBMODE = 0; // #lt
-EPwm1Regs.CMPCTL.bit.LOADAMODE = 0; // load on CTR = Zero, // #lt
-EPwm1Regs.CMPCTL.bit.LOADBMODE = 0; // load on CTR = Zero, // #lt
-EPwm1Regs.AQCTLA.bit.ZRO = 1; // #lt
-EPwm1Regs.AQCTLA.bit.CAU = 2; // #lt
-EPwm1Regs.AQCTLB.bit.ZRO = 0; // #lt
-EPwm1Regs.AQCTLB.bit.CBU = 0; // #lt
+	EALLOW;
+	SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 0;
+	EDIS;
+
+	InitEPwm1Example();
+	InitEPwm2Example();
+	InitEPwm3Example();
+
+	EALLOW;
+	SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1;
+	EDIS;
+
 //
 // Run Time
 // = = = = = = = = = = = = = = = = = = = = = = = =
-EPwm1Regs.CMPA.half.CMPA = 350; // adjust duty for output EPWM1A
-EPwm1Regs.CMPB = 200; // adjust duty for output EPWM1B
 
 
 //==================================================================================
@@ -250,26 +236,9 @@ EPwm1Regs.CMPB = 200; // adjust duty for output EPWM1B
 //==================================================================================
 
 // ---------------------------------- USER -----------------------------------------
-
-//------------------------------------------------------
-#if (INCR_BUILD == 1)
-//------------------------------------------------------
 	
 	LedBlinkTimer = 0;			//Initialize LedBlinkTimer to 0
 	Gui_LedPrd_ms = 1000;		//Default to 1 blink every second
-
-#endif // (INCR_BUILD == 1)
-
-
-//------------------------------------------------------
-#if (INCR_BUILD == 2)
-//------------------------------------------------------
-
-	LedBlinkTimer = 0;			//Initialize LedBlinkTimer to 0
-	Gui_LedPrd_ms = 2000;  		//Default to 2 blinks each second
-	
-#endif // (INCR_BUILD == 2) 
-
 
 
 //==================================================================================
@@ -279,8 +248,6 @@ EPwm1Regs.CMPB = 200; // adjust duty for output EPWM1B
 //	CLA_Init();
 
 // ---------------------------------- USER -----------------------------------------
-
-
 
 
 //=================================================================================
@@ -319,41 +286,243 @@ void A0(void)
 		SerialCommsTimer++;
 	}
 
-	Alpha_State_Ptr = &B0;		// Comment out to allow only A tasks
-}
-
-void B0(void)
-{
-	// loop rate synchronizer for B-tasks
-	if(CpuTimer1Regs.TCR.bit.TIF == 1)
-	{
-		CpuTimer1Regs.TCR.bit.TIF = 1;				// clear flag
-
-		//-----------------------------------------------------------
-		(*B_Task_Ptr)();		// jump to a B Task (B1,B2,B3,...)
-		//-----------------------------------------------------------
-	}
-
-	Alpha_State_Ptr = &C0;		// Allow C state tasks
-}
-
-void C0(void)
-{
-	// loop rate synchronizer for C-tasks
-	if(CpuTimer2Regs.TCR.bit.TIF == 1)
-	{
-		CpuTimer2Regs.TCR.bit.TIF = 1;				// clear flag
-
-		//-----------------------------------------------------------
-		(*C_Task_Ptr)();		// jump to a C Task (C1,C2,C3,...)
-		//-----------------------------------------------------------
-	}
-
-	Alpha_State_Ptr = &A0;	// Back to State A0
+	Alpha_State_Ptr = &A0;		// Comment out to allow only A tasks
 }
 
 
 //----------------------------------- USER ----------------------------------------
+
+__interrupt void epwm1_isr(void) {
+   // Update the CMPA and CMPB values
+   update_compare(&epwm1_info);
+
+   // Clear INT flag for this timer
+   EPwm1Regs.ETCLR.bit.INT = 1;
+}
+
+__interrupt void epwm2_isr(void) {
+   // Update the CMPA and CMPB values
+   update_compare(&epwm2_info);
+
+   // Clear INT flag for this timer
+   EPwm2Regs.ETCLR.bit.INT = 1;
+}
+
+__interrupt void epwm3_isr(void) {
+   // Update the CMPA and CMPB values
+   update_compare(&epwm3_info);
+
+   // Clear INT flag for this timer
+   EPwm3Regs.ETCLR.bit.INT = 1;
+}
+
+void InitEPwm1Example() {
+   // Setup TBCLK
+   EPwm1Regs.TBPRD = EPWM1_TIMER_TBPRD;           // Set timer period 801 TBCLKs
+   EPwm1Regs.TBPHS.half.TBPHS = 0x0000;           // Phase is 0
+   EPwm1Regs.TBCTR = 0x0000;                      // Clear counter
+
+   // Set Compare values
+   EPwm1Regs.CMPA.half.CMPA = EPWM1_MIN_CMPA;     // Set compare A value
+   EPwm1Regs.CMPB = EPWM1_MAX_CMPB;               // Set Compare B value
+
+   // Setup counter mode
+   EPwm1Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN; // Count up
+   EPwm1Regs.TBCTL.bit.PHSEN = TB_DISABLE;        // Disable phase loading
+   EPwm1Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;       // Clock ratio to SYSCLKOUT
+   EPwm1Regs.TBCTL.bit.CLKDIV = TB_DIV1;
+
+   // Setup shadowing
+   EPwm1Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
+   EPwm1Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;
+   EPwm1Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;  // Load on Zero
+   EPwm1Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
+
+   // Set actions
+   EPwm1Regs.AQCTLA.bit.CAU = AQ_SET;             // Set PWM1A on event A, up count
+   EPwm1Regs.AQCTLA.bit.CAD = AQ_CLEAR;           // Clear PWM1A on event A, down count
+
+   EPwm1Regs.AQCTLB.bit.CBU = AQ_SET;             // Set PWM1B on event B, up count
+   EPwm1Regs.AQCTLB.bit.CBD = AQ_CLEAR;           // Clear PWM1B on event B, down count
+
+   // Interrupt where we will change the Compare Values
+   EPwm1Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;      // Select INT on Zero event
+   EPwm1Regs.ETSEL.bit.INTEN = 1;                 // Enable INT
+   EPwm1Regs.ETPS.bit.INTPRD = ET_3RD;            // Generate INT on 3rd event
+
+   // Information this example uses to keep track
+   // of the direction the CMPA/CMPB values are
+   // moving, the min and max allowed values and
+   // a pointer to the correct ePWM registers
+   epwm1_info.EPwm_CMPA_Direction = EPWM_CMP_UP;   // Start by increasing CMPA &
+   epwm1_info.EPwm_CMPB_Direction = EPWM_CMP_DOWN; // decreasing CMPB
+   epwm1_info.EPwmTimerIntCount = 0;               // Zero the interrupt counter
+   epwm1_info.EPwmRegHandle = &EPwm1Regs;          // Set the pointer to the ePWM module
+   epwm1_info.EPwmMaxCMPA = EPWM1_MAX_CMPA;        // Setup min/max CMPA/CMPB values
+   epwm1_info.EPwmMinCMPA = EPWM1_MIN_CMPA;
+   epwm1_info.EPwmMaxCMPB = EPWM1_MAX_CMPB;
+   epwm1_info.EPwmMinCMPB = EPWM1_MIN_CMPB;
+}
+
+void InitEPwm2Example() {
+   // Setup TBCLK
+   EPwm2Regs.TBPRD = EPWM2_TIMER_TBPRD;           // Set timer period 801 TBCLKs
+   EPwm2Regs.TBPHS.half.TBPHS = 0x0000;           // Phase is 0
+   EPwm2Regs.TBCTR = 0x0000;                      // Clear counter
+
+   // Set Compare values
+   EPwm2Regs.CMPA.half.CMPA = EPWM2_MIN_CMPA;     // Set compare A value
+   EPwm2Regs.CMPB = EPWM2_MIN_CMPB;               // Set Compare B value
+
+   // Setup counter mode
+   EPwm2Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN; // Count up
+   EPwm2Regs.TBCTL.bit.PHSEN = TB_DISABLE;        // Disable phase loading
+   EPwm2Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;       // Clock ratio to SYSCLKOUT
+   EPwm2Regs.TBCTL.bit.CLKDIV = TB_DIV1;
+
+   // Setup shadowing
+   EPwm2Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
+   EPwm2Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;
+   EPwm2Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;  // Load on Zero
+   EPwm2Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
+
+   // Set actions
+   EPwm2Regs.AQCTLA.bit.CAU = AQ_SET;            // Set PWM2A on event A, up count
+   EPwm2Regs.AQCTLA.bit.CBD = AQ_CLEAR;          // Clear PWM2A on event B, down count
+
+   EPwm2Regs.AQCTLB.bit.ZRO = AQ_CLEAR;          // Clear PWM2B on zero
+   EPwm2Regs.AQCTLB.bit.PRD = AQ_SET  ;          // Set PWM2B on period
+
+   // Interrupt where we will change the Compare Values
+   EPwm2Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;     // Select INT on Zero event
+   EPwm2Regs.ETSEL.bit.INTEN = 1;                // Enable INT
+   EPwm2Regs.ETPS.bit.INTPRD = ET_3RD;           // Generate INT on 3rd event
+
+   // Information this example uses to keep track
+   // of the direction the CMPA/CMPB values are
+   // moving, the min and max allowed values and
+   // a pointer to the correct ePWM registers
+   epwm2_info.EPwm_CMPA_Direction = EPWM_CMP_UP;   // Start by increasing CMPA &
+   epwm2_info.EPwm_CMPB_Direction = EPWM_CMP_UP;   // increasing CMPB
+   epwm2_info.EPwmTimerIntCount = 0;               // Zero the interrupt counter
+   epwm2_info.EPwmRegHandle = &EPwm2Regs;          // Set the pointer to the ePWM module
+   epwm2_info.EPwmMaxCMPA = EPWM2_MAX_CMPA;        // Setup min/max CMPA/CMPB values
+   epwm2_info.EPwmMinCMPA = EPWM2_MIN_CMPA;
+   epwm2_info.EPwmMaxCMPB = EPWM2_MAX_CMPB;
+   epwm2_info.EPwmMinCMPB = EPWM2_MIN_CMPB;
+
+}
+
+void InitEPwm3Example(void) {
+   // Setup TBCLK
+   EPwm3Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN;// Count up/down
+   EPwm3Regs.TBPRD = EPWM3_TIMER_TBPRD;          // Set timer period
+   EPwm3Regs.TBCTL.bit.PHSEN = TB_DISABLE;       // Disable phase loading
+   EPwm3Regs.TBPHS.half.TBPHS = 0x0000;          // Phase is 0
+   EPwm3Regs.TBCTR = 0x0000;                     // Clear counter
+   EPwm3Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;      // Clock ratio to SYSCLKOUT
+   EPwm3Regs.TBCTL.bit.CLKDIV = TB_DIV1;
+
+   // Setup shadow register load on ZERO
+   EPwm3Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
+   EPwm3Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;
+   EPwm3Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;
+   EPwm3Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
+
+  // Set Compare values
+   EPwm3Regs.CMPA.half.CMPA = EPWM3_MIN_CMPA;    // Set compare A value
+   EPwm3Regs.CMPB = EPWM3_MAX_CMPB;              // Set Compare B value
+
+   // Set Actions
+   EPwm3Regs.AQCTLA.bit.PRD = AQ_SET;            // Set PWM3A on period
+   EPwm3Regs.AQCTLA.bit.CBD = AQ_CLEAR;          // Clear PWM3A on event B, down count
+
+   EPwm3Regs.AQCTLB.bit.PRD = AQ_CLEAR;          // Clear PWM3A on period
+   EPwm3Regs.AQCTLB.bit.CAU = AQ_SET;            // Set PWM3A on event A, up count
+
+   // Interrupt where we will change the Compare Values
+   EPwm3Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;     // Select INT on Zero event
+   EPwm3Regs.ETSEL.bit.INTEN = 1;                // Enable INT
+   EPwm3Regs.ETPS.bit.INTPRD = ET_3RD;           // Generate INT on 3rd event
+
+   // Information this example uses to keep track
+   // of the direction the CMPA/CMPB values are
+   // moving, the min and max allowed values and
+   // a pointer to the correct ePWM registers
+   epwm3_info.EPwm_CMPA_Direction = EPWM_CMP_UP;   // Start by increasing CMPA &
+   epwm3_info.EPwm_CMPB_Direction = EPWM_CMP_DOWN; // decreasing CMPB
+   epwm3_info.EPwmTimerIntCount = 0;               // Zero the interrupt counter
+   epwm3_info.EPwmRegHandle = &EPwm3Regs;          // Set the pointer to the ePWM module
+   epwm3_info.EPwmMaxCMPA = EPWM3_MAX_CMPA;        // Setup min/max CMPA/CMPB values
+   epwm3_info.EPwmMinCMPA = EPWM3_MIN_CMPA;
+   epwm3_info.EPwmMaxCMPB = EPWM3_MAX_CMPB;
+   epwm3_info.EPwmMinCMPB = EPWM3_MIN_CMPB;
+}
+
+void update_compare(EPWM_INFO *epwm_info) {
+   // Every 10'th interrupt, change the CMPA/CMPB values
+   if(epwm_info->EPwmTimerIntCount == 10) {
+	   epwm_info->EPwmTimerIntCount = 0;
+
+	   // If we were increasing CMPA, check to see if
+	   // we reached the max value.  If not, increase CMPA
+	   // else, change directions and decrease CMPA
+	   if(epwm_info->EPwm_CMPA_Direction == EPWM_CMP_UP) {
+		   if(epwm_info->EPwmRegHandle->CMPA.half.CMPA < epwm_info->EPwmMaxCMPA) {
+			  epwm_info->EPwmRegHandle->CMPA.half.CMPA++;
+		   }
+		   else {
+			  epwm_info->EPwm_CMPA_Direction = EPWM_CMP_DOWN;
+			  epwm_info->EPwmRegHandle->CMPA.half.CMPA--;
+		   }
+	   }
+
+	   // If we were decreasing CMPA, check to see if
+	   // we reached the min value.  If not, decrease CMPA
+	   // else, change directions and increase CMPA
+	   else {
+		   if(epwm_info->EPwmRegHandle->CMPA.half.CMPA == epwm_info->EPwmMinCMPA) {
+			  epwm_info->EPwm_CMPA_Direction = EPWM_CMP_UP;
+			  epwm_info->EPwmRegHandle->CMPA.half.CMPA++;
+		   }
+		   else {
+			  epwm_info->EPwmRegHandle->CMPA.half.CMPA--;
+		   }
+	   }
+
+	   // If we were increasing CMPB, check to see if
+	   // we reached the max value.  If not, increase CMPB
+	   // else, change directions and decrease CMPB
+	   if(epwm_info->EPwm_CMPB_Direction == EPWM_CMP_UP) {
+		   if(epwm_info->EPwmRegHandle->CMPB < epwm_info->EPwmMaxCMPB) {
+			  epwm_info->EPwmRegHandle->CMPB++;
+		   }
+		   else {
+			  epwm_info->EPwm_CMPB_Direction = EPWM_CMP_DOWN;
+			  epwm_info->EPwmRegHandle->CMPB--;
+		   }
+	   }
+
+	   // If we were decreasing CMPB, check to see if
+	   // we reached the min value.  If not, decrease CMPB
+	   // else, change directions and increase CMPB
+
+	   else {
+		   if(epwm_info->EPwmRegHandle->CMPB == epwm_info->EPwmMinCMPB) {
+			  epwm_info->EPwm_CMPB_Direction = EPWM_CMP_UP;
+			  epwm_info->EPwmRegHandle->CMPB++;
+		   }
+		   else {
+			  epwm_info->EPwmRegHandle->CMPB--;
+		   }
+	   }
+   }
+   else {
+	  epwm_info->EPwmTimerIntCount++;
+   }
+
+   return;
+}
 
 //=================================================================================
 //	A - TASKS
@@ -386,70 +555,3 @@ void A1(void) // SCI-GUI
 	A_Task_Ptr = &A1;
 	//-------------------
 }
-
-//--------------------------------
-void A2(void) //  SPARE
-//--------------------------------
-{	
-
-	//-------------------
-	//task never runs; Task A1 always never set A_Task_Ptr to come to A2
-	A_Task_Ptr = &A1;
-	//-------------------
-}
-
-
-//=================================================================================
-//	B - TASKS
-//=================================================================================
-// Each active task runs every (CpuTimer1 period) * (# of active B Tasks)
-//--------------------------------
-void B1(void) //  SPARE
-//--------------------------------
-{
-
-	//-----------------
-	//the next time CpuTimer1 'counter' reaches Period value go to B2
-	B_Task_Ptr = &B2;	
-	//-----------------
-}
-
-//--------------------------------
-void B2(void) //  SPARE
-//--------------------------------
-{
-
-	//-----------------
-	//the next time CpuTimer1 'counter' reaches Period value go to B1
-	B_Task_Ptr = &B1;
-	//-----------------
-}
-
-
-//=================================================================================
-//	C - TASKS
-//=================================================================================
-	// Each active task runs every (CpuTimer2 period) * (# of active C Tasks)
-//--------------------------------
-void C1(void) 	// SPARE
-//--------------------------------
-{
-
-	//-----------------
-	//the next time CpuTimer2 'counter' reaches Period value go to C2
-	C_Task_Ptr = &C2;	
-	//-----------------
-
-}
-
-//--------------------------------
-void C2(void) //  SPARE
-//--------------------------------
-{
-
-	//-----------------
-	//the next time CpuTimer2 'counter' reaches Period value go to C1
-	C_Task_Ptr = &C1;	
-	//-----------------
-}
-
