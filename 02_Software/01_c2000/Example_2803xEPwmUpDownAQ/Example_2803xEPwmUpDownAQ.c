@@ -26,6 +26,7 @@
 //###########################################################################
 
 #include "DSP28x_Project.h"     // Device Headerfile and Examples Include File
+#include "math.h"
 
 typedef struct
 {
@@ -57,8 +58,8 @@ EPWM_INFO epwm3_info;
 #define EPWM1_TIMER_TBPRD  2000  // Period register
 #define EPWM1_MAX_CMPA     1000
 #define EPWM1_MIN_CMPA      999
-#define EPWM1_MAX_CMPB     1000
-#define EPWM1_MIN_CMPB      999
+#define EPWM1_MAX_CMPB     1999
+#define EPWM1_MIN_CMPB     1000
 
 #define EPWM2_TIMER_TBPRD  2000  // Period register
 #define EPWM2_MAX_CMPA     1000
@@ -164,7 +165,7 @@ void main(void)
 __interrupt void epwm1_isr(void)
 {
    // Update the CMPA and CMPB values
-   update_compare(&epwm1_info);
+   update_compare1(&epwm1_info);
 
    // Clear INT flag for this timer
    EPwm1Regs.ETCLR.bit.INT = 1;
@@ -176,7 +177,7 @@ __interrupt void epwm1_isr(void)
 __interrupt void epwm2_isr(void)
 {
    // Update the CMPA and CMPB values
-   update_compare(&epwm2_info);
+   update_compare2(&epwm2_info);
 
    // Clear INT flag for this timer
    EPwm2Regs.ETCLR.bit.INT = 1;
@@ -188,7 +189,7 @@ __interrupt void epwm2_isr(void)
 __interrupt void epwm3_isr(void)
 {
    // Update the CMPA and CMPB values
-   update_compare(&epwm3_info);
+   update_compare3(&epwm3_info);
 
    // Clear INT flag for this timer
    EPwm3Regs.ETCLR.bit.INT = 1;
@@ -237,7 +238,7 @@ void InitEPwm1Example()
    // moving, the min and max allowed values and
    // a pointer to the correct ePWM registers
    epwm1_info.EPwm_CMPA_Direction = EPWM_CMP_UP;   // Start by increasing CMPA &
-   epwm1_info.EPwm_CMPB_Direction = EPWM_CMP_DOWN; // decreasing CMPB
+   epwm1_info.EPwm_CMPB_Direction = EPWM_CMP_UP; // decreasing CMPB
    epwm1_info.EPwmTimerIntCount = 0;               // Zero the interrupt counter
    epwm1_info.EPwmRegHandle = &EPwm1Regs;          // Set the pointer to the ePWM module
    epwm1_info.EPwmMaxCMPA = EPWM1_MAX_CMPA;        // Setup min/max CMPA/CMPB values
@@ -343,6 +344,54 @@ void InitEPwm3Example(void)
    epwm3_info.EPwmMinCMPB = EPWM3_MIN_CMPB;
 }
 
+float f = 1;
+int t1 = 0;
+float uU = 0;
+const float pi = 3.1415629;
+
+void update_compare1(EPWM_INFO *epwm_info) {
+	t1++;
+
+	if (t1 >= 1000) {
+		t1 = 0;
+	}
+
+	uU = sin(f*t1 + pi/6); // 2*pi*
+
+	if (uU >= 0) {
+		// positiv
+		// #TODO anderen (B) ausmachen
+
+		// (A) anmachen
+		epwm_info->EPwmRegHandle->CMPA.half.CMPA = uU * 1000;
+	} else {
+		// negativ
+		// #TODO anderen (A) ausmachen
+
+		// (B) anmachen
+		epwm_info->EPwmRegHandle->CMPB = -uU * 1000;
+	}
+
+	/*if (epwm_info->EPwmRegHandle->CMPA.half.CMPA < 400) {
+		epwm_info->EPwmRegHandle->CMPA.half.CMPA = EPWM1_MIN_CMPA;
+	}*/
+}
+
+void update_compare2(EPWM_INFO *epwm_info) {
+	epwm_info->EPwmRegHandle->CMPA.half.CMPA--;
+	if (epwm_info->EPwmRegHandle->CMPA.half.CMPA < 400) {
+		epwm_info->EPwmRegHandle->CMPA.half.CMPA = EPWM1_MIN_CMPA;
+	}
+}
+
+void update_compare3(EPWM_INFO *epwm_info) {
+	epwm_info->EPwmRegHandle->CMPA.half.CMPA--;
+	if (epwm_info->EPwmRegHandle->CMPA.half.CMPA < 400) {
+		epwm_info->EPwmRegHandle->CMPA.half.CMPA = EPWM1_MIN_CMPA;
+	}
+}
+
+/*
 void update_compare(EPWM_INFO *epwm_info)
 {
    // Every 10'th interrupt, change the CMPA/CMPB values
@@ -421,7 +470,7 @@ void update_compare(EPWM_INFO *epwm_info)
    }
 
    return;
-}
+}*/
 
 //===========================================================================
 // No more.

@@ -31,6 +31,8 @@ Example_2803xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_co
 Example_2803xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP2803x_I2c_defines.h
 Example_2803xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP2803x_Cla_defines.h
 Example_2803xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP2803x_DefaultISR.h
+Example_2803xEPwmUpDownAQ.obj: C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/math.h
+Example_2803xEPwmUpDownAQ.obj: C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/linkage.h
 
 ../Example_2803xEPwmUpDownAQ.c: 
 C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP28x_Project.h: 
@@ -63,3 +65,5 @@ C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP2803x_EPwm_defi
 C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP2803x_I2c_defines.h: 
 C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP2803x_Cla_defines.h: 
 C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP2803x_DefaultISR.h: 
+C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/math.h: 
+C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/linkage.h: 
