@@ -1,7 +1,7 @@
 ******************************************************************************
              TMS320C2000 Linker PC v15.9.0                     
 ******************************************************************************
->> Linked Wed Jan 06 08:24:25 2016
+>> Linked Wed Jan 06 08:39:21 2016
 
 OUTPUT FILE NAME:   <Example_F2802xEPwmUpDownAQ.out>
 ENTRY POINT SYMBOL: "code_start"  address: 00000000
@@ -17,7 +17,7 @@ PAGE 0:
   RAMM0                 00000050   000003b0  00000098  00000318  RWIX
   RAMM0                 00000050   000003b0  00000000  000003b0  RWIX
   RAML0                 00008000   00000400  00000000  00000400  RWIX
-  RAML0L1               00008000   00000c00  0000079a  00000466  RWIX
+  PRAML0                00008000   00000900  0000079a  00000166  RWIX
   IQTABLES              003fe000   00000b50  00000000  00000b50  RWIX
   IQTABLES              003fe000   00000b50  00000000  00000b50  RWIX
   IQTABLES2             003feb50   0000008c  00000000  0000008c  RWIX
@@ -33,7 +33,7 @@ PAGE 1:
   BOOT_RSVD             00000002   0000004e  00000000  0000004e  RWIX
   BOOT_RSVD             00000002   0000004e  00000000  0000004e  RWIX
   RAMM1                 00000400   00000400  00000200  00000200  RWIX
-  RAMM1                 00000480   00000380  00000000  00000380  RWIX
+  RAMM1                 00000400   00000400  00000000  00000400  RWIX
   DEV_EMU               00000880   00000105  00000000  00000105  RWIX
   SYS_PWR_CTL           00000985   00000003  00000000  00000003  RWIX
   FLASH_REGS            00000a80   00000060  00000000  00000060  RWIX
@@ -61,8 +61,7 @@ PAGE 1:
   XINTRUPT              00007070   00000010  00000000  00000010  RWIX
   ADC                   00007100   00000080  00000000  00000080  RWIX
   I2CA                  00007900   00000040  00000000  00000040  RWIX
-  RAML2                 00008c00   00000400  00000135  000002cb  RWIX
-  RAML3                 00009000   00001000  00000000  00001000  RWIX
+  DRAML0                00008900   00000700  00000135  000005cb  RWIX
   PARTID                003d7fff   00000001  00000000  00000001  RWIX
   CSM_PWL               003f7ff8   00000008  00000000  00000008  RWIX
 
@@ -203,15 +202,15 @@ ramfuncs   0    00000066    00000004
 .stack     1    00000400    00000200     UNINITIALIZED
                   00000400    00000200     --HOLE--
 
-.econst    1    00008c00    00000100     
-                  00008c00    00000100     driverlib.lib : pie.obj (.econst:_PIE_tableDebugInit)
+.econst    1    00008900    00000100     
+                  00008900    00000100     driverlib.lib : pie.obj (.econst:_PIE_tableDebugInit)
 
-.ebss      1    00008d00    00000035     UNINITIALIZED
-                  00008d00    0000002c     Example_2802xEPwmUpDownAQ.obj (.ebss)
-                  00008d2c    00000004     rts2800_ml.lib : exit.obj (.ebss)
-                  00008d30    00000002                    : _lock.obj (.ebss:__lock)
-                  00008d32    00000002                    : _lock.obj (.ebss:__unlock)
-                  00008d34    00000001     driverlib.lib : cpu.obj (.ebss)
+.ebss      1    00008a00    00000035     UNINITIALIZED
+                  00008a00    0000002c     Example_2802xEPwmUpDownAQ.obj (.ebss)
+                  00008a2c    00000004     rts2800_ml.lib : exit.obj (.ebss)
+                  00008a30    00000002                    : _lock.obj (.ebss:__lock)
+                  00008a32    00000002                    : _lock.obj (.ebss:__unlock)
+                  00008a34    00000001     driverlib.lib : cpu.obj (.ebss)
 
 .cinit     0    00000050    00000000     UNINITIALIZED
 
@@ -270,23 +269,23 @@ address     data page           name
 --------    ----------------    ----
 00000400      10 (00000400)     __stack
 
-00008c00     230 (00008c00)     _PIE_tableDebugInit
+00008900     224 (00008900)     _PIE_tableDebugInit
 
-00008d00     234 (00008d00)     _myPwm1
-00008d02     234 (00008d00)     _myFlash
-00008d04     234 (00008d00)     _myGpio
-00008d06     234 (00008d00)     _myPwm3
-00008d08     234 (00008d00)     _myClk
-00008d0a     234 (00008d00)     _myPie
-00008d0c     234 (00008d00)     _myPwm2
-00008d0e     234 (00008d00)     _epwm1_info
-00008d18     234 (00008d00)     _epwm3_info
-00008d22     234 (00008d00)     _epwm2_info
-00008d2c     234 (00008d00)     ___TI_cleanup_ptr
-00008d2e     234 (00008d00)     ___TI_dtors_ptr
-00008d30     234 (00008d00)     __lock
-00008d32     234 (00008d00)     __unlock
-00008d34     234 (00008d00)     _cpu
+00008a00     228 (00008a00)     _myPwm1
+00008a02     228 (00008a00)     _myFlash
+00008a04     228 (00008a00)     _myGpio
+00008a06     228 (00008a00)     _myPwm3
+00008a08     228 (00008a00)     _myClk
+00008a0a     228 (00008a00)     _myPie
+00008a0c     228 (00008a00)     _myPwm2
+00008a0e     228 (00008a00)     _epwm1_info
+00008a18     228 (00008a00)     _epwm3_info
+00008a22     228 (00008a00)     _epwm2_info
+00008a2c     228 (00008a00)     ___TI_cleanup_ptr
+00008a2e     228 (00008a00)     ___TI_dtors_ptr
+00008a30     228 (00008a00)     __lock
+00008a32     228 (00008a00)     __unlock
+00008a34     228 (00008a00)     _cpu
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -350,7 +349,7 @@ page  address   name
 0     000085e3  _PIE_init                           
 0     00008591  _PIE_registerPieIntHandler          
 0     00008571  _PIE_setDebugIntVectorTable         
-1     00008c00  _PIE_tableDebugInit                 
+1     00008900  _PIE_tableDebugInit                 
 0     0000878b  _PLL_getClkStatus                   
 0     0000878e  _PLL_getLockStatus                  
 0     0000862b  _PLL_init                           
@@ -402,8 +401,8 @@ page  address   name
 0     00008753  _XINT3_ISR                          
 1     00000600  __STACK_END                         
 abs   00000200  __STACK_SIZE                        
-1     00008d2c  ___TI_cleanup_ptr                   
-1     00008d2e  ___TI_dtors_ptr                     
+1     00008a2c  ___TI_cleanup_ptr                   
+1     00008a2e  ___TI_dtors_ptr                     
 abs   ffffffff  ___binit__                          
 abs   ffffffff  ___c_args__                         
 0     00000050  ___cinit__                          
@@ -411,33 +410,33 @@ abs   ffffffff  ___c_args__
 abs   ffffffff  ___pinit__                          
 0     00008000  ___text__                           
 0     00008518  __args_main                         
-1     00008d30  __lock                              
+1     00008a30  __lock                              
 0     000085e2  __nop                               
 0     000085de  __register_lock                     
 0     000085da  __register_unlock                   
 1     00000400  __stack                             
-1     00008d32  __unlock                            
+1     00008a32  __unlock                            
 0     00008531  _abort                              
 0     000083ed  _c_int00                            
 0     00008484  _copy_in                            
-1     00008d34  _cpu                                
+1     00008a34  _cpu                                
 0     000084fe  _ddcopy                             
 0     000084fe  _dpcopy                             
-1     00008d0e  _epwm1_info                         
+1     00008a0e  _epwm1_info                         
 0     00008390  _epwm1_isr                          
-1     00008d22  _epwm2_info                         
+1     00008a22  _epwm2_info                         
 0     000083af  _epwm2_isr                          
-1     00008d18  _epwm3_info                         
+1     00008a18  _epwm3_info                         
 0     000083ce  _epwm3_isr                          
 0     00008533  _exit                               
 0     00008042  _main                               
-1     00008d08  _myClk                              
-1     00008d02  _myFlash                            
-1     00008d04  _myGpio                             
-1     00008d0a  _myPie                              
-1     00008d00  _myPwm1                             
-1     00008d0c  _myPwm2                             
-1     00008d06  _myPwm3                             
+1     00008a08  _myClk                              
+1     00008a02  _myFlash                            
+1     00008a04  _myGpio                             
+1     00008a0a  _myPie                              
+1     00008a00  _myPwm1                             
+1     00008a0c  _myPwm2                             
+1     00008a06  _myPwm3                             
 0     000084fe  _pdcopy                             
 0     000084fe  _ppcopy                             
 0     00008758  _rsvd_ISR                           
@@ -587,22 +586,22 @@ page  address   name
 0     0000879a  etext                               
 1     00000400  __stack                             
 1     00000600  __STACK_END                         
-1     00008c00  _PIE_tableDebugInit                 
-1     00008d00  _myPwm1                             
-1     00008d02  _myFlash                            
-1     00008d04  _myGpio                             
-1     00008d06  _myPwm3                             
-1     00008d08  _myClk                              
-1     00008d0a  _myPie                              
-1     00008d0c  _myPwm2                             
-1     00008d0e  _epwm1_info                         
-1     00008d18  _epwm3_info                         
-1     00008d22  _epwm2_info                         
-1     00008d2c  ___TI_cleanup_ptr                   
-1     00008d2e  ___TI_dtors_ptr                     
-1     00008d30  __lock                              
-1     00008d32  __unlock                            
-1     00008d34  _cpu                                
+1     00008900  _PIE_tableDebugInit                 
+1     00008a00  _myPwm1                             
+1     00008a02  _myFlash                            
+1     00008a04  _myGpio                             
+1     00008a06  _myPwm3                             
+1     00008a08  _myClk                              
+1     00008a0a  _myPie                              
+1     00008a0c  _myPwm2                             
+1     00008a0e  _epwm1_info                         
+1     00008a18  _epwm3_info                         
+1     00008a22  _epwm2_info                         
+1     00008a2c  ___TI_cleanup_ptr                   
+1     00008a2e  ___TI_dtors_ptr                     
+1     00008a30  __lock                              
+1     00008a32  __unlock                            
+1     00008a34  _cpu                                
 abs   00000200  __STACK_SIZE                        
 abs   ffffffff  ___binit__                          
 abs   ffffffff  ___c_args__                         

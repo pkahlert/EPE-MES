@@ -11,7 +11,7 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./Example_2802xEPwmUpDownAQ.obj" \
-"../28035_RAM_lnk.cmd" \
+"../28027_RAM_lnk.cmd" \
 "C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_headers/cmd/F2802x_Headers_nonBIOS.cmd" \
 "C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_common/lib/driverlib.lib" \
 $(GEN_CMDS__FLAG) \
@@ -141,7 +141,7 @@ all: Example_F2802xEPwmUpDownAQ.out
 Example_F2802xEPwmUpDownAQ.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: C2000 Linker'
-	"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/bin/cl2000" -v28 -ml -mt --cla_support=cla0 -g --define="_DEBUG" --define="LARGE_MODEL" --quiet --verbose_diagnostics --diag_warning=225 --output_all_syms --cdebug_asm_data -z -m"Example_F2802xEPwmUpDownAQ.map" --stack_size=0x200 --warn_sections -i"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/lib" -i"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/include" -i"C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_examples/epwm_updown_aq" -i"C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/F2802x_common/lib" -i"C:/Beuth/EPE-MES/libs/math/IQmath/v15c/lib" --reread_libs --issue_remarks --verbose_diagnostics --xml_link_info="Example_F2802xEPwmUpDownAQ_linkInfo.xml" --entry_point=code_start --rom_model -o "Example_F2802xEPwmUpDownAQ.out" $(ORDERED_OBJS)
+	"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/bin/cl2000" -v28 -ml -mt -g --define="_DEBUG" --define="LARGE_MODEL" --quiet --verbose_diagnostics --diag_warning=225 --output_all_syms --cdebug_asm_data -z -m"Example_F2802xEPwmUpDownAQ.map" --stack_size=0x200 --warn_sections -i"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/lib" -i"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_15.9.0.STS/include" -i"C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_examples/epwm_updown_aq" -i"C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/F2802x_common/lib" -i"C:/Beuth/EPE-MES/libs/math/IQmath/v15c/lib" --reread_libs --issue_remarks --verbose_diagnostics --xml_link_info="Example_F2802xEPwmUpDownAQ_linkInfo.xml" --entry_point=code_start --rom_model -o "Example_F2802xEPwmUpDownAQ.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -4,7 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CMD_SRCS += \
-../28035_RAM_lnk.cmd \
+../28027_RAM_lnk.cmd \
 C:/Beuth/EPE-MES/02_Software/01_c2000/C2000_LaunchPad/f2802x_headers/cmd/F2802x_Headers_nonBIOS.cmd 
 
 LIB_SRCS += \
