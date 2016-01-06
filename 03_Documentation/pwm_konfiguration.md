@@ -1,0 +1,14 @@
+j4 - 11, 49
+j5 - gpio10
+
+j5 - 4 = gpio00 = 6x so schnell wie die anderen, wird in B1() gesetzt
+
+
+GPIO-00 - PIN FUNCTION = PWM1A
+GPIO-01 - PIN FUNCTION = PWM1B
+GPIO-02 - PIN FUNCTION = PWM2A
+GPIO-03 - PIN FUNCTION = PWM2B
+GPIO-04 - PIN FUNCTION = PWM3A (evtl b)
+GPIO-05 - PIN FUNCTION = PWM3B (evtl a)
+GPIO-06 - PIN FUNCTION = PWM4A
+

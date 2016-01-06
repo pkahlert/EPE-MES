@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?ccsproject version="1.0"?>
+<projectOptions>
+	<deviceFamily value="C2000"/>
+	<isTargetManual value="true"/>
+	<origin value="C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_examples_ccsv5/epwm_updown_aq"/>
+</projectOptions>
