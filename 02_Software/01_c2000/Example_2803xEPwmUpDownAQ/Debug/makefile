@@ -4,7 +4,7 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6
+CG_TOOL_ROOT := G:/Beuth/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
@@ -20,8 +20,8 @@ ORDERED_OBJS += \
 "./DSP2803x_SysCtrl.obj" \
 "./DSP2803x_usDelay.obj" \
 "./Example_2803xEPwmUpDownAQ.obj" \
-"C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/cmd/28035_RAM_lnk.cmd" \
-"C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_headers/cmd/DSP2803x_Headers_nonBIOS.cmd" \
+"G:/Beuth/epemes/EPE-MES/02_Software/01_c2000/DSP2803x_common/cmd/28035_RAM_lnk.cmd" \
+"G:/Beuth/epemes/EPE-MES/02_Software/01_c2000/DSP2803x_headers/cmd/DSP2803x_Headers_nonBIOS.cmd" \
 $(GEN_CMDS__FLAG) \
 -l"rts2800_ml.lib" \
 -l"IQmath.lib" \
@@ -141,7 +141,7 @@ all: Example_2803xEPwmUpDownAQ.out
 Example_2803xEPwmUpDownAQ.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: C2000 Linker'
-	"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/bin/cl2000" -v28 -ml -mt --cla_support=cla0 -g --define="_DEBUG" --define="LARGE_MODEL" --quiet --verbose_diagnostics --diag_warning=225 --diag_suppress=10063 --issue_remarks --output_all_syms --cdebug_asm_data -z -m"Example_2803xEPwmUpDownAQ.map" --stack_size=0x380 --warn_sections -i"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/lib" -i"C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include" -i"C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_examples_ccsv5/epwm_updown_aq" -i"C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_headers/include" -i"C:/Beuth/libs/math/IQmath/v160/lib" --reread_libs --verbose_diagnostics --issue_remarks --xml_link_info="Example_2803xEPwmUpDownAQ_linkInfo.xml" --entry_point=code_start --rom_model -o "Example_2803xEPwmUpDownAQ.out" $(ORDERED_OBJS)
+	"G:/Beuth/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/bin/cl2000" -v28 -ml -mt --cla_support=cla0 -g --define="_DEBUG" --define="LARGE_MODEL" --quiet --verbose_diagnostics --diag_warning=225 --diag_suppress=10063 --issue_remarks --output_all_syms --cdebug_asm_data -z -m"Example_2803xEPwmUpDownAQ.map" --stack_size=0x380 --warn_sections -i"G:/Beuth/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/lib" -i"G:/Beuth/ti/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include" -i"G:/Beuth/epemes/EPE-MES/02_Software/01_c2000/DSP2803x_examples_ccsv5/epwm_updown_aq" -i"G:/Beuth/epemes/EPE-MES/02_Software/01_c2000/DSP2803x_headers/include" -i"G:/Beuth/epemes/libs/math/IQmath/v160/lib" --reread_libs --verbose_diagnostics --issue_remarks --xml_link_info="Example_2803xEPwmUpDownAQ_linkInfo.xml" --entry_point=code_start --rom_model -o "Example_2803xEPwmUpDownAQ.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
