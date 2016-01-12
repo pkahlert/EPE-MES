@@ -46,6 +46,7 @@ void InitEPwmExample(EPWM_INFO*);
 __interrupt void epwm1_isr(void);
 __interrupt void epwm2_isr(void);
 __interrupt void epwm3_isr(void);
+__interrupt void xint2_isr(void);
 void update_compare(EPWM_INFO*);
 
 // Global variables used in this example
@@ -65,24 +66,6 @@ epwm3_info.EPwmRegHandle = &EPwm3Regs;
 #define EPWM1_MIN_CMPA      999
 #define EPWM1_MAX_CMPB     1999
 #define EPWM1_MIN_CMPB     1000
-
-/*
-#define EPWM2_TIMER_TBPRD  2000  // Period register
-#define EPWM2_MAX_CMPA     1000
-#define EPWM2_MIN_CMPA      999
-#define EPWM2_MAX_CMPB     1000
-#define EPWM2_MIN_CMPB      999
-
-#define EPWM3_TIMER_TBPRD  2000  // Period register
-#define EPWM3_MAX_CMPA     1000
-#define EPWM3_MIN_CMPA      999
-#define EPWM3_MAX_CMPB     1000
-#define EPWM3_MIN_CMPB      999
-
-// To keep track of which way the compare value is moving
-#define EPWM_CMP_UP   1
-#define EPWM_CMP_DOWN 0
-*/
 
 #define EPWM_TIMER_TBPRD  2000  // Period register
 #define EPWM_START_CMP 100 // default cmp
@@ -206,15 +189,22 @@ void InitEPwmExample(EPWM_INFO *epwm_info)
    // of the direction the CMPA/CMPB values are
    // moving, the min and max allowed values and
    // a pointer to the correct ePWM registers
-   epwm_info->EPwm_CMPA_Direction = 1;   // Start by increasing CMPA &
-   epwm_info->EPwm_CMPB_Direction = 1; // decreasing CMPB
+   epwm_info->EPwm_CMPA_Direction = 1;
+   epwm_info->EPwm_CMPB_Direction = 1;
    epwm_info->EPwmTimerIntCount = 0;               // Zero the interrupt counter
-   epwm_info->EPwmMaxCMPA = EPWM1_MAX_CMPA;        // Setup min/max CMPA/CMPB values
+   /*epwm_info->EPwmMaxCMPA = EPWM1_MAX_CMPA;        // Setup min/max CMPA/CMPB values
    epwm_info->EPwmMinCMPA = EPWM1_MIN_CMPA;
-   epwm_info->EPwmMaxCMPB = EPWM1_MAX_CMPB;
-   epwm_info->EPwmMinCMPB = EPWM1_MIN_CMPB;
+   epwm_info->EPwmMaxCMPB = EPWM1_MAX_CMPA;
+   epwm_info->EPwmMinCMPB = EPWM1_MIN_CMPA;*/
 }
 
+//----------------------------------
+//---- FLOATING TIMESTAMP BUFFER ---
+//----------------------------------
+/*typedef struct {
+
+} timestampBuffer;
+*/
 
 void main(void)
 {
@@ -226,6 +216,32 @@ void main(void)
 // Step 2. Initialize GPIO:
 // This example function is found in the DSP2803x_Gpio.c file and
 // illustrates how to set the GPIO to it's default state.
+  //-------------------------
+  //---- GPIO PREPARATION ---
+  //-------------------------
+
+  // Configure GPIO34 as a GPIO output pin
+  EALLOW;
+  GpioCtrlRegs.GPBMUX1.bit.GPIO34 = 0;
+  GpioCtrlRegs.GPBDIR.bit.GPIO34 = 1;
+  EDIS;
+
+  // Make GPIO26 the input source for XINT2
+  EALLOW;
+  GpioCtrlRegs.GPAPUD.bit.GPIO26 = 1; // pullup disable
+  GpioCtrlRegs.GPAMUX2.bit.GPIO26 = 0;  // GPIO26 = GPIO26
+  GpioCtrlRegs.GPADIR.bit.GPIO26 = 0;   // GPIO26 = input
+  GpioCtrlRegs.GPAQSEL2.bit.GPIO26 = 0;
+  GpioIntRegs.GPIOXINT2SEL.bit.GPIOSEL = 26;    // XINT2 connected to GPIO26
+
+  GpioDataRegs.GPADAT.bit.GPIO26 = 0;
+
+  XIntruptRegs.XINT2CR.bit.POLARITY = 1;      // Rising edge interrupt
+  XIntruptRegs.XINT2CR.bit.ENABLE = 1;        // Enable XINT2
+
+  EDIS;
+
+
 // InitGpio();  // Skipped for this example
 
 // For this case just init GPIO pins for ePWM1, ePWM2, ePWM3
@@ -258,16 +274,19 @@ void main(void)
 
 // Interrupts that are used in this example are re-mapped to
 // ISR functions found within this file.
-   EALLOW;  // This is needed to write to EALLOW protected registers
+   EALLOW;
    PieVectTable.EPWM1_INT = &epwm1_isr;
    PieVectTable.EPWM2_INT = &epwm2_isr;
    PieVectTable.EPWM3_INT = &epwm3_isr;
-   EDIS;    // This is needed to disable write to EALLOW protected registers
+   PieVectTable.XINT2 = &xint2_isr;
+   EDIS;
 
-// Step 4. Initialize all the Device Peripherals:
-// Not required for this example
+   // Step 4. Initialize all the Device Peripherals:
 
-// For this example, only initialize the ePWM
+
+   //-------------------------
+   //---- PWM PREPARATION ----
+   //-------------------------
    EALLOW;
    SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 0;
    EDIS;
@@ -281,20 +300,19 @@ void main(void)
    EDIS;
 
 // Step 5. User specific code, enable interrupts:
-   // Configure GPIO34 as a GPIO output pin
-   EALLOW;
-   GpioCtrlRegs.GPBMUX1.bit.GPIO34 = 0;
-   GpioCtrlRegs.GPBDIR.bit.GPIO34 = 1;
-   EDIS;
 
 
 // Enable CPU INT3 which is connected to EPWM1-3 INT:
    IER |= M_INT3;
+   IER |= 0x0003;
 
 // Enable EPWM INTn in the PIE: Group 3 interrupt 1-3
    PieCtrlRegs.PIEIER3.bit.INTx1 = 1;
    PieCtrlRegs.PIEIER3.bit.INTx2 = 1;
    PieCtrlRegs.PIEIER3.bit.INTx3 = 1;
+
+   PieCtrlRegs.PIEIER1.bit.INTx5 = 1;
+   PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 
 // Enable global Interrupts and higher priority real-time debug events:
    EINT;   // Enable Global interrupt INTM
@@ -305,6 +323,29 @@ void main(void)
    {
        __asm("          NOP");
    }
+}
+
+//------------------------
+//---- GPIO INTERRUPT ----
+//------------------------
+
+int t1 = 0;
+float duty = 0.5;
+
+__interrupt void xint2_isr(void)
+{
+	GpioDataRegs.GPACLEAR.bit.GPIO26 = 1;   // GPIO26 is low
+
+	t1++;
+	if (t1 >= 1000) {
+		t1 = 0;
+
+		// Toggle LED
+		GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
+	}
+
+	// Acknowledge this interrupt to get more from group 1
+	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 }
 
 __interrupt void epwm1_isr(void)
@@ -344,19 +385,11 @@ __interrupt void epwm3_isr(void)
 }
 
 
-int t1 = 0;
-float duty = 0.5;
+
 
 void update_compare(EPWM_INFO *epwm_info) {
-	t1++;
-	if (t1 >= 1000) {
-		t1 = 0;
-
-		// Toggle LED
-		GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
-	}
-
 	epwm_info->EPwmRegHandle->CMPA.half.CMPA = (1- duty) * 2000;
+	epwm_info->EPwmRegHandle->CMPB = (1- duty) * 2000;
 	return;
 }
 
