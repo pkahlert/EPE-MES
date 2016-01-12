@@ -96,7 +96,7 @@
 		</variable>
 		<variable>
 			<name>ORIGINAL_PROJECT_ROOT</name>
-			<value>file:/G:/Beuth/epemes/EPE-MES/02_Software/01_c2000/DSP2803x_examples_ccsv5/epwm_updown_aq</value>
+			<value>file:/C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_examples_ccsv5/epwm_updown_aq</value>
 		</variable>
 	</variableList>
 </projectDescription>
