@@ -38,11 +38,14 @@ typedef struct
    Uint16 EPwmMinCMPA;
    Uint16 EPwmMaxCMPB;
    Uint16 EPwmMinCMPB;
-   Uint16 index;
+   float dutyA;
+   float dutyB;
 }EPWM_INFO;
 
 // Prototype statements for functions found within this file.
-void InitEPwmExample(EPWM_INFO*);
+void InitEPwm1Example(void);
+void InitEPwm2Example(void);
+void InitEPwm3Example(void);
 __interrupt void epwm1_isr(void);
 __interrupt void epwm2_isr(void);
 __interrupt void epwm3_isr(void);
@@ -61,143 +64,130 @@ epwm3_info.EPwmRegHandle = &EPwm3Regs;
 
 // Configure the period for each timer
 
-#define EPWM1_TIMER_TBPRD  2000  // Period register
-#define EPWM1_MAX_CMPA     1000
-#define EPWM1_MIN_CMPA      999
-#define EPWM1_MAX_CMPB     1999
-#define EPWM1_MIN_CMPB     1000
-
 #define EPWM_TIMER_TBPRD  2000  // Period register
-#define EPWM_START_CMP 100 // default cmp
+#define EPWM_START_CMP 200 // default cmp
 
-void InitEPwmExample(EPWM_INFO *epwm_info)
-{
-	// Setup TBCLK
-	static Uint16 i = 0;
-	epwm_info->index = i;
+void InitEPwm1Example() {
+	EPwm1Regs.TBPRD = EPWM_TIMER_TBPRD;           // Set timer period 801 TBCLKs
+	EPwm1Regs.TBPHS.half.TBPHS = 0;           // Phase is 0
+	//   EPwm1Regs.TBCTR = 0x0000;                      // Clear counter
 
-	switch (epwm_info->index+1) {
-	case 1:
-		EPwm1Regs.TBPRD = EPWM_TIMER_TBPRD;           // Set timer period 801 TBCLKs
-	   EPwm1Regs.TBPHS.half.TBPHS = 0x0000;           // Phase is 0
-	   EPwm1Regs.TBCTR = 0x0000;                      // Clear counter
+	// Set Compare values
+	EPwm1Regs.CMPA.half.CMPA = EPWM_START_CMP;     // Set compare A value
 
-	   // Set Compare values
-	   EPwm1Regs.CMPA.half.CMPA = EPWM_START_CMP;     // Set compare A value
-	   EPwm1Regs.CMPB = EPWM_START_CMP;               // Set Compare B value
+	// Setup counter mode
+	EPwm1Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN; //UPDOWN // Count up
+	EPwm1Regs.TBCTL.bit.PHSEN = TB_DISABLE;        // Disable phase loading
+	EPwm2Regs.TBCTL.bit.PRDLD = TB_SHADOW;
+	EPwm1Regs.TBCTL.bit.SYNCOSEL = TB_CTR_ZERO; // Sync down-stream module
 
-	   // Setup counter mode
-	   EPwm1Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN; // Count up
-	   EPwm1Regs.TBCTL.bit.PHSEN = TB_DISABLE;        // Disable phase loading
-	   EPwm1Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;       // Clock ratio to SYSCLKOUT
-	   EPwm1Regs.TBCTL.bit.CLKDIV = TB_DIV1;
+	// Setup shadowing
+	EPwm1Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
+	EPwm1Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;
+	EPwm1Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;  // Load on Zero
+	EPwm1Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
 
-	   // Setup shadowing
-	   EPwm1Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
-	   EPwm1Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;
-	   EPwm1Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;  // Load on Zero
-	   EPwm1Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
+	// Set actions
+	EPwm1Regs.AQCTLA.bit.CAU = AQ_SET;             // Set PWM1A on event A, up count
+	EPwm1Regs.AQCTLA.bit.CAD = AQ_CLEAR;           // Clear PWM1A on event A, down count
+	//  EPwm1Regs.AQCTLA.bit.ZRO = AQ_TOGGLE; //#DEBUG
 
-	   // Set actions
-	   EPwm1Regs.AQCTLA.bit.CAU = AQ_SET;             // Set PWM1A on event A, up count
-	   EPwm1Regs.AQCTLA.bit.CAD = AQ_CLEAR;           // Clear PWM1A on event A, down count
+	// Interrupt where we will change the Compare Values
+	EPwm1Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;      // Select INT on Zero event
+	EPwm1Regs.ETSEL.bit.INTEN = 1;                 // Enable INT
+	EPwm1Regs.ETPS.bit.INTPRD = ET_3RD;            // Generate INT on 3rd event
 
-	   EPwm1Regs.AQCTLB.bit.CBU = AQ_SET;             // Set PWM1B on event B, up count
-	   EPwm1Regs.AQCTLB.bit.CBD = AQ_CLEAR;           // Clear PWM1B on event B, down count
+	EPwm1Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
+	EPwm1Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
+	EPwm1Regs.DBFED = 20;
+	EPwm1Regs.DBRED = 20;
 
-	   // Interrupt where we will change the Compare Values
-	   EPwm1Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;      // Select INT on Zero event
-	   EPwm1Regs.ETSEL.bit.INTEN = 1;                 // Enable INT
-	   EPwm1Regs.ETPS.bit.INTPRD = ET_3RD;            // Generate INT on 3rd event
-	   epwm_info->EPwmRegHandle = &EPwm1Regs;          // Set the pointer to the ePWM module
-	   break;
-	case 2:
-		EPwm2Regs.TBPRD = EPWM_TIMER_TBPRD;           // Set timer period 801 TBCLKs
-	   EPwm2Regs.TBPHS.half.TBPHS = 0x0000;           // Phase is 0
-	   EPwm2Regs.TBCTR = 0x0000;                      // Clear counter
-
-	   // Set Compare values
-	   EPwm2Regs.CMPA.half.CMPA = EPWM_START_CMP;     // Set compare A value
-	   EPwm2Regs.CMPB = EPWM_START_CMP;               // Set Compare B value
-
-	   // Setup counter mode
-	   EPwm2Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN; // Count up
-	   EPwm2Regs.TBCTL.bit.PHSEN = TB_DISABLE;        // Disable phase loading
-	   EPwm2Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;       // Clock ratio to SYSCLKOUT
-	   EPwm2Regs.TBCTL.bit.CLKDIV = TB_DIV1;
-
-	   // Setup shadowing
-	   EPwm2Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
-	   EPwm2Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;
-	   EPwm2Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;  // Load on Zero
-	   EPwm2Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
-
-	   // Set actions
-	   EPwm2Regs.AQCTLA.bit.CAU = AQ_SET;             // Set PWM1A on event A, up count
-	   EPwm2Regs.AQCTLA.bit.CAD = AQ_CLEAR;           // Clear PWM1A on event A, down count
-
-	   EPwm2Regs.AQCTLB.bit.CBU = AQ_SET;             // Set PWM1B on event B, up count
-	   EPwm2Regs.AQCTLB.bit.CBD = AQ_CLEAR;           // Clear PWM1B on event B, down count
-
-	   // Interrupt where we will change the Compare Values
-	   EPwm2Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;      // Select INT on Zero event
-	   EPwm2Regs.ETSEL.bit.INTEN = 1;                 // Enable INT
-	   EPwm2Regs.ETPS.bit.INTPRD = ET_3RD;            // Generate INT on 3rd event
-	   epwm_info->EPwmRegHandle = &EPwm2Regs;          // Set the pointer to the ePWM module
-	   break;
-	case 3:
-		EPwm3Regs.TBPRD = EPWM_TIMER_TBPRD;           // Set timer period 801 TBCLKs
-	   EPwm3Regs.TBPHS.half.TBPHS = 0x0000;           // Phase is 0
-	   EPwm3Regs.TBCTR = 0x0000;                      // Clear counter
-
-	   // Set Compare values
-	   EPwm3Regs.CMPA.half.CMPA = EPWM_START_CMP;     // Set compare A value
-	   EPwm3Regs.CMPB = EPWM_START_CMP;               // Set Compare B value
-
-	   // Setup counter mode
-	   EPwm3Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN; // Count up
-	   EPwm3Regs.TBCTL.bit.PHSEN = TB_DISABLE;        // Disable phase loading
-	   EPwm3Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;       // Clock ratio to SYSCLKOUT
-	   EPwm3Regs.TBCTL.bit.CLKDIV = TB_DIV1;
-
-	   // Setup shadowing
-	   EPwm3Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
-	   EPwm3Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;
-	   EPwm3Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;  // Load on Zero
-	   EPwm3Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
-
-	   // Set actions
-	   EPwm3Regs.AQCTLA.bit.CAU = AQ_SET;             // Set PWM1A on event A, up count
-	   EPwm3Regs.AQCTLA.bit.CAD = AQ_CLEAR;           // Clear PWM1A on event A, down count
-
-	   EPwm3Regs.AQCTLB.bit.CBU = AQ_SET;             // Set PWM1B on event B, up count
-	   EPwm3Regs.AQCTLB.bit.CBD = AQ_CLEAR;           // Clear PWM1B on event B, down count
-
-	   // Interrupt where we will change the Compare Values
-	   EPwm3Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;      // Select INT on Zero event
-	   EPwm3Regs.ETSEL.bit.INTEN = 1;                 // Enable INT
-	   EPwm3Regs.ETPS.bit.INTPRD = ET_3RD;            // Generate INT on 3rd event
-	   epwm_info->EPwmRegHandle = &EPwm3Regs;          // Set the pointer to the ePWM module
-	   break;
-	}
-
-	i++;
-
-
-
-   // Information this example uses to keep track
-   // of the direction the CMPA/CMPB values are
-   // moving, the min and max allowed values and
-   // a pointer to the correct ePWM registers
-   epwm_info->EPwm_CMPA_Direction = 1;
-   epwm_info->EPwm_CMPB_Direction = 1;
-   epwm_info->EPwmTimerIntCount = 0;               // Zero the interrupt counter
-   /*epwm_info->EPwmMaxCMPA = EPWM1_MAX_CMPA;        // Setup min/max CMPA/CMPB values
-   epwm_info->EPwmMinCMPA = EPWM1_MIN_CMPA;
-   epwm_info->EPwmMaxCMPB = EPWM1_MAX_CMPA;
-   epwm_info->EPwmMinCMPB = EPWM1_MIN_CMPA;*/
+//	epwm1_info.EPwmRegHandle = &EPwm1Regs;          // Set the pointer to the ePWM module
+	epwm1_info.dutyA = EPWM_START_DUTY;
+	epwm1_info.dutyB = EPWM_START_DUTY;
 }
 
+void InitEPwm2Example() {
+	EPwm2Regs.TBPRD = EPWM_TIMER_TBPRD;           // Set timer period 801 TBCLKs
+	EPwm2Regs.TBPHS.half.TBPHS = EPWM_TIMER_TBPRD/3;           // Phase is 0
+
+	// Set Compare values
+	EPwm2Regs.CMPA.half.CMPA = EPWM_START_CMP; //EPWM_START_CMP;     // Set compare A value
+
+	// Setup counter mode
+	EPwm2Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN; //TB_COUNT_UPDOWN; // Count up
+	EPwm2Regs.TBCTL.bit.PHSEN = TB_ENABLE; //#DEBUG TB_DISABLE;        // Disable phase loading
+	EPwm2Regs.TBCTL.bit.PHSDIR = TB_DOWN;
+	EPwm2Regs.TBCTL.bit.PRDLD = TB_SHADOW;
+	EPwm2Regs.TBCTL.bit.SYNCOSEL = TB_SYNC_IN; // sync flow-through
+
+	// Setup shadowing
+	EPwm2Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
+	EPwm2Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;
+	EPwm2Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;  // Load on Zero
+	EPwm2Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
+
+	// Set actions
+	EPwm2Regs.AQCTLA.bit.CAU = AQ_SET;             // Set PWM1A on event A, up count
+	EPwm2Regs.AQCTLA.bit.CAD = AQ_CLEAR;           // Clear PWM1A on event A, down count
+	// EPwm2Regs.AQCTLA.bit.ZRO = AQ_TOGGLE; //in case of TB_COUNT_DOWN
+
+
+	// Interrupt where we will change the Compare Values
+	EPwm2Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;      // Select INT on Zero event
+	EPwm2Regs.ETSEL.bit.INTEN = 1;                 // Enable INT
+	EPwm2Regs.ETPS.bit.INTPRD = ET_3RD;            // Generate INT on 3rd event
+
+	// #TODO anpassen oder raus?
+	EPwm2Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
+	EPwm2Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
+	EPwm2Regs.DBFED = 20;
+	EPwm2Regs.DBRED = 20;
+
+	epwm2_info.dutyA = EPWM_START_DUTY;
+	epwm2_info.dutyB = EPWM_START_DUTY;
+//	epwm2_info.EPwmRegHandle = &EPwm2Regs;          // Set the pointer to the ePWM module
+}
+
+void InitEPwm3Example() {
+	EPwm3Regs.TBPRD = EPWM_TIMER_TBPRD;           // Set timer period 801 TBCLKs
+   EPwm3Regs.TBPHS.half.TBPHS = 2*EPWM_TIMER_TBPRD/3;           // Phase is 0
+
+   // Set Compare values
+   EPwm3Regs.CMPA.half.CMPA = EPWM_START_CMP; //EPWM_START_CMP;     // Set compare A value
+
+   // Setup counter mode
+   EPwm3Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN; //TB_COUNT_UPDOWN; // Count up
+   EPwm3Regs.TBCTL.bit.PHSEN = TB_ENABLE; //#DEBUG TB_DISABLE;        // Disable phase loading
+   EPwm3Regs.TBCTL.bit.PHSDIR = TB_UP;
+   EPwm3Regs.TBCTL.bit.PRDLD = TB_SHADOW;
+   EPwm3Regs.TBCTL.bit.SYNCOSEL = TB_SYNC_IN; // sync flow-through
+
+   // Setup shadowing
+   EPwm3Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;
+   EPwm3Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;
+   EPwm3Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO;  // Load on Zero
+   EPwm3Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO;
+
+   // Set actions
+   EPwm3Regs.AQCTLA.bit.CAU = AQ_SET;             // Set PWM1A on event A, up count
+   EPwm3Regs.AQCTLA.bit.CAD = AQ_CLEAR;           // Clear PWM1A on event A, down count
+  // EPwm3Regs.AQCTLA.bit.ZRO = AQ_TOGGLE; //in case of TB_COUNT_DOWN
+
+   // Interrupt where we will change the Compare Values
+	EPwm3Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;      // Select INT on Zero event
+	EPwm3Regs.ETSEL.bit.INTEN = 1;                 // Enable INT
+	EPwm3Regs.ETPS.bit.INTPRD = ET_3RD;            // Generate INT on 3rd event
+
+   EPwm3Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
+   EPwm3Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
+   EPwm3Regs.DBFED = 20;
+   EPwm3Regs.DBRED = 20;
+
+   //epwm3_info.EPwmRegHandle = &EPwm3Regs;          // Set the pointer to the ePWM module
+   epwm3_info.dutyA = EPWM_START_DUTY;
+   epwm3_info.dutyB = EPWM_START_DUTY;
+}
 //----------------------------------
 //---- FLOATING TIMESTAMP BUFFER ---
 //----------------------------------
@@ -291,9 +281,9 @@ void main(void)
    SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 0;
    EDIS;
 
-   InitEPwmExample(&epwm1_info);
-   InitEPwmExample(&epwm2_info);
-   InitEPwmExample(&epwm3_info);
+   InitEPwm1Example();
+   InitEPwm2Example();
+   InitEPwm3Example();
 
    EALLOW;
    SysCtrlRegs.PCLKCR0.bit.TBCLKSYNC = 1;
@@ -385,11 +375,9 @@ __interrupt void epwm3_isr(void)
 }
 
 
-
-
 void update_compare(EPWM_INFO *epwm_info) {
-	epwm_info->EPwmRegHandle->CMPA.half.CMPA = (1- duty) * 2000;
-	epwm_info->EPwmRegHandle->CMPB = (1- duty) * 2000;
+	epwm_info->EPwmRegHandle->CMPA.half.CMPA = (1- epwm_info->dutyA) * 2000;
+	epwm_info->EPwmRegHandle->CMPB = (1- epwm_info->dutyB) * 2000;
 	return;
 }
 
