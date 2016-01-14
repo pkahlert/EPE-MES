@@ -70,6 +70,8 @@ epwm3_info.EPwmRegHandle = &EPwm3Regs;
 #define EPWM_START_CMP 200 // default cmp
 #define EPWM_START_DUTY 0.2
 
+signed int sinus[] = {0,256,507,750,981,1196,1391,1563,1709,1828,1916,1973,1998,1990,1949,1876,1772,1640,1480,1296,1091,867,630,382,128,-128,-382,-630,-867,-1091,-1296,-1480,-1640,-1772,-1876,-1949,-1990,-1998,-1973,-1916,-1828,-1709,-1563,-1391,-1196,-981,-750,-507,-256,0};
+
 void InitEPwm1Example() {
 	EPwm1Regs.TBPRD = EPWM_TIMER_TBPRD;           // Set timer period 801 TBCLKs
 	EPwm1Regs.TBPHS.half.TBPHS = 0;           // Phase is 0
@@ -384,16 +386,64 @@ __interrupt void epwm3_isr(void)
 	return;
 }*/
 
+double pi = 3.141592653589793;
+// Interrupt kommt alle 8,1 / 20 ms = 0,4 ms
+// PWM Frequenz 7,576 kHz
+// 50 Hz = 20ms / 0,4 = 50
+
 void update_compare1(EPWM_INFO *epwm_info) {
-	EPwm1Regs.CMPA.half.CMPA = (1 - epwm_info->dutyA) * EPWM_TIMER_TBPRD;
+	static int t = 0;
+	t++;
+
+	if (t == 50) {
+		t = 0;
+	}
+	int x = sinus[t];
+	if (x < 0) {
+		EPwm1Regs.CMPA.half.CMPA = 1;
+		EPwm1Regs.CMPB = -x;
+	} else {
+		EPwm1Regs.CMPA.half.CMPA = x+1;
+		EPwm1Regs.CMPB = 1;
+	}
+
 	return;
 }
+
 void update_compare2(EPWM_INFO *epwm_info) {
-	EPwm2Regs.CMPA.half.CMPA = (1 - epwm_info->dutyA) * EPWM_TIMER_TBPRD;
+	static int t = 0;
+	t++;
+
+	if (t == 50) {
+		t = 0;
+	}
+	int x = sinus[t];
+	if (x < 0) {
+		EPwm2Regs.CMPA.half.CMPA = 0;
+		EPwm2Regs.CMPB = x;
+	} else {
+		EPwm2Regs.CMPA.half.CMPA = x;
+		EPwm2Regs.CMPB = 0;
+	}
+
 	return;
 }
 void update_compare3(EPWM_INFO *epwm_info) {
-	EPwm3Regs.CMPA.half.CMPA = (1 - epwm_info->dutyA) * EPWM_TIMER_TBPRD;
+	static int t = 0;
+	t++;
+
+	if (t == 50) {
+		t = 0;
+	}
+	int x = sinus[t];
+	if (x < 0) {
+		EPwm3Regs.CMPA.half.CMPA = 0;
+		EPwm3Regs.CMPB = x;
+	} else {
+		EPwm3Regs.CMPA.half.CMPA = x;
+		EPwm3Regs.CMPB = 0;
+	}
+
 	return;
 }
 
