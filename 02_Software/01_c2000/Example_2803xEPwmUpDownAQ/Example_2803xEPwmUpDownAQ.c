@@ -50,7 +50,9 @@ __interrupt void epwm1_isr(void);
 __interrupt void epwm2_isr(void);
 __interrupt void epwm3_isr(void);
 __interrupt void xint2_isr(void);
-void update_compare(EPWM_INFO*);
+void update_compare1(EPWM_INFO*);
+void update_compare2(EPWM_INFO*);
+void update_compare3(EPWM_INFO*);
 
 // Global variables used in this example
 EPWM_INFO epwm1_info;
@@ -66,6 +68,7 @@ epwm3_info.EPwmRegHandle = &EPwm3Regs;
 
 #define EPWM_TIMER_TBPRD  2000  // Period register
 #define EPWM_START_CMP 200 // default cmp
+#define EPWM_START_DUTY 0.2
 
 void InitEPwm1Example() {
 	EPwm1Regs.TBPRD = EPWM_TIMER_TBPRD;           // Set timer period 801 TBCLKs
@@ -109,7 +112,7 @@ void InitEPwm1Example() {
 
 void InitEPwm2Example() {
 	EPwm2Regs.TBPRD = EPWM_TIMER_TBPRD;           // Set timer period 801 TBCLKs
-	EPwm2Regs.TBPHS.half.TBPHS = EPWM_TIMER_TBPRD/3;           // Phase is 0
+	EPwm2Regs.TBPHS.half.TBPHS = 2*EPWM_TIMER_TBPRD/3;           // Phase is 0
 
 	// Set Compare values
 	EPwm2Regs.CMPA.half.CMPA = EPWM_START_CMP; //EPWM_START_CMP;     // Set compare A value
@@ -201,7 +204,7 @@ void main(void)
 // Step 1. Initialize System Control:
 // PLL, WatchDog, enable Peripheral Clocks
 // This example function is found in the DSP2803x_SysCtrl.c file.
-   InitSysCtrl();
+    InitSysCtrl();
 
 // Step 2. Initialize GPIO:
 // This example function is found in the DSP2803x_Gpio.c file and
@@ -341,7 +344,7 @@ __interrupt void xint2_isr(void)
 __interrupt void epwm1_isr(void)
 {
    // Update the CMPA and CMPB values
-   update_compare(&epwm1_info);
+   update_compare1(&epwm1_info);
 
    // Clear INT flag for this timer
    EPwm1Regs.ETCLR.bit.INT = 1;
@@ -353,7 +356,7 @@ __interrupt void epwm1_isr(void)
 __interrupt void epwm2_isr(void)
 {
    // Update the CMPA and CMPB values
-   update_compare(&epwm2_info);
+   update_compare2(&epwm2_info);
 
    // Clear INT flag for this timer
    EPwm2Regs.ETCLR.bit.INT = 1;
@@ -365,7 +368,7 @@ __interrupt void epwm2_isr(void)
 __interrupt void epwm3_isr(void)
 {
    // Update the CMPA and CMPB values
-   update_compare(&epwm3_info);
+   update_compare3(&epwm3_info);
 
    // Clear INT flag for this timer
    EPwm3Regs.ETCLR.bit.INT = 1;
@@ -375,11 +378,25 @@ __interrupt void epwm3_isr(void)
 }
 
 
-void update_compare(EPWM_INFO *epwm_info) {
-	epwm_info->EPwmRegHandle->CMPA.half.CMPA = (1- epwm_info->dutyA) * 2000;
-	epwm_info->EPwmRegHandle->CMPB = (1- epwm_info->dutyB) * 2000;
+/*void update_compare(EPWM_INFO *epwm_info) {
+	epwm_info->EPwmRegHandle->CMPA.half.CMPA = (1 - epwm_info->dutyA) * EPWM_TIMER_TBPRD;
+	epwm_info->EPwmRegHandle->CMPB = (1- epwm_info->dutyB) * EPWM_TIMER_TBPRD;
+	return;
+}*/
+
+void update_compare1(EPWM_INFO *epwm_info) {
+	EPwm1Regs.CMPA.half.CMPA = (1 - epwm_info->dutyA) * EPWM_TIMER_TBPRD;
 	return;
 }
+void update_compare2(EPWM_INFO *epwm_info) {
+	EPwm2Regs.CMPA.half.CMPA = (1 - epwm_info->dutyA) * EPWM_TIMER_TBPRD;
+	return;
+}
+void update_compare3(EPWM_INFO *epwm_info) {
+	EPwm3Regs.CMPA.half.CMPA = (1 - epwm_info->dutyA) * EPWM_TIMER_TBPRD;
+	return;
+}
+
 
 //===========================================================================
 // No more.
