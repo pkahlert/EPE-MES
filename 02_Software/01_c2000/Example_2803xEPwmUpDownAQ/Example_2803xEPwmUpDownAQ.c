@@ -46,6 +46,7 @@ typedef struct
 void InitEPwm1Example(void);
 void InitEPwm2Example(void);
 void InitEPwm3Example(void);
+__interrupt void cpu_timer0_isr(void);
 __interrupt void epwm1_isr(void);
 __interrupt void epwm2_isr(void);
 __interrupt void epwm3_isr(void);
@@ -259,6 +260,7 @@ void main(void)
    IER = 0x0000;
    IFR = 0x0000;
 
+
 // Initialize the PIE vector table with pointers to the shell Interrupt
 // Service Routines (ISR).
 // This will populate the entire table, even if the interrupt
@@ -270,6 +272,7 @@ void main(void)
 // Interrupts that are used in this example are re-mapped to
 // ISR functions found within this file.
    EALLOW;
+   PieVectTable.TINT0 = &cpu_timer0_isr;
    PieVectTable.EPWM1_INT = &epwm1_isr;
    PieVectTable.EPWM2_INT = &epwm2_isr;
    PieVectTable.EPWM3_INT = &epwm3_isr;
@@ -277,7 +280,18 @@ void main(void)
    EDIS;
 
    // Step 4. Initialize all the Device Peripherals:
+   InitCpuTimers();   // For this example, only initialize the Cpu Timers
+	 // Configure CPU-Timer 0 to interrupt every 1 milliseconds:
+	 // 60MHz CPU Freq, 1 millisecond Period (in uSeconds)
+    ConfigCpuTimer(&CpuTimer0, 60, 1000);
 
+    // To ensure precise timing, use write-only instructions to write to the entire
+    // register. Therefore, if any of the configuration bits are changed in
+    // ConfigCpuTimer and InitCpuTimers (in DSP2803x_CpuTimers.h), the
+    // below settings must also be updated.
+
+   CpuTimer0Regs.TCR.all = 0x4001; // Use write-only instruction
+								   // to set TSS bit = 0
 
    //-------------------------
    //---- PWM PREPARATION ----
@@ -300,6 +314,12 @@ void main(void)
 // Enable CPU INT3 which is connected to EPWM1-3 INT:
    IER |= M_INT3;
    IER |= 0x0003;
+
+// Enable CPU INT1 which is connected to CPU-Timer 0:
+   IER |= M_INT1;
+
+// Enable TINT0 in the PIE: Group 1 interrupt 7
+   PieCtrlRegs.PIEIER1.bit.INTx7 = 1;
 
 // Enable EPWM INTn in the PIE: Group 3 interrupt 1-3
    PieCtrlRegs.PIEIER3.bit.INTx1 = 1;
@@ -327,17 +347,35 @@ void main(void)
 int t1 = 0;
 float duty = 0.5;
 
+__interrupt void cpu_timer0_isr(void)
+{
+   CpuTimer0.InterruptCount++;
+   // Every 1 ms
+
+  t1++;
+
+
+
+   // Acknowledge this interrupt to receive more interrupts from group 1
+   PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
+}
+
 __interrupt void xint2_isr(void)
 {
 	GpioDataRegs.GPACLEAR.bit.GPIO26 = 1;   // GPIO26 is low
 
-	t1++;
-	if (t1 >= 1000) {
-		t1 = 0;
+	/*t1++;
+		if (t1 >= 2048) { // sample jede Umdrehung
+	t1 = 0;*/
 
-		// Toggle LED
-		GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
-	}
+	// Eine Umdrehung rum
+
+	t1 = 0;
+
+	// Toggle LED
+	GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
+
+	//}
 
 	// Acknowledge this interrupt to get more from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
