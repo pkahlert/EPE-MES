@@ -1,7 +1,7 @@
 ******************************************************************************
              TMS320C2000 Linker PC v6.4.6                      
 ******************************************************************************
->> Linked Wed Jan 20 09:51:32 2016
+>> Linked Wed Jan 20 11:12:26 2016
 
 OUTPUT FILE NAME:   <Example_2803xEPwmUpDownAQ.out>
 ENTRY POINT SYMBOL: "code_start"  address: 00000000
@@ -14,7 +14,7 @@ MEMORY CONFIGURATION
 PAGE 0:
   BEGIN                 00000000   00000002  00000002  00000000  RWIX
   RAMM0                 00000050   000003b0  00000069  00000347  RWIX
-  RAML0L1               00008000   00000d00  0000078e  00000572  RWIX
+  RAML0L1               00008000   00000d00  00000796  0000056a  RWIX
   IQTABLES              003fe000   00000b50  00000000  00000b50  RWIX
   IQTABLES2             003feb50   0000008c  00000000  0000008c  RWIX
   IQTABLES3             003febdc   000000aa  00000000  000000aa  RWIX
@@ -91,22 +91,22 @@ codestart
 ramfuncs   0    000000b5    00000004     
                   000000b5    00000004     DSP2803x_usDelay.obj (ramfuncs)
 
-.text      0    00008000    0000078e     
+.text      0    00008000    00000796     
                   00008000    000001c3     Example_2803xEPwmUpDownAQ.obj (.text)
                   000081c3    0000017c     DSP2803x_DefaultIsr.obj (.text:retain)
                   0000833f    00000144     DSP2803x_SysCtrl.obj (.text)
                   00008483    000000c4     DSP2803x_EPwm.obj (.text)
-                  00008547    0000007a     Example_2803xEPwmUpDownAQ.obj (.text:retain)
-                  000085c1    00000073     DSP2803x_CpuTimers.obj (.text)
-                  00008634    0000005a     rts2800_ml.lib : fs_mpy.obj (.text)
-                  0000868e    00000044                    : boot.obj (.text)
-                  000086d2    00000029                    : fs_tol.obj (.text)
-                  000086fb    00000028     DSP2803x_PieCtrl.obj (.text)
-                  00008723    00000028     DSP2803x_PieVect.obj (.text)
-                  0000874b    00000019     rts2800_ml.lib : args_main.obj (.text)
-                  00008764    00000019                    : exit.obj (.text)
-                  0000877d    00000009                    : _lock.obj (.text)
-                  00008786    00000008     DSP2803x_CodeStartBranch.obj (.text)
+                  00008547    00000082     Example_2803xEPwmUpDownAQ.obj (.text:retain)
+                  000085c9    00000073     DSP2803x_CpuTimers.obj (.text)
+                  0000863c    0000005a     rts2800_ml.lib : fs_mpy.obj (.text)
+                  00008696    00000044                    : boot.obj (.text)
+                  000086da    00000029                    : fs_tol.obj (.text)
+                  00008703    00000028     DSP2803x_PieCtrl.obj (.text)
+                  0000872b    00000028     DSP2803x_PieVect.obj (.text)
+                  00008753    00000019     rts2800_ml.lib : args_main.obj (.text)
+                  0000876c    00000019                    : exit.obj (.text)
+                  00008785    00000009                    : _lock.obj (.text)
+                  0000878e    00000008     DSP2803x_CodeStartBranch.obj (.text)
 
 .pinit     0    00000050    00000000     UNINITIALIZED
 
@@ -435,9 +435,9 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 page  address   name                 
 ----  -------   ----                 
 0     00008000  .text                
-0     00008764  C$$EXIT              
-0     00008634  FS$$MPY              
-0     000086d2  FS$$TOL              
+0     0000876c  C$$EXIT              
+0     0000863c  FS$$MPY              
+0     000086da  FS$$TOL              
 0     00008222  _ADCINT1_ISR         
 0     00008227  _ADCINT2_ISR         
 0     000082db  _ADCINT3_ISR         
@@ -461,7 +461,7 @@ page  address   name
 1     00006400  _Comp1Regs           
 1     00006420  _Comp2Regs           
 1     00006440  _Comp3Regs           
-0     00008602  _ConfigCpuTimer      
+0     0000860a  _ConfigCpuTimer      
 1     00008e90  _CpuTimer0           
 1     00000c00  _CpuTimer0Regs       
 1     00008e80  _CpuTimer1           
@@ -511,7 +511,7 @@ page  address   name
 1     00006b00  _EQep1Regs           
 1     00000d01  _EmuBMode            
 1     00000d00  _EmuKey              
-0     0000871a  _EnableInterrupts    
+0     00008722  _EnableInterrupts    
 0     0000846d  _ExtOscSel           
 1     00000a80  _FlashRegs           
 1     00000d04  _Flash_CPUScaleFactor
@@ -529,7 +529,7 @@ page  address   name
 0     000081e1  _ILLEGAL_ISR         
 0     000081c3  _INT13_ISR           
 0     000081c8  _INT14_ISR           
-0     000085c1  _InitCpuTimers       
+0     000085c9  _InitCpuTimers       
 0     00008483  _InitEPwm            
 0     00008000  _InitEPwm1Example    
 0     00008493  _InitEPwm1Gpio       
@@ -544,8 +544,8 @@ page  address   name
 0     00008484  _InitEPwmGpio        
 0     00008515  _InitEPwmSyncGpio    
 0     000083c0  _InitPeripheralClocks
-0     000086fb  _InitPieCtrl         
-0     00008723  _InitPieVectTable    
+0     00008703  _InitPieCtrl         
+0     0000872b  _InitPieVectTable    
 0     0000836b  _InitPll             
 0     0000833f  _InitSysCtrl         
 0     00008526  _InitTzGpio          
@@ -602,27 +602,27 @@ abs   00000380  __STACK_SIZE
 abs   ffffffff  ___binit__           
 abs   ffffffff  ___c_args__          
 0     00000050  ___cinit__           
-0     0000878e  ___etext__           
+0     00008796  ___etext__           
 abs   ffffffff  ___pinit__           
 0     00008000  ___text__            
-0     0000874b  __args_main          
+0     00008753  __args_main          
 1     00008e76  __lock               
-0     00008785  __nop                
-0     00008781  __register_lock      
-0     0000877d  __register_unlock    
+0     0000878d  __nop                
+0     00008789  __register_lock      
+0     00008785  __register_unlock    
 1     00000480  __stack              
 1     00008e78  __unlock             
-0     00008764  _abort               
-0     0000868e  _c_int00             
+0     0000876c  _abort               
+0     00008696  _c_int00             
 0     00008547  _cpu_timer0_isr      
 1     00008e06  _duty                
 1     00008e24  _epwm1_info          
-0     00008567  _epwm1_isr           
+0     0000856f  _epwm1_isr           
 1     00008e08  _epwm2_info          
-0     00008585  _epwm2_isr           
+0     0000858d  _epwm2_isr           
 1     00008e16  _epwm3_info          
-0     000085a3  _epwm3_isr           
-0     00008766  _exit                
+0     000085ab  _epwm3_isr           
+0     0000876e  _exit                
 0     000080cc  _main                
 1     00008e04  _pi                  
 0     0000833a  _rsvd_ISR            
@@ -631,11 +631,11 @@ abs   ffffffff  ___pinit__
 0     00008154  _update_compare1     
 0     00008179  _update_compare2     
 0     0000819e  _update_compare3     
-0     00008558  _xint2_isr           
+0     00008555  _xint2_isr           
 abs   ffffffff  binit                
 0     00000050  cinit                
 0     00000000  code_start           
-0     0000878e  etext                
+0     00008796  etext                
 abs   ffffffff  pinit                
 
 
@@ -754,27 +754,27 @@ page  address   name
 0     00008515  _InitEPwmSyncGpio    
 0     00008526  _InitTzGpio          
 0     00008547  _cpu_timer0_isr      
-0     00008558  _xint2_isr           
-0     00008567  _epwm1_isr           
-0     00008585  _epwm2_isr           
-0     000085a3  _epwm3_isr           
-0     000085c1  _InitCpuTimers       
-0     00008602  _ConfigCpuTimer      
-0     00008634  FS$$MPY              
-0     0000868e  _c_int00             
-0     000086d2  FS$$TOL              
-0     000086fb  _InitPieCtrl         
-0     0000871a  _EnableInterrupts    
-0     00008723  _InitPieVectTable    
-0     0000874b  __args_main          
-0     00008764  C$$EXIT              
-0     00008764  _abort               
-0     00008766  _exit                
-0     0000877d  __register_unlock    
-0     00008781  __register_lock      
-0     00008785  __nop                
-0     0000878e  ___etext__           
-0     0000878e  etext                
+0     00008555  _xint2_isr           
+0     0000856f  _epwm1_isr           
+0     0000858d  _epwm2_isr           
+0     000085ab  _epwm3_isr           
+0     000085c9  _InitCpuTimers       
+0     0000860a  _ConfigCpuTimer      
+0     0000863c  FS$$MPY              
+0     00008696  _c_int00             
+0     000086da  FS$$TOL              
+0     00008703  _InitPieCtrl         
+0     00008722  _EnableInterrupts    
+0     0000872b  _InitPieVectTable    
+0     00008753  __args_main          
+0     0000876c  C$$EXIT              
+0     0000876c  _abort               
+0     0000876e  _exit                
+0     00008785  __register_unlock    
+0     00008789  __register_lock      
+0     0000878d  __nop                
+0     00008796  ___etext__           
+0     00008796  etext                
 1     00000480  __stack              
 1     00000800  __STACK_END          
 1     00000880  _DevEmuRegs          

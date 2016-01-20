@@ -222,15 +222,20 @@ void main(void) {
 	GpioCtrlRegs.GPBDIR.bit.GPIO34 = 1;
 	EDIS;
 
-	// Make GPIO26 the input source for XINT2
-	EALLOW;
-	GpioCtrlRegs.GPAPUD.bit.GPIO26 = 1; // pullup disable
-	GpioCtrlRegs.GPAMUX2.bit.GPIO26 = 0;  // GPIO26 = GPIO26
-	GpioCtrlRegs.GPADIR.bit.GPIO26 = 0;   // GPIO26 = input
-	GpioCtrlRegs.GPAQSEL2.bit.GPIO26 = 0;
-	GpioIntRegs.GPIOXINT2SEL.bit.GPIOSEL = 26;    // XINT2 connected to GPIO26
+	// Remap QEP pins to gpio
+	// GpioCtrlRegs.GPAMUX2.bit.GPIO20 = 1;   GPIO20 is EQEP1A
+	//GpioCtrlRegs.GPAMUX2.bit.GPIO21 = 1;   GPIO21 is EQEP1B
+	GpioCtrlRegs.GPAMUX2.bit.GPIO23 = 0; //GPIO23 is not EQEP1I, but GPIO23
 
-	GpioDataRegs.GPADAT.bit.GPIO26 = 0;
+	// Make GPIO23 the input source for XINT2
+	EALLOW;
+	GpioCtrlRegs.GPAPUD.bit.GPIO23 = 1; // pullup disable
+	//GpioCtrlRegs.GPAMUX2.bit.GPIO26 = 0;  // GPIO26 = GPIO26
+	GpioCtrlRegs.GPADIR.bit.GPIO23 = 0;   // GPIO26 = input
+	GpioCtrlRegs.GPAQSEL2.bit.GPIO23 = 0;
+	GpioIntRegs.GPIOXINT2SEL.bit.GPIOSEL = 23;    // XINT2 connected to GPIO23
+
+	GpioDataRegs.GPADAT.bit.GPIO23 = 0;
 
 	XIntruptRegs.XINT2CR.bit.POLARITY = 1;      // Rising edge interrupt
 	XIntruptRegs.XINT2CR.bit.ENABLE = 1;        // Enable XINT2
@@ -315,15 +320,13 @@ void main(void) {
 // Enable CPU INT1 which is connected to CPU-Timer 0:
 	IER |= M_INT1;
 
-// Enable TINT0 in the PIE: Group 1 interrupt 7
-	PieCtrlRegs.PIEIER1.bit.INTx7 = 1;
-
 // Enable EPWM INTn in the PIE: Group 3 interrupt 1-3
 	PieCtrlRegs.PIEIER3.bit.INTx1 = 1;
 	PieCtrlRegs.PIEIER3.bit.INTx2 = 1;
 	PieCtrlRegs.PIEIER3.bit.INTx3 = 1;
 
 	PieCtrlRegs.PIEIER1.bit.INTx5 = 1;
+	PieCtrlRegs.PIEIER1.bit.INTx7 = 1; // TINT0
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 
 // Enable global Interrupts and higher priority real-time debug events:
@@ -352,82 +355,81 @@ __interrupt void cpu_timer0_isr(void) {
 	CpuTimer0.InterruptCount++;
 	// Every 1 ms
 
-	t1++;
-/*
-	// #DEBUG Blocktaktung
-	switch (t1) {
-	case 1:
-		EPwm1Regs.CMPA.half.CMPA = ON;
-		EPwm1Regs.CMPB = OFF;
-		EPwm2Regs.CMPA.half.CMPA = OFF;
-		EPwm2Regs.CMPB = ON;
-		EPwm3Regs.CMPA.half.CMPA = OFF;
-		EPwm3Regs.CMPB = ON;
-		break;
-	case 2:
-		EPwm1Regs.CMPA.half.CMPA = ON;
-		EPwm1Regs.CMPB = OFF;
-		EPwm2Regs.CMPA.half.CMPA = OFF;
-		EPwm2Regs.CMPB = ON;
-		EPwm3Regs.CMPA.half.CMPA = OFF;
-		EPwm3Regs.CMPB = ON;
-		break;
-	case 3:
-		EPwm1Regs.CMPA.half.CMPA = ON;
-		EPwm1Regs.CMPB = OFF;
-		EPwm2Regs.CMPA.half.CMPA = OFF;
-		EPwm2Regs.CMPB = ON;
-		EPwm3Regs.CMPA.half.CMPA = OFF;
-		EPwm3Regs.CMPB = ON;
-		break;
-	case 4:
-		EPwm1Regs.CMPA.half.CMPA = ON;
-		EPwm1Regs.CMPB = OFF;
-		EPwm2Regs.CMPA.half.CMPA = OFF;
-		EPwm2Regs.CMPB = ON;
-		EPwm3Regs.CMPA.half.CMPA = OFF;
-		EPwm3Regs.CMPB = ON;
-		break;
-	case 5:
-		EPwm1Regs.CMPA.half.CMPA = ON;
-		EPwm1Regs.CMPB = OFF;
-		EPwm2Regs.CMPA.half.CMPA = OFF;
-		EPwm2Regs.CMPB = ON;
-		EPwm3Regs.CMPA.half.CMPA = OFF;
-		EPwm3Regs.CMPB = ON;
-		break;
-	case 6:
-		EPwm1Regs.CMPA.half.CMPA = ON;
-		EPwm1Regs.CMPB = OFF;
-		EPwm2Regs.CMPA.half.CMPA = OFF;
-		EPwm2Regs.CMPB = ON;
-		EPwm3Regs.CMPA.half.CMPA = OFF;
-		EPwm3Regs.CMPB = ON;
-		t1 = 0;
-		break;
-	default:
-		break;
-	}
-*/
+	//t1++;
+	/*
+	 // #DEBUG Blocktaktung
+	 switch (t1) {
+	 case 1:
+	 EPwm1Regs.CMPA.half.CMPA = ON;
+	 EPwm1Regs.CMPB = OFF;
+	 EPwm2Regs.CMPA.half.CMPA = OFF;
+	 EPwm2Regs.CMPB = ON;
+	 EPwm3Regs.CMPA.half.CMPA = OFF;
+	 EPwm3Regs.CMPB = ON;
+	 break;
+	 case 2:
+	 EPwm1Regs.CMPA.half.CMPA = ON;
+	 EPwm1Regs.CMPB = OFF;
+	 EPwm2Regs.CMPA.half.CMPA = OFF;
+	 EPwm2Regs.CMPB = ON;
+	 EPwm3Regs.CMPA.half.CMPA = OFF;
+	 EPwm3Regs.CMPB = ON;
+	 break;
+	 case 3:
+	 EPwm1Regs.CMPA.half.CMPA = ON;
+	 EPwm1Regs.CMPB = OFF;
+	 EPwm2Regs.CMPA.half.CMPA = OFF;
+	 EPwm2Regs.CMPB = ON;
+	 EPwm3Regs.CMPA.half.CMPA = OFF;
+	 EPwm3Regs.CMPB = ON;
+	 break;
+	 case 4:
+	 EPwm1Regs.CMPA.half.CMPA = ON;
+	 EPwm1Regs.CMPB = OFF;
+	 EPwm2Regs.CMPA.half.CMPA = OFF;
+	 EPwm2Regs.CMPB = ON;
+	 EPwm3Regs.CMPA.half.CMPA = OFF;
+	 EPwm3Regs.CMPB = ON;
+	 break;
+	 case 5:
+	 EPwm1Regs.CMPA.half.CMPA = ON;
+	 EPwm1Regs.CMPB = OFF;
+	 EPwm2Regs.CMPA.half.CMPA = OFF;
+	 EPwm2Regs.CMPB = ON;
+	 EPwm3Regs.CMPA.half.CMPA = OFF;
+	 EPwm3Regs.CMPB = ON;
+	 break;
+	 case 6:
+	 EPwm1Regs.CMPA.half.CMPA = ON;
+	 EPwm1Regs.CMPB = OFF;
+	 EPwm2Regs.CMPA.half.CMPA = OFF;
+	 EPwm2Regs.CMPB = ON;
+	 EPwm3Regs.CMPA.half.CMPA = OFF;
+	 EPwm3Regs.CMPB = ON;
+	 t1 = 0;
+	 break;
+	 default:
+	 break;
+	 }
+	 */
 
 	// Acknowledge this interrupt to receive more interrupts from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 }
 
 __interrupt void xint2_isr(void) {
-	GpioDataRegs.GPACLEAR.bit.GPIO26 = 1;   // GPIO26 is low
+	GpioDataRegs.GPACLEAR.bit.GPIO23 = 1;   // GPIO26 is low
+	t1++;
+	if (t1 >= 10) { // sample jede Umdrehung
+		t1 = 0;
 
-	/*t1++;
-	 if (t1 >= 2048) { // sample jede Umdrehung
-	 t1 = 0;*/
+		// Eine Umdrehung rum
+		t1 = 0;
 
-	// Eine Umdrehung rum
-	//t1 = 0;
+		// Toggle LED
+		GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
 
-	// Toggle LED
-	GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
-
-	//}
+	}
 
 	// Acknowledge this interrupt to get more from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
@@ -435,7 +437,7 @@ __interrupt void xint2_isr(void) {
 
 __interrupt void epwm1_isr(void) {
 	// Update the CMPA and CMPB values
-   update_compare1(&epwm1_info);
+	update_compare1(&epwm1_info);
 
 	// Clear INT flag for this timer
 	EPwm1Regs.ETCLR.bit.INT = 1;
@@ -446,7 +448,7 @@ __interrupt void epwm1_isr(void) {
 
 __interrupt void epwm2_isr(void) {
 	// Update the CMPA and CMPB values
-   update_compare2(&epwm2_info);
+	update_compare2(&epwm2_info);
 
 	// Clear INT flag for this timer
 	EPwm2Regs.ETCLR.bit.INT = 1;
@@ -457,7 +459,7 @@ __interrupt void epwm2_isr(void) {
 
 __interrupt void epwm3_isr(void) {
 	// Update the CMPA and CMPB values
-   update_compare3(&epwm3_info);
+	update_compare3(&epwm3_info);
 
 	// Clear INT flag for this timer
 	EPwm3Regs.ETCLR.bit.INT = 1;
@@ -477,8 +479,6 @@ double pi = 3.141592653589793;
 // PWM Frequenz 7,576 kHz
 // 50 Hz = 20ms / 0,4 = 50
 
-
-
 void update_compare1(EPWM_INFO *epwm_info) {
 	static int t = 0;
 	t++;
@@ -489,9 +489,9 @@ void update_compare1(EPWM_INFO *epwm_info) {
 	int x = sinus[t];
 	if (x < 0) {
 		EPwm1Regs.CMPA.half.CMPA = ON; //1;
-		EPwm1Regs.CMPB = ON+x;//-x;
+		EPwm1Regs.CMPB = ON + x; //-x;
 	} else {
-		EPwm1Regs.CMPA.half.CMPA = ON-x;//x + 1;
+		EPwm1Regs.CMPA.half.CMPA = ON - x; //x + 1;
 		EPwm1Regs.CMPB = ON; //1;
 	}
 
@@ -499,7 +499,7 @@ void update_compare1(EPWM_INFO *epwm_info) {
 }
 
 void update_compare2(EPWM_INFO *epwm_info) {
-	static int t = 50/3;
+	static int t = 50 / 3;
 	t++;
 
 	if (t == 50) {
@@ -508,16 +508,16 @@ void update_compare2(EPWM_INFO *epwm_info) {
 	int x = sinus[t];
 	if (x < 0) {
 		EPwm2Regs.CMPA.half.CMPA = ON; //1;
-		EPwm2Regs.CMPB = ON+x;//-x;
+		EPwm2Regs.CMPB = ON + x; //-x;
 	} else {
-		EPwm2Regs.CMPA.half.CMPA = ON-x;//x+1;
+		EPwm2Regs.CMPA.half.CMPA = ON - x; //x+1;
 		EPwm2Regs.CMPB = ON; //1;
 	}
 
 	return;
 }
 void update_compare3(EPWM_INFO *epwm_info) {
-	static int t = 2*50/3;
+	static int t = 2 * 50 / 3;
 	t++;
 
 	if (t == 50) {
@@ -526,9 +526,9 @@ void update_compare3(EPWM_INFO *epwm_info) {
 	int x = sinus[t];
 	if (x < 0) {
 		EPwm3Regs.CMPA.half.CMPA = ON; //1;
-		EPwm3Regs.CMPB = ON+x;//-x;
+		EPwm3Regs.CMPB = ON + x; //-x;
 	} else {
-		EPwm3Regs.CMPA.half.CMPA = ON-x;//x+1;
+		EPwm3Regs.CMPA.half.CMPA = ON - x; //x+1;
 		EPwm3Regs.CMPB = ON; //1;
 	}
 
