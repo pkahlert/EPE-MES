@@ -27,6 +27,8 @@
 
 #include "DSP28x_Project.h"     // Device Headerfile and Examples Include File
 #include "math.h"
+#include "Stromsollwerte.c"
+#include "Strommodel.c"
 
 typedef struct {
 	volatile struct EPWM_REGS *EPwmRegHandle;
@@ -196,18 +198,25 @@ void InitEPwm3Example() {
 	epwm3_info.dutyB = EPWM_START_DUTY;
 }
 //----------------------------------
-//---- FLOATING TIMESTAMP BUFFER ---
+//----------- Strommodel -----------
 //----------------------------------
-/*typedef struct {
+// PSI aus Wurm/abt
+#define PSI 123;
 
- } timestampBuffer;
- */
+Stromsollwerte_U.Psi = PSI;
+Strommodel_U.Psi = PSI;
+
 
 void main(void) {
 // Step 1. Initialize System Control:
 // PLL, WatchDog, enable Peripheral Clocks
 // This example function is found in the DSP2803x_SysCtrl.c file.
 	InitSysCtrl();
+
+	// Strommodel initialisieren
+	Stromsollwerte_initialize();
+	Strommodel_initialize();
+
 
 // Step 2. Initialize GPIO:
 // This example function is found in the DSP2803x_Gpio.c file and
@@ -234,9 +243,7 @@ void main(void) {
 	GpioCtrlRegs.GPADIR.bit.GPIO23 = 0;   // GPIO26 = input
 	GpioCtrlRegs.GPAQSEL2.bit.GPIO23 = 0;
 	GpioIntRegs.GPIOXINT2SEL.bit.GPIOSEL = 23;    // XINT2 connected to GPIO23
-
 	GpioDataRegs.GPADAT.bit.GPIO23 = 0;
-
 	XIntruptRegs.XINT2CR.bit.POLARITY = 1;      // Rising edge interrupt
 	XIntruptRegs.XINT2CR.bit.ENABLE = 1;        // Enable XINT2
 
@@ -324,7 +331,6 @@ void main(void) {
 	PieCtrlRegs.PIEIER3.bit.INTx1 = 1;
 	PieCtrlRegs.PIEIER3.bit.INTx2 = 1;
 	PieCtrlRegs.PIEIER3.bit.INTx3 = 1;
-
 	PieCtrlRegs.PIEIER1.bit.INTx5 = 1;
 	PieCtrlRegs.PIEIER1.bit.INTx7 = 1; // TINT0
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
@@ -344,9 +350,9 @@ void main(void) {
 //------------------------
 //---- GPIO INTERRUPT ----
 //------------------------
-
-int t1 = 0;
-float duty = 0.5;
+short int t1 = 0;
+float f_timer0 = 1000; // Hz
+float n = 0;
 
 #define ON 1998
 #define OFF 1
@@ -354,81 +360,30 @@ float duty = 0.5;
 __interrupt void cpu_timer0_isr(void) {
 	CpuTimer0.InterruptCount++;
 	// Every 1 ms
+	t1++;
 
-	//t1++;
-	/*
-	 // #DEBUG Blocktaktung
-	 switch (t1) {
-	 case 1:
-	 EPwm1Regs.CMPA.half.CMPA = ON;
-	 EPwm1Regs.CMPB = OFF;
-	 EPwm2Regs.CMPA.half.CMPA = OFF;
-	 EPwm2Regs.CMPB = ON;
-	 EPwm3Regs.CMPA.half.CMPA = OFF;
-	 EPwm3Regs.CMPB = ON;
-	 break;
-	 case 2:
-	 EPwm1Regs.CMPA.half.CMPA = ON;
-	 EPwm1Regs.CMPB = OFF;
-	 EPwm2Regs.CMPA.half.CMPA = OFF;
-	 EPwm2Regs.CMPB = ON;
-	 EPwm3Regs.CMPA.half.CMPA = OFF;
-	 EPwm3Regs.CMPB = ON;
-	 break;
-	 case 3:
-	 EPwm1Regs.CMPA.half.CMPA = ON;
-	 EPwm1Regs.CMPB = OFF;
-	 EPwm2Regs.CMPA.half.CMPA = OFF;
-	 EPwm2Regs.CMPB = ON;
-	 EPwm3Regs.CMPA.half.CMPA = OFF;
-	 EPwm3Regs.CMPB = ON;
-	 break;
-	 case 4:
-	 EPwm1Regs.CMPA.half.CMPA = ON;
-	 EPwm1Regs.CMPB = OFF;
-	 EPwm2Regs.CMPA.half.CMPA = OFF;
-	 EPwm2Regs.CMPB = ON;
-	 EPwm3Regs.CMPA.half.CMPA = OFF;
-	 EPwm3Regs.CMPB = ON;
-	 break;
-	 case 5:
-	 EPwm1Regs.CMPA.half.CMPA = ON;
-	 EPwm1Regs.CMPB = OFF;
-	 EPwm2Regs.CMPA.half.CMPA = OFF;
-	 EPwm2Regs.CMPB = ON;
-	 EPwm3Regs.CMPA.half.CMPA = OFF;
-	 EPwm3Regs.CMPB = ON;
-	 break;
-	 case 6:
-	 EPwm1Regs.CMPA.half.CMPA = ON;
-	 EPwm1Regs.CMPB = OFF;
-	 EPwm2Regs.CMPA.half.CMPA = OFF;
-	 EPwm2Regs.CMPB = ON;
-	 EPwm3Regs.CMPA.half.CMPA = OFF;
-	 EPwm3Regs.CMPB = ON;
-	 t1 = 0;
-	 break;
-	 default:
-	 break;
-	 }
-	 */
+	// Strommodel steppen (Sachen aus Eingabe strukt
+	Stromsollwerte_step();
+	Strommodel_U.Isl = Stromsollwerte_Y.Isl;
+	Strommodel_step();
 
 	// Acknowledge this interrupt to receive more interrupts from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 }
 
 __interrupt void xint2_isr(void) {
-	GpioDataRegs.GPACLEAR.bit.GPIO23 = 1;   // GPIO26 is low
-	t1++;
-	if (t1 >= 10) { // sample jede Umdrehung
-		t1 = 0;
+	// Umdrehung detektiert
+	n = f_timer0/t1;
+	t1 = 0;
 
-		// Eine Umdrehung rum
-		t1 = 0;
+	static short ledUmdrehung = 0;
+	GpioDataRegs.GPACLEAR.bit.GPIO23 = 1;   // GPIO26 is low
+	ledUmdrehung++;
+	if (ledUmdrehung >= 10) { // sample jede Umdrehung
+		ledUmdrehung = 0;
 
 		// Toggle LED
 		GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1;
-
 	}
 
 	// Acknowledge this interrupt to get more from group 1
@@ -467,12 +422,6 @@ __interrupt void epwm3_isr(void) {
 	// Acknowledge this interrupt to receive more interrupts from group 3
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
 }
-
-/*void update_compare(EPWM_INFO *epwm_info) {
- epwm_info->EPwmRegHandle->CMPA.half.CMPA = (1 - epwm_info->dutyA) * EPWM_TIMER_TBPRD;
- epwm_info->EPwmRegHandle->CMPB = (1- epwm_info->dutyB) * EPWM_TIMER_TBPRD;
- return;
- }*/
 
 double pi = 3.141592653589793;
 // Interrupt kommt alle 8,1 / 20 ms = 0,4 ms

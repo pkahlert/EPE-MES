@@ -33,6 +33,15 @@ Example_2803xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_co
 Example_2803xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP2803x_DefaultISR.h
 Example_2803xEPwmUpDownAQ.obj: C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/math.h
 Example_2803xEPwmUpDownAQ.obj: C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/linkage.h
+Example_2803xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/04_Simulation/ASM/Stromsollwerte_grt_rtw/Stromsollwerte.c
+Example_2803xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/04_Simulation/ASM/Stromsollwerte_grt_rtw/Stromsollwerte.h
+Example_2803xEPwmUpDownAQ.obj: C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/float.h
+Example_2803xEPwmUpDownAQ.obj: C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/string.h
+Example_2803xEPwmUpDownAQ.obj: C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/stddef.h
+Example_2803xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/04_Simulation/ASM/Stromsollwerte_grt_rtw/rtwtypes.h
+Example_2803xEPwmUpDownAQ.obj: C:/Beuth/EPE-MES/04_Simulation/ASM/matlab_libs/tmwtypes.h
+Example_2803xEPwmUpDownAQ.obj: C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/limits.h
+Example_2803xEPwmUpDownAQ.obj: C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/stddef.h
 
 ../Example_2803xEPwmUpDownAQ.c: 
 C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP28x_Project.h: 
@@ -67,3 +76,12 @@ C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP2803x_Cla_defin
 C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_common/include/DSP2803x_DefaultISR.h: 
 C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/math.h: 
 C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/linkage.h: 
+C:/Beuth/EPE-MES/04_Simulation/ASM/Stromsollwerte_grt_rtw/Stromsollwerte.c: 
+C:/Beuth/EPE-MES/04_Simulation/ASM/Stromsollwerte_grt_rtw/Stromsollwerte.h: 
+C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/float.h: 
+C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/string.h: 
+C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/stddef.h: 
+C:/Beuth/EPE-MES/04_Simulation/ASM/Stromsollwerte_grt_rtw/rtwtypes.h: 
+C:/Beuth/EPE-MES/04_Simulation/ASM/matlab_libs/tmwtypes.h: 
+C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/limits.h: 
+C:/Beuth/ti_motorware/ccs/ccsv6/tools/compiler/ti-cgt-c2000_6.4.6/include/stddef.h: 
