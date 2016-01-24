@@ -27,8 +27,8 @@
 
 #include "DSP28x_Project.h"     // Device Headerfile and Examples Include File
 #include "math.h"
-#include "Stromsollwerte.c"
-#include "Strommodel.c"
+#include "Stromsollwerte.h"
+#include "Strommodel.h"
 
 typedef struct {
 	volatile struct EPWM_REGS *EPwmRegHandle;
@@ -200,12 +200,12 @@ void InitEPwm3Example() {
 //----------------------------------
 //----------- Strommodel -----------
 //----------------------------------
-// PSI aus Wurm/abt
-#define PSI 123;
-
-Stromsollwerte_U.Psi = PSI;
-Strommodel_U.Psi = PSI;
-
+// #TODO PSI aus Wurm/abt (zum testen 12.0)
+/*P_Stromsollwerte_T Stromsollwerte_P = {10.0};
+ExtU_Stromsollwerte_T Stromsollwerte_U = {12.0, 0};
+P_Strommodel_T Strommodel_P = {1.0};
+ExtU_Strommodel_T Strommodel_U = {12.0, 0};
+*/
 
 void main(void) {
 // Step 1. Initialize System Control:

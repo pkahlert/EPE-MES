@@ -4,10 +4,10 @@
 		<cconfiguration id="com.ti.ccstudio.buildDefinitions.C2000.Debug.2070455522">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.ti.ccstudio.buildDefinitions.C2000.Debug.2070455522" moduleId="org.eclipse.cdt.core.settings" name="Debug">
 				<macros>
-					<stringMacro name="INSTALLROOT_HRCAP_HCCAL_TYPE0_V100" type="VALUE_PATH_DIR" value="${ORIGINAL_PROJECT_ROOT}/../../../../../libs/utilities/hrcap_hccal/type0/v100"/>
 					<stringMacro name="INSTALLROOT_2803x_V130" type="VALUE_PATH_DIR" value="${ORIGINAL_PROJECT_ROOT}/../.."/>
-					<stringMacro name="ORIGINAL_PROJECT_ROOT" type="VALUE_PATH_DIR" value="C:\Beuth\EPE-MES\02_Software\01_c2000\DSP2803x_examples_ccsv5\epwm_updown_aq"/>
+					<stringMacro name="INSTALLROOT_HRCAP_HCCAL_TYPE0_V100" type="VALUE_PATH_DIR" value="${ORIGINAL_PROJECT_ROOT}/../../../../../libs/utilities/hrcap_hccal/type0/v100"/>
 					<stringMacro name="INSTALLROOT_IQMATH_V160" type="VALUE_PATH_DIR" value="${ORIGINAL_PROJECT_ROOT}/../../../../../libs/math/IQmath/v160"/>
+					<stringMacro name="ORIGINAL_PROJECT_ROOT" type="VALUE_PATH_DIR" value="C:\Beuth\EPE-MES\02_Software\01_c2000\DSP2803x_examples_ccsv5\epwm_updown_aq"/>
 				</macros>
 				<externalSettings/>
 				<extensions>
@@ -44,6 +44,8 @@
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.2.compilerID.DEBUGGING_MODEL.431746745" name="Debugging model" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.2.compilerID.DEBUGGING_MODEL" value="com.ti.ccstudio.buildDefinitions.C2000_6.2.compilerID.DEBUGGING_MODEL.SYMDEBUG__DWARF" valueType="enumerated"/>
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.2.compilerID.INCLUDE_PATH.1841035754" name="Add dir to #include search path (--include_path, -I)" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.2.compilerID.INCLUDE_PATH" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Beuth\EPE-MES\04_Simulation\ASM\mathworks_c_src&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Beuth\EPE-MES\04_Simulation\ASM\simulink_libs&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Beuth\EPE-MES\04_Simulation\ASM\matlab_libs&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Beuth\EPE-MES\04_Simulation\ASM\Strommodel_grt_rtw&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\Beuth\EPE-MES\04_Simulation\ASM\Stromsollwerte_grt_rtw&quot;"/>
@@ -85,6 +87,11 @@
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.2.linkerID.SEARCH_PATH.1929880133" name="Add &lt;dir&gt; to library search path (--search_path, -i)" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.2.linkerID.SEARCH_PATH" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Beuth\EPE-MES\04_Simulation\ASM\matlab_libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Beuth\EPE-MES\04_Simulation\ASM\mathworks_c_src&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Beuth\EPE-MES\04_Simulation\ASM\simulink_libs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Beuth\EPE-MES\04_Simulation\ASM\Strommodel_grt_rtw&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Beuth\EPE-MES\04_Simulation\ASM\Stromsollwerte_grt_rtw&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ORIGINAL_PROJECT_ROOT}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${INSTALLROOT_2803x_V130}/DSP2803x_headers/include&quot;"/>
