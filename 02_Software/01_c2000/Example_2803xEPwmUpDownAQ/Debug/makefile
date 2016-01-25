@@ -24,6 +24,7 @@ ORDERED_OBJS += \
 "C:/Beuth/EPE-MES/02_Software/01_c2000/DSP2803x_headers/cmd/DSP2803x_Headers_nonBIOS.cmd" \
 $(GEN_CMDS__FLAG) \
 -l"rts2800_ml.lib" \
+-l"C:\Beuth\EPE-MES\04_Simulation\ASM\mathworks_libs\*" \
 -l"IQmath.lib" \
 
 -include ../makefile.init

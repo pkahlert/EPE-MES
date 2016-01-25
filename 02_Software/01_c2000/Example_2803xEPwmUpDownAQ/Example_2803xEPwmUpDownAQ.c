@@ -27,8 +27,6 @@
 
 #include "DSP28x_Project.h"     // Device Headerfile and Examples Include File
 #include "math.h"
-#include "Stromsollwerte.h"
-#include "Strommodel.h"
 
 typedef struct {
 	volatile struct EPWM_REGS *EPwmRegHandle;
@@ -213,11 +211,6 @@ void main(void) {
 // This example function is found in the DSP2803x_SysCtrl.c file.
 	InitSysCtrl();
 
-	// Strommodel initialisieren
-	Stromsollwerte_initialize();
-	Strommodel_initialize();
-
-
 // Step 2. Initialize GPIO:
 // This example function is found in the DSP2803x_Gpio.c file and
 // illustrates how to set the GPIO to it's default state.
@@ -357,15 +350,102 @@ float n = 0;
 #define ON 1998
 #define OFF 1
 
+float Ism = 0.0;
+float Isl = 0.0;
+float wS = 0.0;
+float wR = 0.0;
+float wN = 0.0;
+float Usm = 0.0;
+float Usl = 0.0;
+
+float sumWn = 0.0;
+float cosWn = 0.0;
+float sinWn = 0.0;
+
+float sumWr = 0.0;
+float cosWr = 0.0;
+float sinWr = 0.0;
+
+float hin1In1 = 0.0;
+float hin1In2 = 0.0;
+float hin1Out1 = 0.0;
+float hin1Out2 = 0.0;
+float hin2In1 = 0.0;
+float hin2In2 = 0.0;
+float hin2Out1 = 0.0;
+float hin2Out2 = 0.0;
+float rueckOut1 = 0.0;
+float rueckOut2 = 0.0;
+
+// Reglerparameter, Reglerhilfsvariablen
+const float I1 = 0.0;
+const float I2 = 0.0;
+const float P1 = 1.0;
+const float P2 = 1.0;
+float e1 = 0.0;
+float e2 = 0.0;
+float integr1 = 0.0;
+float integr2 = 0.0;
+
+// Modellkonstanten
+const float SollwertM = 20.0; // pascal und robby sagen 20 vorgeben ist gut
+const float L_Gain = 0.0;
+const float Rr_Gain = 0.0;
+const float Lsigmal_Gain = 0.01;
+const float Lsigmam_Gain = 0.01;
+const float Rsm_Gain = 1.0;
+const float Rsl_Gain = 1.0;
+const float Psi = 0;
+const double pi = 3.141592653589793;
+
 __interrupt void cpu_timer0_isr(void) {
 	CpuTimer0.InterruptCount++;
 	// Every 1 ms
 	t1++;
 
 	// Strommodel steppen (Sachen aus Eingabe strukt
-	Stromsollwerte_step();
-	Strommodel_U.Isl = Stromsollwerte_Y.Isl;
-	Strommodel_step();
+	Ism = L_Gain * Psi;
+	Isl = SollwertM / Psi;
+	wR = Isl / Psi * Rr_Gain;
+
+	// ws bilden
+	wS = wR + (2*pi*n);
+
+	// das rechts neben Strommodell
+	sumWr += wR;
+	sumWr -= (2*pi) * ((int) sumWr/(2*pi)); // float modulo #yolo
+	cosWr = cos(sumWr);
+	sinWr = sin(sumWr);
+
+	// inverses spannungsmodell
+	Usm = Rsm_Gain * Ism - Lsigmal_Gain * Isl * wS;
+	Usl = (Lsigmam_Gain * Ism + Psi) * wS + Rsl_Gain * Isl;
+
+	// PI regler und Addition danach
+	e1 = Ism - rueckOut1;
+	e2 = Isl - rueckOut2;
+	integr1 += e1 * I1;
+	integr2 += e2 * I2;
+	hin1In1 = e1 * (P1 + integr1) + Usm;
+	hin1In2 = e2 * (P2 + integr2) + Usl;
+
+	// das rechts neben Koordinatentransfer2
+	sumWn += wN;
+	sumWn -= (2*pi) * ((int) sumWn/(2*pi)); // float modulo #yolo
+	cosWn = cos(sumWn);
+	sinWn = sin(sumWn);
+
+	// Koordinatentransfer2
+	hin2Out1 = cosWr * cosWn - sinWr * sinWn;
+	hin2Out2 = sinWr * cosWn + cosWr * sinWn;
+
+	// Koordinatentransfer1
+	hin1Out1 = hin1In1 * hin2Out1 - hin1In2 * hin2Out2;
+	hin1Out2 = hin1In2 * hin2Out1 + hin1In1 * hin2Out2;
+
+	// Rücktransfer
+	rueckOut1 = R_U.in1 * hin2Out1 + R_U.in2 * -hin2Out2;
+	rueckOut2 = R_U.in2 * hin2Out1 - R_U.in1 * -hin2Out2;
 
 	// Acknowledge this interrupt to receive more interrupts from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
@@ -423,7 +503,7 @@ __interrupt void epwm3_isr(void) {
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
 }
 
-double pi = 3.141592653589793;
+
 // Interrupt kommt alle 8,1 / 20 ms = 0,4 ms
 // PWM Frequenz 7,576 kHz
 // 50 Hz = 20ms / 0,4 = 50
