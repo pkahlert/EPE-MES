@@ -24,8 +24,7 @@ Rreib = 0.16;
 
 %% Simulationsparameter
 MLast = 0;
-MASM = 25
-;
+MASM = 25;
 
 %%Parameter speichern
 save('parameter.mat');
