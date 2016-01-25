@@ -1,7 +1,7 @@
 ******************************************************************************
              TMS320C2000 Linker PC v6.4.6                      
 ******************************************************************************
->> Linked Sun Jan 24 19:05:10 2016
+>> Linked Mon Jan 25 15:01:38 2016
 
 OUTPUT FILE NAME:   <Example_2803xEPwmUpDownAQ.out>
 ENTRY POINT SYMBOL: "code_start"  address: 00000000

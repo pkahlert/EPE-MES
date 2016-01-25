@@ -2,7 +2,7 @@
 <link_info>
    <banner>TMS320C2000 Linker PC v6.4.6</banner>
    <copyright>Copyright (c) 1996-2015 Texas Instruments Incorporated</copyright>
-   <link_time>0x56a51256</link_time>
+   <link_time>0x56a62ac2</link_time>
    <link_errors>0x1</link_errors>
    <output_file>Example_2803xEPwmUpDownAQ.out</output_file>
    <entry_point>
