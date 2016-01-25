@@ -1,0 +1,3 @@
+<map id="IODFTCTRL_REG" name="IODFTCTRL_REG">
+<area shape="rect" id="node2" href="$_d_s_p2803x___lin_8h.html#struct_i_o_d_f_t_c_t_r_l___b_i_t_s" title="{IODFTCTRL_BITS\n|+ RXPENA\l+ LPBENA\l+ rsvd1\l+ IODFTENA\l+ rsvd2\l+ TXSHIFT\l+ PINSAMPLEMASK\l+ rsvd3\l+ BRKDTERRENA\l+ PERRENA\land 6 more...\l|}" alt="" coords="5,5,152,229"/>
+</map>

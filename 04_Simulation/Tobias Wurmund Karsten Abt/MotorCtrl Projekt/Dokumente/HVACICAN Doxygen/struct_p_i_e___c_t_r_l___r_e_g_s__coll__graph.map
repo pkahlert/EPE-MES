@@ -1,0 +1,10 @@
+<map id="PIE_CTRL_REGS" name="PIE_CTRL_REGS">
+<area shape="rect" id="node2" href="$_d_s_p2803x___pie_ctrl_8h.html#union_p_i_e_a_c_k___r_e_g" title="{PIEACK_REG\n|+ all\l|}" alt="" coords="5,323,109,400"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___pie_ctrl_8h.html#struct_p_i_e_a_c_k___b_i_t_s" title="{PIEACK_BITS\n|+ ACK1\l+ ACK2\l+ ACK3\l+ ACK4\l+ ACK5\l+ ACK6\l+ ACK7\l+ ACK8\l+ ACK9\l+ ACK10\l+ ACK11\l+ ACK12\l+ rsvd\l|}" alt="" coords="5,5,109,259"/>
+<area shape="rect" id="node6" href="$_d_s_p2803x___pie_ctrl_8h.html#union_p_i_e_i_f_r___r_e_g" title="{PIEIFR_REG\n|+ all\l|}" alt="" coords="135,323,233,400"/>
+<area shape="rect" id="node8" href="$_d_s_p2803x___pie_ctrl_8h.html#struct_p_i_e_i_f_r___b_i_t_s" title="{PIEIFR_BITS\n|+ INTx1\l+ INTx2\l+ INTx3\l+ INTx4\l+ INTx5\l+ INTx6\l+ INTx7\l+ INTx8\l+ rsvd\l|}" alt="" coords="135,35,233,229"/>
+<area shape="rect" id="node10" href="$_d_s_p2803x___pie_ctrl_8h.html#union_p_i_e_c_t_r_l___r_e_g" title="{PIECTRL_REG\n|+ all\l|}" alt="" coords="258,323,368,400"/>
+<area shape="rect" id="node12" href="$_d_s_p2803x___pie_ctrl_8h.html#struct_p_i_e_c_t_r_l___b_i_t_s" title="{PIECTRL_BITS\n|+ ENPIE\l+ PIEVECT\l|}" alt="" coords="258,86,368,178"/>
+<area shape="rect" id="node14" href="$_d_s_p2803x___pie_ctrl_8h.html#union_p_i_e_i_e_r___r_e_g" title="{PIEIER_REG\n|+ all\l|}" alt="" coords="393,323,492,400"/>
+<area shape="rect" id="node16" href="$_d_s_p2803x___pie_ctrl_8h.html#struct_p_i_e_i_e_r___b_i_t_s" title="{PIEIER_BITS\n|+ INTx1\l+ INTx2\l+ INTx3\l+ INTx4\l+ INTx5\l+ INTx6\l+ INTx7\l+ INTx8\l+ rsvd\l|}" alt="" coords="393,35,492,229"/>
+</map>

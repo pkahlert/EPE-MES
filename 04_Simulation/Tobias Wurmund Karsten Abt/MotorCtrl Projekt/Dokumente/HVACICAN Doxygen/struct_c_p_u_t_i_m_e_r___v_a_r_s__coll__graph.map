@@ -1,0 +1,13 @@
+<map id="CPUTIMER_VARS" name="CPUTIMER_VARS">
+<area shape="rect" id="node2" href="$_d_s_p2803x___cpu_timers_8h.html#struct_c_p_u_t_i_m_e_r___r_e_g_s" title="{CPUTIMER_REGS\n|+ rsvd1\l|}" alt="" coords="223,405,355,483"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___cpu_timers_8h.html#union_t_p_r_h___r_e_g" title="{TPRH_REG\n|+ all\l|}" alt="" coords="5,264,96,341"/>
+<area shape="rect" id="node6" href="$_d_s_p2803x___cpu_timers_8h.html#struct_t_p_r_h___b_i_t_s" title="{TPRH_BITS\n|+ TDDRH\l+ PSCH\l|}" alt="" coords="5,57,96,149"/>
+<area shape="rect" id="node8" href="$_d_s_p2803x___cpu_timers_8h.html#union_p_r_d___g_r_o_u_p" title="{PRD_GROUP\n|+ all\l|}" alt="" coords="121,264,223,341"/>
+<area shape="rect" id="node10" href="$_d_s_p2803x___cpu_timers_8h.html#struct_p_r_d___r_e_g" title="{PRD_REG\n|+ LSW\l+ MSW\l|}" alt="" coords="130,57,213,149"/>
+<area shape="rect" id="node12" href="$_d_s_p2803x___cpu_timers_8h.html#union_t_c_r___r_e_g" title="{TCR_REG\n|+ all\l|}" alt="" coords="248,264,331,341"/>
+<area shape="rect" id="node14" href="$_d_s_p2803x___cpu_timers_8h.html#struct_t_c_r___b_i_t_s" title="{TCR_BITS\n|+ rsvd1\l+ TSS\l+ TRB\l+ rsvd2\l+ SOFT\l+ FREE\l+ rsvd3\l+ TIE\l+ TIF\l|}" alt="" coords="248,5,331,200"/>
+<area shape="rect" id="node16" href="$_d_s_p2803x___cpu_timers_8h.html#union_t_p_r___r_e_g" title="{TPR_REG\n|+ all\l|}" alt="" coords="355,264,437,341"/>
+<area shape="rect" id="node18" href="$_d_s_p2803x___cpu_timers_8h.html#struct_t_p_r___b_i_t_s" title="{TPR_BITS\n|+ TDDR\l+ PSC\l|}" alt="" coords="355,57,437,149"/>
+<area shape="rect" id="node20" href="$_d_s_p2803x___cpu_timers_8h.html#union_t_i_m___g_r_o_u_p" title="{TIM_GROUP\n|+ all\l|}" alt="" coords="462,264,559,341"/>
+<area shape="rect" id="node22" href="$_d_s_p2803x___cpu_timers_8h.html#struct_t_i_m___r_e_g" title="{TIM_REG\n|+ LSW\l+ MSW\l|}" alt="" coords="471,57,549,149"/>
+</map>

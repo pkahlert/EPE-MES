@@ -1,0 +1,290 @@
+/******************************************************************************
+ *
+ * File:	MotorCtrl.c
+ * Author:	Tobias Wurm (tobi.wurm@gmail.com)
+ *
+ * MotorCtrl.c is designed to connect to a Texas Instruments
+ * High Voltage Motor Control Kit (TMDSHVMTRPFCKIT).
+ * It prints a menu in stdout to offer a user friendly interface.
+ * Since MotorCtrl uses CAN Messages to communicate with the T.I. Kit,
+ * it is mandatory to connect some kind of CAN hardware to your machine.
+ *
+ *****************************************************************************/
+
+#include "MotorCtrl.h"
+
+int main()
+{
+	struct{
+		float pid_iq[4];	//[KP KI KD KC]
+		float pid_id[4];
+		float pid_spd[4];
+	}pid_params;
+
+	struct can_frame Send;
+	int Byte=0, userOptInput=0, running=1, setPointLoop = 0, pidParamsMenu=1;
+	int newSetpoint=0, userOptInputSetpointM=0, sSetpointInvalid=0;
+	int activeOpt1=0, actSpeedPrint=0, recActSpeed = 0, recActSSetpoint = 0;
+	int pid_ki = 0, pid_kp = 0, pid_kc = 0, pid_kd = 0, userOptexit = 0;
+	float floatIn = 0, actrecSpeed = 0, actSSetpoint=0;
+	char consumeInputString[194];
+
+	//Send Setpoint 0 as a matter of precaution
+	setSpeedZero(Send);
+	printMainM();
+
+	do
+	{
+		////// get Option //////
+		userOptInput = getcheckOptions();
+		if(userOptInput != -1)
+		{
+			switch(userOptInput)
+			{
+				case 0:
+					running = 0;
+					break;
+
+				case 1:	//Speed Setpoint Menu
+					activeOpt1=1;
+					do
+					{
+						setPointLoop=1;
+						sSetpointInvalid=1;
+
+						//Get Actual Speed Setpoint
+						openReceiveSocket();
+
+						if(canReceiveInt(CAN_ID_REC_ACTSPEED_ACTSSETPOINT,&recActSpeed,&recActSSetpoint)!=-1)
+						{
+							skaleByte2Iq(&actSSetpoint, recActSSetpoint);
+						}
+						else //error
+						{
+							actSSetpoint=-1;
+						}
+
+						closeReceiveSocket();
+
+						printSetpointM(actSSetpoint);
+						do
+						{
+							userOptInputSetpointM = getcheckOptions();
+							if(userOptInputSetpointM != -1)
+							{		//Valid
+
+								switch(userOptInputSetpointM)
+								{
+									case 0:	//Back to Main Menu
+										setPointLoop=0;
+										sSetpointInvalid=0;
+										activeOpt1 = 0;
+										printMainM();
+										break;
+
+									case 1:	//Change Setpoint
+										sSetpointInvalid=0;
+										break;
+
+									default:	//Wrong Option
+										printf("No option. Try again!         ");
+										break;
+								}
+							}
+							else	//Invalid
+							{
+								printf("Invalid input. Try again!     ");
+							}
+						}while(sSetpointInvalid);	//End SpeedSetpoint Menu
+
+						while(setPointLoop)
+						{
+							printEnterSP();
+							//Change Setpoint
+							newSetpoint=getFloat(&floatIn);
+
+							if(newSetpoint!=-1)	//Format OK
+							{
+								skaleIq2Byte(floatIn, &Byte);
+
+								// Setpoint out of range
+								//Free chosen Valid Input Rage
+								if((floatIn<-0.5)||(floatIn>0.5))
+								{
+									printf("Setpoint out of range!        ");
+								}
+								else	//Setpoint ok
+								{
+									setPointLoop = 0;
+									////// Transmit new Setpoint
+									memset(&Send, 0, sizeof(Send)); // init CAN frames
+
+									//Set Bit for extended Identifier
+									Send.can_id=(0x80000000|CAN_ID_SEND_SPEED_SETPOINT);
+									Send.can_dlc=4;
+
+									Send.data[0]=(Byte>>24)&0xFF;
+									Send.data[1]=(Byte>>16)&0xFF;
+									Send.data[2]=(Byte>>8)&0xFF;
+									Send.data[3]=Byte&0xFF;
+
+									if(canSend(Send)!=0)
+									{
+										printf("\n!!! canSend() ERROR !!!\n");
+										fflush(stdout);
+									}
+									usleep(200000);	//Give TI Unit time to change
+													//Speed Setpoint so that next
+													//menu shows correct value
+								}
+							}
+							else
+							{
+								printf("Invalid setpoint!             ");
+							}
+						}
+					}while(activeOpt1);	//End Option 1
+					break;
+
+				case 2:	//Show Actual Speed
+					printActualSM();
+					sleep(1);
+					openReceiveSocket();
+					actSpeedPrint=1;
+					while(actSpeedPrint)
+					{
+						openReceiveSocket();
+						if(canReceiveInt(CAN_ID_REC_ACTSPEED_ACTSSETPOINT,&recActSpeed,&recActSSetpoint)!=-1)
+						{
+							skaleByte2Iq(&actrecSpeed, recActSpeed);
+							printf("Wert[HEX]: %x   Wert[IQ]: %f\n", recActSpeed, actrecSpeed);
+						}
+					    fflush(stdout);
+					    usleep(100000);
+
+					    // Check if user wants to stop
+					    if(stopKeyCheck())
+					    {
+					    	fgets(consumeInputString, 190, stdin);
+					    	actSpeedPrint=0;
+					    }
+					}
+					closeReceiveSocket();
+					printMainM();
+					break;
+
+				case 3:	//PID iq
+					openReceiveSocket();
+					// Receive Ki and Kp
+					if(canReceiveInt(CAN_ID_REC_PID_IQ1,&pid_kp,&pid_ki)!=-1)
+					{
+						skaleByte2Iq(&pid_params.pid_iq[0], pid_kp);
+						skaleByte2Iq(&pid_params.pid_iq[1], pid_ki);
+					}
+					else	//error
+					{
+						pid_params.pid_iq[0]=-1;	//No Value received
+						pid_params.pid_iq[1]=-1;	//No Value received
+					}
+					//Receive Kd and Kc
+					if(canReceiveInt(CAN_ID_REC_PID_IQ2,&pid_kd,&pid_kc)!=-1)
+					{
+						skaleByte2Iq(&pid_params.pid_iq[2], pid_kd);
+						skaleByte2Iq(&pid_params.pid_iq[3], pid_kc);
+					}
+						else	//error
+					{
+						pid_params.pid_iq[2]=-1;	//No Value received
+						pid_params.pid_iq[3]=-1;	//No Value received
+					}
+
+					//PID id
+					// Receive Ki and Kp
+					if(canReceiveInt(CAN_ID_REC_PID_ID1,&pid_kp,&pid_ki)!=-1)
+					{
+						skaleByte2Iq(&pid_params.pid_id[0], pid_kp);
+						skaleByte2Iq(&pid_params.pid_id[1], pid_ki);
+					}
+					else	//error
+					{
+						pid_params.pid_id[0]=-1;	//No Value received
+						pid_params.pid_id[1]=-1;	//No Value received
+					}
+					//Receive Kd and Kc
+					if(canReceiveInt(CAN_ID_REC_PID_ID2,&pid_kd,&pid_kc)!=-1)
+					{
+						skaleByte2Iq(&pid_params.pid_id[2], pid_kd);
+						skaleByte2Iq(&pid_params.pid_id[3], pid_kc);
+					}
+					else	//error
+					{
+						pid_params.pid_id[2]=-1;	//No Value received
+						pid_params.pid_id[3]=-1;	//No Value received
+					}
+
+					//PID speed
+					// Receive Ki and Kp
+					if(canReceiveInt(CAN_ID_REC_PID_SPD1,&pid_kp,&pid_ki)!=-1)
+					{
+						skaleByte2Iq(&pid_params.pid_spd[0], pid_kp);
+						skaleByte2Iq(&pid_params.pid_spd[1], pid_ki);
+					}
+					else	//error
+					{
+						pid_params.pid_spd[0]=-1;	//No Value received
+						pid_params.pid_spd[1]=-1;	//No Value received
+					}
+					//Receive Kd and Kc
+					if(canReceiveInt(CAN_ID_REC_PID_SPD2,&pid_kd,&pid_kc)!=-1)
+					{
+						skaleByte2Iq(&pid_params.pid_spd[2], pid_kd);
+						skaleByte2Iq(&pid_params.pid_spd[3], pid_kc);
+					}
+					else	//error
+					{
+						pid_params.pid_spd[2]=-1;	//No Value received
+						pid_params.pid_spd[3]=-1;	//No Value received
+					}
+
+					closeReceiveSocket();
+
+					printPIDSetup(pid_params.pid_iq, pid_params.pid_id, pid_params.pid_spd);
+					
+					do{
+						userOptexit = getcheckOptions();
+						if(userOptexit != -1)
+						{		//Valid
+							 if(userOptexit==0)	//exit menu
+							 {	
+								  pidParamsMenu=0;
+							 }
+							 else
+							 {
+								  printf("No option. Try again!         ");
+							 }
+						}
+						else	//Invalid
+						{
+							 printf("Invalid input. Try again!     ");
+						}							
+					}while(pidParamsMenu!=0);
+					printMainM();
+					break;
+					
+				default:
+					printf("No option. Try again!         ");
+					break;
+			}
+		}
+		else
+		{
+			printf("Invalid input. Try again!     ");
+		}
+	}while(running);
+
+	//Send Setpoint 0 as a matter of precaution
+	setSpeedZero(Send);
+
+	return 0;
+}
+

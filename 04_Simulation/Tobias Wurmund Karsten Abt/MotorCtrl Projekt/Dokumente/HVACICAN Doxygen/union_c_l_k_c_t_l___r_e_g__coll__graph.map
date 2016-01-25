@@ -1,0 +1,3 @@
+<map id="CLKCTL_REG" name="CLKCTL_REG">
+<area shape="rect" id="node2" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_c_l_k_c_t_l___b_i_t_s" title="{CLKCTL_BITS\n|+ OSCCLKSRCSEL\l+ OSCCLKSRC2SEL\l+ WDCLKSRCSEL\l+ TMR2CLKSRCSEL\l+ TMR2CLKPRESCALE\l+ INTOSC1OFF\l+ INTOSC1HALTI\l+ INTOSC2OFF\l+ INTOSC2HALTI\l+ WDHALTI\l+ XCLKINOFF\l+ XTALOSCOFF\l+ NMIRESETSEL\l|}" alt="" coords="5,5,168,259"/>
+</map>

@@ -1,0 +1,44 @@
+<map id="LIN_REGS" name="LIN_REGS">
+<area shape="rect" id="node2" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_c_l_e_a_r_i_n_t_l_v_l___r_e_g" title="{SCICLEARINTLVL_REG\n|+ all\l|}" alt="" coords="8,293,171,371"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_c_l_e_a_r_i_n_t_l_v_l___b_i_t_s" title="{SCICLEARINTLVL_BITS\n|+ CLRBRKDTINTLVL\l+ CLRWAKEUPINTLVL\l+ rsvd1\l+ CLRTIMEOUTINTLVL\l+ rsvd2\l+ CLRTOAWUSINTLVL\l+ CLRTOA3WUSINTLVL\l+ CLRTXINTLVL\l+ CLRRXINTLVL\l+ rsvd3\land 13 more...\l|}" alt="" coords="5,5,171,229"/>
+<area shape="rect" id="node6" href="$_d_s_p2803x___lin_8h.html#union_l_i_n_r_d0___r_e_g" title="{LINRD0_REG\n|+ all\l|}" alt="" coords="236,293,337,371"/>
+<area shape="rect" id="node8" href="$_d_s_p2803x___lin_8h.html#struct_l_i_n_r_d0___b_i_t_s" title="{LINRD0_BITS\n|+ RD3\l+ RD2\l+ RD1\l+ RD0\l|}" alt="" coords="195,57,296,178"/>
+<area shape="rect" id="node10" href="$_d_s_p2803x___lin_8h.html#union_l_i_n_t_d0___r_e_g" title="{LINTD0_REG\n|+ all\l|}" alt="" coords="383,293,481,371"/>
+<area shape="rect" id="node12" href="$_d_s_p2803x___lin_8h.html#struct_l_i_n_t_d0___b_i_t_s" title="{LINTD0_BITS\n|+ TD3\l+ TD2\l+ TD1\l+ TD0\l|}" alt="" coords="320,57,419,178"/>
+<area shape="rect" id="node14" href="$_d_s_p2803x___lin_8h.html#union_l_i_n_c_o_m_p___r_e_g" title="{LINCOMP_REG\n|+ all\l|}" alt="" coords="516,293,631,371"/>
+<area shape="rect" id="node16" href="$_d_s_p2803x___lin_8h.html#struct_l_i_n_c_o_m_p___b_i_t_s" title="{LINCOMP_BITS\n|+ SBREAK\l+ rsvd1\l+ SDEL\l+ rsvd2\l+ rsvd3\l|}" alt="" coords="443,49,557,185"/>
+<area shape="rect" id="node18" href="$_d_s_p2803x___lin_8h.html#union_l_i_n_i_d___r_e_g" title="{LINID_REG\n|+ all\l|}" alt="" coords="660,293,748,371"/>
+<area shape="rect" id="node20" href="$_d_s_p2803x___lin_8h.html#struct_l_i_n_i_d___b_i_t_s" title="{LINID_BITS\n|+ IDBYTE\l+ IDSLAVETASKBYTE\l+ RECEIVEDID\l+ rsvd1\l|}" alt="" coords="581,57,739,178"/>
+<area shape="rect" id="node22" href="$_d_s_p2803x___lin_8h.html#union_l_i_n_r_d1___r_e_g" title="{LINRD1_REG\n|+ all\l|}" alt="" coords="775,293,876,371"/>
+<area shape="rect" id="node24" href="$_d_s_p2803x___lin_8h.html#struct_l_i_n_r_d1___b_i_t_s" title="{LINRD1_BITS\n|+ RD7\l+ RD6\l+ RD5\l+ RD4\l|}" alt="" coords="763,57,864,178"/>
+<area shape="rect" id="node26" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_i_n_t_v_e_c_t1___r_e_g" title="{SCIINTVECT1_REG\n|+ all\l|}" alt="" coords="901,293,1040,371"/>
+<area shape="rect" id="node28" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_i_n_t_v_e_c_t1___b_i_t_s" title="{SCIINTVECT1_BITS\n|+ INTVECT1\l+ rsvd1\l+ rsvd2\l|}" alt="" coords="888,64,1027,171"/>
+<area shape="rect" id="node30" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_g_c_r2___r_e_g" title="{SCIGCR2_REG\n|+ all\l|}" alt="" coords="1065,293,1177,371"/>
+<area shape="rect" id="node32" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_g_c_r2___b_i_t_s" title="{SCIGCR2_BITS\n|+ POWERDOWN\l+ rsvd1\l+ GENWU\l+ rsvd2\l+ SC\l+ CC\l+ rsvd3\l|}" alt="" coords="1051,35,1176,200"/>
+<area shape="rect" id="node34" href="$_d_s_p2803x___lin_8h.html#union_l_i_n_t_d1___r_e_g" title="{LINTD1_REG\n|+ all\l|}" alt="" coords="1203,293,1301,371"/>
+<area shape="rect" id="node36" href="$_d_s_p2803x___lin_8h.html#struct_l_i_n_t_d1___b_i_t_s" title="{LINTD1_BITS\n|+ TD7\l+ TD6\l+ TD5\l+ TD4\l|}" alt="" coords="1200,57,1299,178"/>
+<area shape="rect" id="node38" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_i_n_t_v_e_c_t0___r_e_g" title="{SCIINTVECT0_REG\n|+ all\l|}" alt="" coords="1325,293,1464,371"/>
+<area shape="rect" id="node40" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_i_n_t_v_e_c_t0___b_i_t_s" title="{SCIINTVECT0_BITS\n|+ INTVECT0\l+ rsvd1\l+ rsvd2\l|}" alt="" coords="1323,64,1461,171"/>
+<area shape="rect" id="node42" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_g_c_r1___r_e_g" title="{SCIGCR1_REG\n|+ all\l|}" alt="" coords="1489,293,1601,371"/>
+<area shape="rect" id="node44" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_g_c_r1___b_i_t_s" title="{SCIGCR1_BITS\n|+ COMMMODE\l+ TIMINGMODE\l+ PARITYENA\l+ PARITY\l+ STOP\l+ CLK_MASTER\l+ LINMODE\l+ SWnRST\l+ SLEEP\l+ ADAPT\land 11 more...\l|}" alt="" coords="1485,5,1605,229"/>
+<area shape="rect" id="node46" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_p_i_o2___r_e_g" title="{SCIPIO2_REG\n|+ all\l|}" alt="" coords="1628,293,1735,371"/>
+<area shape="rect" id="node48" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_p_i_o2___b_i_t_s" title="{SCIPIO2_BITS\n|+ rsvd1\l+ RXIN\l+ TXIN\l+ rsvd2\l+ rsvd3\l|}" alt="" coords="1629,49,1736,185"/>
+<area shape="rect" id="node50" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_g_c_r0___r_e_g" title="{SCIGCR0_REG\n|+ all\l|}" alt="" coords="1761,293,1873,371"/>
+<area shape="rect" id="node52" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_g_c_r0___b_i_t_s" title="{SCIGCR0_BITS\n|+ RESET\l+ rsvd1\l+ rsvd2\l|}" alt="" coords="1761,64,1873,171"/>
+<area shape="rect" id="node54" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_f_o_r_m_a_t___r_e_g" title="{SCIFORMAT_REG\n|+ all\l|}" alt="" coords="1898,293,2029,371"/>
+<area shape="rect" id="node56" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_f_o_r_m_a_t___b_i_t_s" title="{SCIFORMAT_BITS\n|+ CHAR\l+ rsvd1\l+ LENGTH\l+ rsvd2\l|}" alt="" coords="1898,57,2029,178"/>
+<area shape="rect" id="node58" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_s_e_t_i_n_t___r_e_g" title="{SCISETINT_REG\n|+ all\l|}" alt="" coords="2060,293,2183,371"/>
+<area shape="rect" id="node60" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_s_e_t_i_n_t___b_i_t_s" title="{SCISETINT_BITS\n|+ SETBRKDTINT\l+ SETWAKEUPINT\l+ rsvd1\l+ SETTIMEOUTINT\l+ rsvd2\l+ SETTOAWUSINT\l+ SETTOA3WUSINT\l+ SETTXINT\l+ SETRXINT\l+ rsvd3\land 13 more...\l|}" alt="" coords="2054,5,2196,229"/>
+<area shape="rect" id="node62" href="$_d_s_p2803x___lin_8h.html#union_i_o_d_f_t_c_t_r_l___r_e_g" title="{IODFTCTRL_REG\n|+ all\l|}" alt="" coords="2219,293,2345,371"/>
+<area shape="rect" id="node64" href="$_d_s_p2803x___lin_8h.html#struct_i_o_d_f_t_c_t_r_l___b_i_t_s" title="{IODFTCTRL_BITS\n|+ RXPENA\l+ LPBENA\l+ rsvd1\l+ IODFTENA\l+ rsvd2\l+ TXSHIFT\l+ PINSAMPLEMASK\l+ rsvd3\l+ BRKDTERRENA\l+ PERRENA\land 6 more...\l|}" alt="" coords="2221,5,2368,229"/>
+<area shape="rect" id="node66" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_f_l_r___r_e_g" title="{SCIFLR_REG\n|+ all\l|}" alt="" coords="2382,293,2484,371"/>
+<area shape="rect" id="node68" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_f_l_r___b_i_t_s" title="{SCIFLR_BITS\n|+ BRKDT\l+ WAKEUP\l+ IDLE\l+ BUSY\l+ TIMEOUT\l+ rsvd2\l+ TOAWUS\l+ TOA3WUS\l+ TXRDY\l+ RXRDY\land 15 more...\l|}" alt="" coords="2392,5,2499,229"/>
+<area shape="rect" id="node70" href="$_d_s_p2803x___lin_8h.html#union_l_i_n_m_a_s_k___r_e_g" title="{LINMASK_REG\n|+ all\l|}" alt="" coords="2516,293,2631,371"/>
+<area shape="rect" id="node72" href="$_d_s_p2803x___lin_8h.html#struct_l_i_n_m_a_s_k___b_i_t_s" title="{LINMASK_BITS\n|+ TXIDMASK\l+ rsvd1\l+ RXIDMASK\l+ rsvd2\l|}" alt="" coords="2523,57,2637,178"/>
+<area shape="rect" id="node74" href="$_d_s_p2803x___lin_8h.html#union_b_r_s_r___r_e_g" title="{BRSR_REG\n|+ all\l|}" alt="" coords="2664,293,2757,371"/>
+<area shape="rect" id="node76" href="$_d_s_p2803x___lin_8h.html#struct_b_r_s_r___b_i_t_s" title="{BRSR_BITS\n|+ SCI_LIN_PSL\l+ SCI_LIN_PSH\l+ M\l+ rsvd1\l|}" alt="" coords="2661,57,2776,178"/>
+<area shape="rect" id="node78" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_s_e_t_i_n_t_l_v_l___r_e_g" title="{SCISETINTLVL_REG\n|+ all\l|}" alt="" coords="2797,293,2941,371"/>
+<area shape="rect" id="node80" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_s_e_t_i_n_t_l_v_l___b_i_t_s" title="{SCISETINTLVL_BITS\n|+ SETBRKDTINTLVL\l+ SETWAKEUPINTLVL\l+ rsvd1\l+ SETTIMEOUTINTLVL\l+ rsvd2\l+ SETTOAWUSINTLVL\l+ SETTOA3WUSINTLVL\l+ SETTXINTLVL\l+ SETRXINTOVO\l+ rsvd3\land 13 more...\l|}" alt="" coords="2800,5,2965,229"/>
+<area shape="rect" id="node82" href="$_d_s_p2803x___lin_8h.html#union_s_c_i_c_l_e_a_r_i_n_t___r_e_g" title="{SCICLEARINT_REG\n|+ all\l|}" alt="" coords="2979,293,3119,371"/>
+<area shape="rect" id="node84" href="$_d_s_p2803x___lin_8h.html#struct_s_c_i_c_l_e_a_r_i_n_t___b_i_t_s" title="{SCICLEARINT_BITS\n|+ CLRBRKDTINT\l+ CLRWAKEUPINT\l+ rsvd1\l+ CLRTIMEOUTINT\l+ rsvd2\l+ CLRTOAWUSINT\l+ CLRTOA3WUSINT\l+ CLRTXINT\l+ CLRRXINT\l+ rsvd3\land 13 more...\l|}" alt="" coords="2990,5,3132,229"/>
+</map>

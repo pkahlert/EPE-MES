@@ -1,0 +1,4 @@
+<map id="XINTRUPT_REGS" name="XINTRUPT_REGS">
+<area shape="rect" id="node2" href="$_d_s_p2803x___x_intrupt_8h.html#union_x_i_n_t_c_r___r_e_g" title="{XINTCR_REG\n|+ all\l|}" alt="" coords="17,192,119,269"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___x_intrupt_8h.html#struct_x_i_n_t_c_r___b_i_t_s" title="{XINTCR_BITS\n|+ ENABLE\l+ rsvd1\l+ POLARITY\l+ rsvd2\l|}" alt="" coords="17,6,119,127"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="LAM_REGS" name="LAM_REGS">
+<area shape="rect" id="node2" href="$_d_s_p2803x___e_can_8h.html#union_c_a_n_l_a_m___r_e_g" title="{CANLAM_REG\n|+ all\l|}" alt="" coords="5,192,115,269"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___e_can_8h.html#struct_c_a_n_l_a_m___b_i_t_s" title="{CANLAM_BITS\n|+ LAM_L\l+ LAM_H\l+ rsvd1\l+ LAMI\l|}" alt="" coords="5,6,115,127"/>
+</map>

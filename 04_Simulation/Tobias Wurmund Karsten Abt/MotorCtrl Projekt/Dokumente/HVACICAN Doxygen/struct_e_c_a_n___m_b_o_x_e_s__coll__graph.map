@@ -1,0 +1,13 @@
+<map id="ECAN_MBOXES" name="ECAN_MBOXES">
+<area shape="rect" id="node2" href="$_d_s_p2803x___e_can_8h.html#struct_m_b_o_x" title="{MBOX\n||}" alt="" coords="441,363,500,440"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___e_can_8h.html#union_c_a_n_m_s_g_c_t_r_l___r_e_g" title="{CANMSGCTRL_REG\n|+ all\l|}" alt="" coords="88,221,235,299"/>
+<area shape="rect" id="node6" href="$_d_s_p2803x___e_can_8h.html#struct_c_a_n_m_s_g_c_t_r_l___b_i_t_s" title="{CANMSGCTRL_BITS\n|+ DLC\l+ RTR\l+ rsvd1\l+ TPL\l+ rsvd2\l+ rsvd3\l|}" alt="" coords="5,6,152,157"/>
+<area shape="rect" id="node8" href="$_d_s_p2803x___e_can_8h.html#union_c_a_n_m_d_l___r_e_g" title="{CANMDL_REG\n|+ all\l|}" alt="" coords="342,221,452,299"/>
+<area shape="rect" id="node10" href="$_d_s_p2803x___e_can_8h.html#struct_c_a_n_m_d_l___w_o_r_d_s" title="{CANMDL_WORDS\n|+ LOW_WORD\l+ HI_WORD\l|}" alt="" coords="176,35,309,127"/>
+<area shape="rect" id="node12" href="$_d_s_p2803x___e_can_8h.html#struct_c_a_n_m_d_l___b_y_t_e_s" title="{CANMDL_BYTES\n|+ BYTE3\l+ BYTE2\l+ BYTE1\l+ BYTE0\l|}" alt="" coords="334,21,460,142"/>
+<area shape="rect" id="node14" href="$_d_s_p2803x___e_can_8h.html#union_c_a_n_m_s_g_i_d___r_e_g" title="{CANMSGID_REG\n|+ all\l|}" alt="" coords="481,221,607,299"/>
+<area shape="rect" id="node16" href="$_d_s_p2803x___e_can_8h.html#struct_c_a_n_m_s_g_i_d___b_i_t_s" title="{CANMSGID_BITS\n|+ EXTMSGID_L\l+ EXTMSGID_H\l+ STDMSGID\l+ AAM\l+ AME\l+ IDE\l|}" alt="" coords="485,6,611,157"/>
+<area shape="rect" id="node18" href="$_d_s_p2803x___e_can_8h.html#union_c_a_n_m_d_h___r_e_g" title="{CANMDH_REG\n|+ all\l|}" alt="" coords="643,221,756,299"/>
+<area shape="rect" id="node20" href="$_d_s_p2803x___e_can_8h.html#struct_c_a_n_m_d_h___b_y_t_e_s" title="{CANMDH_BYTES\n|+ BYTE7\l+ BYTE6\l+ BYTE5\l+ BYTE4\l|}" alt="" coords="636,21,764,142"/>
+<area shape="rect" id="node22" href="$_d_s_p2803x___e_can_8h.html#struct_c_a_n_m_d_h___w_o_r_d_s" title="{CANMDH_WORDS\n|+ LOW_WORD\l+ HI_WORD\l|}" alt="" coords="789,35,923,127"/>
+</map>

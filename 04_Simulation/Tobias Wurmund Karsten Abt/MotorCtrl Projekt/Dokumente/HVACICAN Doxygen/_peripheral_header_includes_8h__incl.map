@@ -1,0 +1,22 @@
+<map id="PeripheralHeaderIncludes.h" name="PeripheralHeaderIncludes.h">
+<area shape="rect" id="node3" href="$_d_s_p2803x___adc_8h.html" title="DSP2803x_Adc.h" alt="" coords="5,80,131,107"/>
+<area shape="rect" id="node5" href="$_d_s_p2803x___boot_vars_8h.html" title="DSP2803x_BootVars.h" alt="" coords="155,80,311,107"/>
+<area shape="rect" id="node7" href="$_d_s_p2803x___dev_emu_8h.html" title="DSP2803x_DevEmu.h" alt="" coords="335,80,485,107"/>
+<area shape="rect" id="node9" href="$_d_s_p2803x___cla_8h.html" title="DSP2803x_Cla.h" alt="" coords="510,80,631,107"/>
+<area shape="rect" id="node11" href="$_d_s_p2803x___comp_8h.html" title="DSP2803x_Comp.h" alt="" coords="656,80,792,107"/>
+<area shape="rect" id="node13" href="$_d_s_p2803x___cpu_timers_8h.html" title="DSP2803x_CpuTimers.h" alt="" coords="817,80,980,107"/>
+<area shape="rect" id="node15" href="$_d_s_p2803x___e_can_8h.html" title="DSP2803x_ECan.h" alt="" coords="1005,80,1139,107"/>
+<area shape="rect" id="node17" href="$_d_s_p2803x___e_cap_8h.html" title="DSP2803x_ECap.h" alt="" coords="1163,80,1297,107"/>
+<area shape="rect" id="node19" href="$_d_s_p2803x___e_pwm_8h.html" title="DSP2803x_EPwm.h" alt="" coords="1322,80,1461,107"/>
+<area shape="rect" id="node21" href="$_d_s_p2803x___e_qep_8h.html" title="DSP2803x_EQep.h" alt="" coords="1486,80,1620,107"/>
+<area shape="rect" id="node23" href="$_d_s_p2803x___gpio_8h.html" title="DSP2803x_Gpio.h" alt="" coords="1645,80,1773,107"/>
+<area shape="rect" id="node25" href="$_d_s_p2803x___i2c_8h.html" title="DSP2803x_I2c.h" alt="" coords="1798,80,1916,107"/>
+<area shape="rect" id="node27" href="$_d_s_p2803x___lin_8h.html" title="DSP2803x_Lin.h" alt="" coords="1941,80,2059,107"/>
+<area shape="rect" id="node29" href="$_d_s_p2803x___nmi_intrupt_8h.html" title="DSP2803x_NmiIntrupt.h" alt="" coords="2083,80,2244,107"/>
+<area shape="rect" id="node31" href="$_d_s_p2803x___pie_ctrl_8h.html" title="DSP2803x_PieCtrl.h" alt="" coords="2269,80,2411,107"/>
+<area shape="rect" id="node33" href="$_d_s_p2803x___pie_vect_8h.html" title="DSP2803x_PieVect.h" alt="" coords="2435,80,2583,107"/>
+<area shape="rect" id="node35" href="$_d_s_p2803x___spi_8h.html" title="DSP2803x_Spi.h" alt="" coords="2607,80,2728,107"/>
+<area shape="rect" id="node37" href="$_d_s_p2803x___sci_8h.html" title="DSP2803x_Sci.h" alt="" coords="2753,80,2873,107"/>
+<area shape="rect" id="node39" href="$_d_s_p2803x___sys_ctrl_8h.html" title="DSP2803x_SysCtrl.h" alt="" coords="2898,80,3043,107"/>
+<area shape="rect" id="node41" href="$_d_s_p2803x___x_intrupt_8h.html" title="DSP2803x_XIntrupt.h" alt="" coords="3067,80,3212,107"/>
+</map>

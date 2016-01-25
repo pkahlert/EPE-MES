@@ -1,0 +1,3 @@
+<map id="PLLSTS_REG" name="PLLSTS_REG">
+<area shape="rect" id="node2" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_p_l_l_s_t_s___b_i_t_s" title="{PLLSTS_BITS\n|+ PLLLOCKS\l+ rsvd1\l+ PLLOFF\l+ MCLKSTS\l+ MCLKCLR\l+ OSCOFF\l+ MCLKOFF\l+ DIVSEL\l+ rsvd2\l+ NORMRDYE\l|}" alt="" coords="5,6,115,215"/>
+</map>

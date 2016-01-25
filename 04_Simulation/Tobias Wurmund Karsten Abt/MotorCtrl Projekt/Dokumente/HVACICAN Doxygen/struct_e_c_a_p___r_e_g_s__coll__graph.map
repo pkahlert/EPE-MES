@@ -1,0 +1,10 @@
+<map id="ECAP_REGS" name="ECAP_REGS">
+<area shape="rect" id="node2" href="$_d_s_p2803x___e_cap_8h.html#union_e_c_e_i_n_t___r_e_g" title="{ECEINT_REG\n|+ all\l|}" alt="" coords="21,293,123,371"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___e_cap_8h.html#struct_e_c_e_i_n_t___b_i_t_s" title="{ECEINT_BITS\n|+ rsvd1\l+ CEVT1\l+ CEVT2\l+ CEVT3\l+ CEVT4\l+ CTROVF\l+ CTR_EQ_PRD\l+ CTR_EQ_CMP\l+ rsvd2\l|}" alt="" coords="5,20,125,215"/>
+<area shape="rect" id="node6" href="$_d_s_p2803x___e_cap_8h.html#union_e_c_c_t_l1___r_e_g" title="{ECCTL1_REG\n|+ all\l|}" alt="" coords="157,293,261,371"/>
+<area shape="rect" id="node8" href="$_d_s_p2803x___e_cap_8h.html#struct_e_c_c_t_l1___b_i_t_s" title="{ECCTL1_BITS\n|+ CAP1POL\l+ CTRRST1\l+ CAP2POL\l+ CTRRST2\l+ CAP3POL\l+ CTRRST3\l+ CAP4POL\l+ CTRRST4\l+ CAPLDEN\l+ PRESCALE\l+ FREE_SOFT\l|}" alt="" coords="150,5,260,229"/>
+<area shape="rect" id="node10" href="$_d_s_p2803x___e_cap_8h.html#union_e_c_c_t_l2___r_e_g" title="{ECCTL2_REG\n|+ all\l|}" alt="" coords="290,293,395,371"/>
+<area shape="rect" id="node12" href="$_d_s_p2803x___e_cap_8h.html#struct_e_c_c_t_l2___b_i_t_s" title="{ECCTL2_BITS\n|+ CONT_ONESHT\l+ STOP_WRAP\l+ REARM\l+ TSCTRSTOP\l+ SYNCI_EN\l+ SYNCO_SEL\l+ SWSYNC\l+ CAP_APWM\l+ APWMPOL\l+ rsvd1\l|}" alt="" coords="285,13,413,222"/>
+<area shape="rect" id="node14" href="$_d_s_p2803x___e_cap_8h.html#union_e_c_f_l_g___r_e_g" title="{ECFLG_REG\n|+ all\l|}" alt="" coords="434,293,533,371"/>
+<area shape="rect" id="node16" href="$_d_s_p2803x___e_cap_8h.html#struct_e_c_f_l_g___b_i_t_s" title="{ECFLG_BITS\n|+ INT\l+ CEVT1\l+ CEVT2\l+ CEVT3\l+ CEVT4\l+ CTROVF\l+ CTR_EQ_PRD\l+ CTR_EQ_CMP\l+ rsvd2\l|}" alt="" coords="438,20,559,215"/>
+</map>

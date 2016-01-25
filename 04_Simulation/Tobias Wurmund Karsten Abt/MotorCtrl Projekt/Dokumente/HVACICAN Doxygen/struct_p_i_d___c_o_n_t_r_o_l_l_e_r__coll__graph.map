@@ -1,0 +1,5 @@
+<map id="PID_CONTROLLER" name="PID_CONTROLLER">
+<area shape="rect" id="node2" href="$pid__grando_8h.html#struct_p_i_d___d_a_t_a" title="{PID_DATA\n|+ up\l+ ui\l+ ud\l+ v1\l+ i1\l+ d1\l+ d2\l+ w1\l|}" alt="" coords="5,6,88,186"/>
+<area shape="rect" id="node4" href="$pid__grando_8h.html#struct_p_i_d___p_a_r_a_m_e_t_e_r_s" title="{PID_PARAMETERS\n|+ Kr\l+ Kp\l+ Ki\l+ Kd\l+ Km\l+ Umax\l+ Umin\l|}" alt="" coords="113,13,252,179"/>
+<area shape="rect" id="node6" href="$pid__grando_8h.html#struct_p_i_d___t_e_r_m_i_n_a_l_s" title="{PID_TERMINALS\n|+ Ref\l+ Fbk\l+ Out\l+ c1\l+ c2\l|}" alt="" coords="277,28,400,164"/>
+</map>

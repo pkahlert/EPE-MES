@@ -1,0 +1,4 @@
+<map id="SYS_PWR_CTRL_REGS" name="SYS_PWR_CTRL_REGS">
+<area shape="rect" id="node2" href="$_d_s_p2803x___sys_ctrl_8h.html#union_b_o_r_c_f_g___r_e_g" title="{BORCFG_REG\n|+ all\l|}" alt="" coords="35,163,147,240"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_b_o_r_c_f_g___b_i_t_s" title="{BORCFG_BITS\n|+ BORENZ\l+ rsvd1\l|}" alt="" coords="35,6,147,98"/>
+</map>

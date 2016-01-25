@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['xa',['XA',['../_d_s_p2803x___i2c_8h.html#ac560243766d253956acde7c62ec8a12e',1,'I2CMDR_BITS']]],
+  ['xclk',['XCLK',['../_d_s_p2803x___sys_ctrl_8h.html#a8b90a98e47de4db8f9f3cc1e191dab54',1,'SYS_CTRL_REGS']]],
+  ['xclkinoff',['XCLKINOFF',['../_d_s_p2803x___sys_ctrl_8h.html#af6b6adf0df81a244ebc7cabff363e2e0',1,'CLKCTL_BITS']]],
+  ['xclkinsel',['XCLKINSEL',['../_d_s_p2803x___sys_ctrl_8h.html#a46ef46d52a270e74eae080e61f66497f',1,'XCLK_BITS']]],
+  ['xclkoutdiv',['XCLKOUTDIV',['../_d_s_p2803x___sys_ctrl_8h.html#abe81b7147e838b53a45cd514c9632dc6',1,'XCLK_BITS']]],
+  ['xcr',['XCR',['../_d_s_p2803x___e_qep_8h.html#a967c7f00af9183a5a04fe7e656dfe07e',1,'QDECCTL_BITS']]],
+  ['xint1',['XINT1',['../_d_s_p2803x___pie_vect_8h.html#a9fe82e703a495e382b7737c2ac58c13e',1,'PIE_VECT_TABLE']]],
+  ['xint1cr',['XINT1CR',['../_d_s_p2803x___x_intrupt_8h.html#aa85211e0c7071a04f109a8b2a59cd6b9',1,'XINTRUPT_REGS']]],
+  ['xint1ctr',['XINT1CTR',['../_d_s_p2803x___x_intrupt_8h.html#acf45853f0b1c1f802bc9405d86ce07e5',1,'XINTRUPT_REGS']]],
+  ['xint2',['XINT2',['../_d_s_p2803x___pie_vect_8h.html#a0e0bcff98c82b8f5938bcb52542f70a4',1,'PIE_VECT_TABLE']]],
+  ['xint2cr',['XINT2CR',['../_d_s_p2803x___x_intrupt_8h.html#a5c10f5f790ca40b9a1b9e8e27f2a146e',1,'XINTRUPT_REGS']]],
+  ['xint2ctr',['XINT2CTR',['../_d_s_p2803x___x_intrupt_8h.html#a14019907a432e09a5198689197499b5c',1,'XINTRUPT_REGS']]],
+  ['xint3',['XINT3',['../_d_s_p2803x___pie_vect_8h.html#aa27d72d1d8152f502a9ac21ab355d450',1,'PIE_VECT_TABLE']]],
+  ['xint3cr',['XINT3CR',['../_d_s_p2803x___x_intrupt_8h.html#a1cd55e0692caadd19dee0d091748afa4',1,'XINTRUPT_REGS']]],
+  ['xint3ctr',['XINT3CTR',['../_d_s_p2803x___x_intrupt_8h.html#a33f8a5159a92848c16110b53c0255a91',1,'XINTRUPT_REGS']]],
+  ['xintruptregs',['XIntruptRegs',['../_d_s_p2803x___x_intrupt_8h.html#a42668d2361079c80249c164ea157d46e',1,'DSP2803x_XIntrupt.h']]],
+  ['xrdy',['XRDY',['../_d_s_p2803x___i2c_8h.html#a21ae35a5bdb1cc156fc9ad9377e89082',1,'I2CIER_BITS::XRDY()'],['../_d_s_p2803x___i2c_8h.html#a9aba77dabb5660ab8f6b7f31da075749',1,'I2CSTR_BITS::XRDY()']]],
+  ['xrsn',['XRSn',['../_d_s_p2803x___dev_emu_8h.html#a538fb89b1cd0fddbb9a5e3e2b0699a21',1,'DEVICECNF_BITS']]],
+  ['xsmt',['XSMT',['../_d_s_p2803x___i2c_8h.html#ae112827427b81bd35f8d180bd94f32c8',1,'I2CSTR_BITS']]],
+  ['xtaloscoff',['XTALOSCOFF',['../_d_s_p2803x___sys_ctrl_8h.html#a87d916a38649d74a6f13d64a96dddc91',1,'CLKCTL_BITS']]]
+];

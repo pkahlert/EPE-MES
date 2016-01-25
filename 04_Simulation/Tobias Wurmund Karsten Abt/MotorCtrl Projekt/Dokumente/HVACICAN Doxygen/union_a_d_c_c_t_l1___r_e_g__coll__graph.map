@@ -1,0 +1,3 @@
+<map id="ADCCTL1_REG" name="ADCCTL1_REG">
+<area shape="rect" id="node2" href="$_d_s_p2803x___adc_8h.html#struct_a_d_c_c_t_l1___b_i_t_s" title="{ADCCTL1_BITS\n|+ TEMPCONV\l+ VREFLOCONV\l+ INTPULSEPOS\l+ ADCREFSEL\l+ rsvd1\l+ ADCREFPWD\l+ ADCBGPWD\l+ ADCPWDN\l+ ADCBSYCHN\l+ ADCBSY\l+ ADCENABLE\l+ RESET\l|}" alt="" coords="5,6,128,245"/>
+</map>

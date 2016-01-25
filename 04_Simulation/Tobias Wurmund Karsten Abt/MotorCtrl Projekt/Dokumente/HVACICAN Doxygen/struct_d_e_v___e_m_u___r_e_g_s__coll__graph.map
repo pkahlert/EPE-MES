@@ -1,0 +1,6 @@
+<map id="DEV_EMU_REGS" name="DEV_EMU_REGS">
+<area shape="rect" id="node2" href="$_d_s_p2803x___dev_emu_8h.html#union_c_l_a_s_s_i_d___r_e_g" title="{CLASSID_REG\n|+ all\l|}" alt="" coords="7,309,119,387"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___dev_emu_8h.html#struct_c_l_a_s_s_i_d___b_i_t_s" title="{CLASSID_BITS\n|+ CLASSNO\l+ PARTTYPE\l|}" alt="" coords="5,79,117,171"/>
+<area shape="rect" id="node6" href="$_d_s_p2803x___dev_emu_8h.html#union_d_e_v_i_c_e_c_n_f___r_e_g" title="{DEVICECNF_REG\n|+ all\l|}" alt="" coords="143,309,273,387"/>
+<area shape="rect" id="node8" href="$_d_s_p2803x___dev_emu_8h.html#struct_d_e_v_i_c_e_c_n_f___b_i_t_s" title="{DEVICECNF_BITS\n|+ rsvd1\l+ VMAPS\l+ rsvd2\l+ XRSn\l+ rsvd3\l+ rsvd4\l+ ENPROT\l+ rsvd5\l+ TRSTn\l+ PINOUTSELSTS\l+ PINOUTSELPUD\l+ rsvd6\l|}" alt="" coords="141,6,275,245"/>
+</map>

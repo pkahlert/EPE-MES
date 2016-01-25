@@ -1,0 +1,26 @@
+<map id="SYS_CTRL_REGS" name="SYS_CTRL_REGS">
+<area shape="rect" id="node2" href="$_d_s_p2803x___sys_ctrl_8h.html#union_l_o_s_p_c_p___r_e_g" title="{LOSPCP_REG\n|+ all\l|}" alt="" coords="7,323,117,400"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_l_o_s_p_c_p___b_i_t_s" title="{LOSPCP_BITS\n|+ LSPCLK\l+ rsvd1\l|}" alt="" coords="5,86,115,178"/>
+<area shape="rect" id="node6" href="$_d_s_p2803x___sys_ctrl_8h.html#union_c_l_k_c_t_l___r_e_g" title="{CLKCTL_REG\n|+ all\l|}" alt="" coords="179,323,284,400"/>
+<area shape="rect" id="node8" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_c_l_k_c_t_l___b_i_t_s" title="{CLKCTL_BITS\n|+ OSCCLKSRCSEL\l+ OSCCLKSRC2SEL\l+ WDCLKSRCSEL\l+ TMR2CLKSRCSEL\l+ TMR2CLKPRESCALE\l+ INTOSC1OFF\l+ INTOSC1HALTI\l+ INTOSC2OFF\l+ INTOSC2HALTI\l+ WDHALTI\l+ XCLKINOFF\l+ XTALOSCOFF\l+ NMIRESETSEL\l|}" alt="" coords="140,5,303,259"/>
+<area shape="rect" id="node10" href="$_d_s_p2803x___sys_ctrl_8h.html#union_p_l_l_c_r___r_e_g" title="{PLLCR_REG\n|+ all\l|}" alt="" coords="328,323,427,400"/>
+<area shape="rect" id="node12" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_p_l_l_c_r___b_i_t_s" title="{PLLCR_BITS\n|+ DIV\l+ rsvd1\l|}" alt="" coords="327,86,425,178"/>
+<area shape="rect" id="node14" href="$_d_s_p2803x___sys_ctrl_8h.html#union_l_p_m_c_r0___r_e_g" title="{LPMCR0_REG\n|+ all\l|}" alt="" coords="460,323,569,400"/>
+<area shape="rect" id="node16" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_l_p_m_c_r0___b_i_t_s" title="{LPMCR0_BITS\n|+ LPM\l+ QUALSTDBY\l+ rsvd1\l+ WDINTE\l|}" alt="" coords="449,71,561,193"/>
+<area shape="rect" id="node18" href="$_d_s_p2803x___sys_ctrl_8h.html#union_p_l_l_s_t_s___r_e_g" title="{PLLSTS_REG\n|+ all\l|}" alt="" coords="598,323,703,400"/>
+<area shape="rect" id="node20" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_p_l_l_s_t_s___b_i_t_s" title="{PLLSTS_BITS\n|+ PLLLOCKS\l+ rsvd1\l+ PLLOFF\l+ MCLKSTS\l+ MCLKCLR\l+ OSCOFF\l+ MCLKOFF\l+ DIVSEL\l+ rsvd2\l+ NORMRDYE\l|}" alt="" coords="585,27,695,237"/>
+<area shape="rect" id="node22" href="$_d_s_p2803x___sys_ctrl_8h.html#union_p_c_l_k_c_r0___r_e_g" title="{PCLKCR0_REG\n|+ all\l|}" alt="" coords="730,323,845,400"/>
+<area shape="rect" id="node24" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_p_c_l_k_c_r0___b_i_t_s" title="{PCLKCR0_BITS\n|+ HRPWMENCLK\l+ LINAENCLK\l+ TBCLKSYNC\l+ ADCENCLK\l+ I2CAENCLK\l+ rsvd1\l+ SPIAENCLK\l+ SPIBENCLK\l+ SCIAENCLK\l+ rsvd3\l+ ECANAENCLK\l+ rsvd5\l|}" alt="" coords="719,13,847,251"/>
+<area shape="rect" id="node26" href="$_d_s_p2803x___sys_ctrl_8h.html#union_p_c_l_k_c_r1___r_e_g" title="{PCLKCR1_REG\n|+ all\l|}" alt="" coords="871,323,987,400"/>
+<area shape="rect" id="node28" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_p_c_l_k_c_r1___b_i_t_s" title="{PCLKCR1_BITS\n|+ EPWM1ENCLK\l+ EPWM2ENCLK\l+ EPWM3ENCLK\l+ EPWM4ENCLK\l+ EPWM5ENCLK\l+ EPWM6ENCLK\l+ EPWM7ENCLK\l+ rsvd1\l+ ECAP1ENCLK\l+ rsvd2\l+ EQEP1ENCLK\l+ rsvd3\l|}" alt="" coords="871,13,997,251"/>
+<area shape="rect" id="node30" href="$_d_s_p2803x___sys_ctrl_8h.html#union_i_n_t_o_s_c1_t_r_i_m___r_e_g" title="{INTOSC1TRIM_REG\n|+ all\l|}" alt="" coords="1017,323,1159,400"/>
+<area shape="rect" id="node32" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_i_n_t_o_s_c1_t_r_i_m___b_i_t_s" title="{INTOSC1TRIM_BITS\n|+ COARSETRIM\l+ rsvd1\l+ FINETRIM\l+ rsvd2\l|}" alt="" coords="1023,71,1164,193"/>
+<area shape="rect" id="node34" href="$_d_s_p2803x___sys_ctrl_8h.html#union_p_c_l_k_c_r2___r_e_g" title="{PCLKCR2_REG\n|+ all\l|}" alt="" coords="1190,323,1305,400"/>
+<area shape="rect" id="node36" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_p_c_l_k_c_r2___b_i_t_s" title="{PCLKCR2_BITS\n|+ rsvd1\l+ HRCAP1ENCLK\l+ HRCAP2ENCLK\l+ rsvd2\l|}" alt="" coords="1189,71,1317,193"/>
+<area shape="rect" id="node38" href="$_d_s_p2803x___sys_ctrl_8h.html#union_i_n_t_o_s_c2_t_r_i_m___r_e_g" title="{INTOSC2TRIM_REG\n|+ all\l|}" alt="" coords="1337,323,1479,400"/>
+<area shape="rect" id="node40" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_i_n_t_o_s_c2_t_r_i_m___b_i_t_s" title="{INTOSC2TRIM_BITS\n|+ COARSETRIM\l+ rsvd1\l+ FINETRIM\l+ rsvd2\l|}" alt="" coords="1343,71,1484,193"/>
+<area shape="rect" id="node42" href="$_d_s_p2803x___sys_ctrl_8h.html#union_x_c_l_k___r_e_g" title="{XCLK_REG\n|+ all\l|}" alt="" coords="1513,323,1601,400"/>
+<area shape="rect" id="node44" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_x_c_l_k___b_i_t_s" title="{XCLK_BITS\n|+ XCLKOUTDIV\l+ rsvd1\l+ XCLKINSEL\l+ rsvd3\l|}" alt="" coords="1509,71,1621,193"/>
+<area shape="rect" id="node46" href="$_d_s_p2803x___sys_ctrl_8h.html#union_p_c_l_k_c_r3___r_e_g" title="{PCLKCR3_REG\n|+ all\l|}" alt="" coords="1645,323,1760,400"/>
+<area shape="rect" id="node48" href="$_d_s_p2803x___sys_ctrl_8h.html#struct_p_c_l_k_c_r3___b_i_t_s" title="{PCLKCR3_BITS\n|+ COMP1ENCLK\l+ COMP2ENCLK\l+ COMP3ENCLK\l+ rsvd1\l+ CPUTIMER0ENCLK\l+ CPUTIMER1ENCLK\l+ CPUTIMER2ENCLK\l+ rsvd2\l+ CLA1ENCLK\l+ rsvd3\l|}" alt="" coords="1646,27,1796,237"/>
+</map>

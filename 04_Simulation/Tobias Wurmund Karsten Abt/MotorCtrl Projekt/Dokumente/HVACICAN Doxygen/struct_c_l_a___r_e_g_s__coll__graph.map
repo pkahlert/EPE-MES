@@ -1,0 +1,19 @@
+<map id="CLA_REGS" name="CLA_REGS">
+<area shape="rect" id="node2" href="$_d_s_p2803x___cla_8h.html#union_m_i_c_l_r_o_v_f___r_e_g" title="{MICLROVF_REG\n|+ all\l|}" alt="" coords="5,331,128,408"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___cla_8h.html#struct_m_i_f_r___b_i_t_s" title="{MIFR_BITS\n|+ INT1\l+ INT2\l+ INT3\l+ INT4\l+ INT5\l+ INT6\l+ INT7\l+ INT8\l+ rsvd\l|}" alt="" coords="401,35,489,229"/>
+<area shape="rect" id="node6" href="$_d_s_p2803x___cla_8h.html#union_m_i_f_r_c___r_e_g" title="{MIFRC_REG\n|+ all\l|}" alt="" coords="153,331,249,408"/>
+<area shape="rect" id="node13" href="$_d_s_p2803x___cla_8h.html#union_m_i_r_u_n___r_e_g" title="{MIRUN_REG\n|+ all\l|}" alt="" coords="275,331,373,408"/>
+<area shape="rect" id="node16" href="$_d_s_p2803x___cla_8h.html#union_m_i_c_l_r___r_e_g" title="{MICLR_REG\n|+ all\l|}" alt="" coords="397,331,493,408"/>
+<area shape="rect" id="node19" href="$_d_s_p2803x___cla_8h.html#union_m_i_f_r___r_e_g" title="{MIFR_REG\n|+ all\l|}" alt="" coords="517,331,605,408"/>
+<area shape="rect" id="node22" href="$_d_s_p2803x___cla_8h.html#union_m_i_e_r___r_e_g" title="{MIER_REG\n|+ all\l|}" alt="" coords="630,331,719,408"/>
+<area shape="rect" id="node27" href="$_d_s_p2803x___cla_8h.html#union_m_i_o_v_f___r_e_g" title="{MIOVF_REG\n|+ all\l|}" alt="" coords="744,331,843,408"/>
+<area shape="rect" id="node9" href="$_d_s_p2803x___cla_8h.html#union_m_s_t_f___r_e_g" title="{MSTF_REG\n|+ all\l|}" alt="" coords="867,331,959,408"/>
+<area shape="rect" id="node11" href="$_d_s_p2803x___cla_8h.html#struct_m_s_t_f___b_i_t_s" title="{MSTF_BITS\n|+ LVF\l+ LUF\l+ NF\l+ ZF\l+ rsvd1\l+ TF\l+ rsvd2\l+ RNDF32\l+ rsvd3\l+ MEALLOW\l+ RPCL\l+ RPCH\l+ rsvd4\l|}" alt="" coords="863,5,963,259"/>
+<area shape="rect" id="node25" href="$_d_s_p2803x___cla_8h.html#union_m_r___r_e_g" title="{MR_REG\n|+ i32\l+ f32\l|}" alt="" coords="984,323,1061,415"/>
+<area shape="rect" id="node30" href="$_d_s_p2803x___cla_8h.html#union_m_m_e_m_c_f_g___r_e_g" title="{MMEMCFG_REG\n|+ all\l|}" alt="" coords="1086,331,1212,408"/>
+<area shape="rect" id="node32" href="$_d_s_p2803x___cla_8h.html#struct_m_m_e_m_c_f_g___b_i_t_s" title="{MMEMCFG_BITS\n|+ PROGE\l+ rsvd1\l+ RAM0E\l+ RAM1E\l+ rsvd2\l|}" alt="" coords="1086,64,1212,200"/>
+<area shape="rect" id="node34" href="$_d_s_p2803x___cla_8h.html#union_m_p_i_s_r_c_s_e_l1___r_e_g" title="{MPISRCSEL1_REG\n|+ all\l|}" alt="" coords="1237,331,1376,408"/>
+<area shape="rect" id="node36" href="$_d_s_p2803x___cla_8h.html#struct_m_p_i_s_r_c_s_e_l1___b_i_t_s" title="{MPISRCSEL1_BITS\n|+ PERINT1SEL\l+ PERINT2SEL\l+ PERINT3SEL\l+ PERINT4SEL\l+ PERINT5SEL\l+ PERINT6SEL\l+ PERINT7SEL\l+ PERINT8SEL\l|}" alt="" coords="1237,42,1376,222"/>
+<area shape="rect" id="node38" href="$_d_s_p2803x___cla_8h.html#union_m_c_t_l___r_e_g" title="{MCTL_REG\n|+ all\l|}" alt="" coords="1407,331,1497,408"/>
+<area shape="rect" id="node40" href="$_d_s_p2803x___cla_8h.html#struct_m_c_t_l___b_i_t_s" title="{MCTL_BITS\n|+ HARDRESET\l+ SOFTRESET\l+ IACKE\l+ rsvd1\l|}" alt="" coords="1401,71,1513,193"/>
+</map>

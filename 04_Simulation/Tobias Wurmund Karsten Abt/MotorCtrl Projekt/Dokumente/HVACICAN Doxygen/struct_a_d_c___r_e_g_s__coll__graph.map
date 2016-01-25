@@ -1,0 +1,36 @@
+<map id="ADC_REGS" name="ADC_REGS">
+<area shape="rect" id="node2" href="$_d_s_p2803x___adc_8h.html#union_a_d_c_s_o_cx_c_t_l___r_e_g" title="{ADCSOCxCTL_REG\n|+ all\l|}" alt="" coords="6,309,148,387"/>
+<area shape="rect" id="node4" href="$_d_s_p2803x___adc_8h.html#struct_a_d_c_s_o_cx_c_t_l___b_i_t_s" title="{ADCSOCxCTL_BITS\n|+ ACQPS\l+ CHSEL\l+ rsvd1\l+ TRIGSEL\l|}" alt="" coords="5,65,147,186"/>
+<area shape="rect" id="node6" href="$_d_s_p2803x___adc_8h.html#union_a_d_c_s_a_m_p_l_e_m_o_d_e___r_e_g" title="{ADCSAMPLEMODE_REG\n|+ all\l|}" alt="" coords="187,309,364,387"/>
+<area shape="rect" id="node8" href="$_d_s_p2803x___adc_8h.html#struct_a_d_c_s_a_m_p_l_e_m_o_d_e___b_i_t_s" title="{ADCSAMPLEMODE_BITS\n|+ SIMULEN0\l+ SIMULEN2\l+ SIMULEN4\l+ SIMULEN6\l+ SIMULEN8\l+ SIMULEN10\l+ SIMULEN12\l+ SIMULEN14\l+ rsvd1\l|}" alt="" coords="171,28,348,223"/>
+<area shape="rect" id="node10" href="$_d_s_p2803x___adc_8h.html#union_a_d_c_s_o_c___r_e_g" title="{ADCSOC_REG\n|+ all\l|}" alt="" coords="396,309,508,387"/>
+<area shape="rect" id="node12" href="$_d_s_p2803x___adc_8h.html#struct_a_d_c_s_o_c___b_i_t_s" title="{ADCSOC_BITS\n|+ SOC0\l+ SOC1\l+ SOC2\l+ SOC3\l+ SOC4\l+ SOC5\l+ SOC6\l+ SOC7\l+ SOC8\l+ SOC9\land 6 more...\l|}" alt="" coords="373,13,485,237"/>
+<area shape="rect" id="node14" href="$_d_s_p2803x___adc_8h.html#union_s_o_c_p_r_i_c_t_l___r_e_g" title="{SOCPRICTL_REG\n|+ all\l|}" alt="" coords="537,309,665,387"/>
+<area shape="rect" id="node16" href="$_d_s_p2803x___adc_8h.html#struct_s_o_c_p_r_i_c_t_l___b_i_t_s" title="{SOCPRICTL_BITS\n|+ SOCPRIORITY\l+ RRPOINTER\l+ rsvd1\l+ ONESHOT\l|}" alt="" coords="510,65,639,186"/>
+<area shape="rect" id="node18" href="$_d_s_p2803x___adc_8h.html#union_i_n_t_s_e_l9_n10___r_e_g" title="{INTSEL9N10_REG\n|+ all\l|}" alt="" coords="692,309,823,387"/>
+<area shape="rect" id="node20" href="$_d_s_p2803x___adc_8h.html#struct_i_n_t_s_e_l9_n10___b_i_t_s" title="{INTSEL9N10_BITS\n|+ INT9SEL\l+ INT9E\l+ INT9CONT\l+ rsvd1\l+ INT10SEL\l+ INT10E\l+ INT10CONT\l+ rsvd2\l|}" alt="" coords="664,35,795,215"/>
+<area shape="rect" id="node22" href="$_d_s_p2803x___adc_8h.html#union_c_o_m_p_h_y_s_t_c_t_l___r_e_g" title="{COMPHYSTCTL_REG\n|+ all\l|}" alt="" coords="849,309,1001,387"/>
+<area shape="rect" id="node24" href="$_d_s_p2803x___adc_8h.html#struct_c_o_m_p_h_y_s_t_c_t_l___b_i_t_s" title="{COMPHYSTCTL_BITS\n|+ rsvd1\l+ COMP1_HYST_DISABLE\l+ rsvd2\l+ COMP2_HYST_DISABLE\l+ rsvd3\l+ COMP3_HYST_DISABLE\l+ rsvd4\l|}" alt="" coords="819,43,1001,208"/>
+<area shape="rect" id="node26" href="$_d_s_p2803x___adc_8h.html#union_a_d_c_o_f_f_t_r_i_m___r_e_g" title="{ADCOFFTRIM_REG\n|+ all\l|}" alt="" coords="1026,309,1165,387"/>
+<area shape="rect" id="node28" href="$_d_s_p2803x___adc_8h.html#struct_a_d_c_o_f_f_t_r_i_m___b_i_t_s" title="{ADCOFFTRIM_BITS\n|+ OFFTRIM\l+ rsvd1\l|}" alt="" coords="1026,79,1165,171"/>
+<area shape="rect" id="node30" href="$_d_s_p2803x___adc_8h.html#union_i_n_t_s_e_l1_n2___r_e_g" title="{INTSEL1N2_REG\n|+ all\l|}" alt="" coords="1190,309,1313,387"/>
+<area shape="rect" id="node32" href="$_d_s_p2803x___adc_8h.html#struct_i_n_t_s_e_l1_n2___b_i_t_s" title="{INTSEL1N2_BITS\n|+ INT1SEL\l+ INT1E\l+ INT1CONT\l+ rsvd1\l+ INT2SEL\l+ INT2E\l+ INT2CONT\l+ rsvd2\l|}" alt="" coords="1190,35,1313,215"/>
+<area shape="rect" id="node34" href="$_d_s_p2803x___adc_8h.html#union_i_n_t_s_e_l7_n8___r_e_g" title="{INTSEL7N8_REG\n|+ all\l|}" alt="" coords="1338,309,1461,387"/>
+<area shape="rect" id="node36" href="$_d_s_p2803x___adc_8h.html#struct_i_n_t_s_e_l7_n8___b_i_t_s" title="{INTSEL7N8_BITS\n|+ INT7SEL\l+ INT7E\l+ INT7CONT\l+ rsvd1\l+ INT8SEL\l+ INT8E\l+ INT8CONT\l+ rsvd2\l|}" alt="" coords="1338,35,1461,215"/>
+<area shape="rect" id="node38" href="$_d_s_p2803x___adc_8h.html#union_i_n_t_s_e_l5_n6___r_e_g" title="{INTSEL5N6_REG\n|+ all\l|}" alt="" coords="1486,309,1609,387"/>
+<area shape="rect" id="node40" href="$_d_s_p2803x___adc_8h.html#struct_i_n_t_s_e_l5_n6___b_i_t_s" title="{INTSEL5N6_BITS\n|+ INT5SEL\l+ INT5E\l+ INT5CONT\l+ rsvd1\l+ INT6SEL\l+ INT6E\l+ INT6CONT\l+ rsvd2\l|}" alt="" coords="1486,35,1609,215"/>
+<area shape="rect" id="node42" href="$_d_s_p2803x___adc_8h.html#union_i_n_t_s_e_l3_n4___r_e_g" title="{INTSEL3N4_REG\n|+ all\l|}" alt="" coords="1634,309,1757,387"/>
+<area shape="rect" id="node44" href="$_d_s_p2803x___adc_8h.html#struct_i_n_t_s_e_l3_n4___b_i_t_s" title="{INTSEL3N4_BITS\n|+ INT3SEL\l+ INT3E\l+ INT3CONT\l+ rsvd1\l+ INT4SEL\l+ INT4E\l+ INT4CONT\l+ rsvd2\l|}" alt="" coords="1634,35,1757,215"/>
+<area shape="rect" id="node46" href="$_d_s_p2803x___adc_8h.html#union_a_d_c_r_e_f_t_r_i_m___r_e_g" title="{ADCREFTRIM_REG\n|+ all\l|}" alt="" coords="1786,309,1925,387"/>
+<area shape="rect" id="node48" href="$_d_s_p2803x___adc_8h.html#struct_a_d_c_r_e_f_t_r_i_m___b_i_t_s" title="{ADCREFTRIM_BITS\n|+ BG_FINE_TRIM\l+ BG_COARSE_TRIM\l+ EXTREF_FINE_TRIM\l+ rsvd1\l|}" alt="" coords="1782,65,1937,186"/>
+<area shape="rect" id="node50" href="$_d_s_p2803x___adc_8h.html#union_a_d_c_c_t_l2___r_e_g" title="{ADCCTL2_REG\n|+ all\l|}" alt="" coords="1965,309,2080,387"/>
+<area shape="rect" id="node52" href="$_d_s_p2803x___adc_8h.html#struct_a_d_c_c_t_l2___b_i_t_s" title="{ADCCTL2_BITS\n|+ CLKDIV2EN\l+ ADCNONOVERLAP\l+ rsvd1\l|}" alt="" coords="1962,72,2112,179"/>
+<area shape="rect" id="node54" href="$_d_s_p2803x___adc_8h.html#union_a_d_c_c_t_l1___r_e_g" title="{ADCCTL1_REG\n|+ all\l|}" alt="" coords="2123,309,2237,387"/>
+<area shape="rect" id="node56" href="$_d_s_p2803x___adc_8h.html#struct_a_d_c_c_t_l1___b_i_t_s" title="{ADCCTL1_BITS\n|+ TEMPCONV\l+ VREFLOCONV\l+ INTPULSEPOS\l+ ADCREFSEL\l+ rsvd1\l+ ADCREFPWD\l+ ADCBGPWD\l+ ADCPWDN\l+ ADCBSYCHN\l+ ADCBSY\l+ ADCENABLE\l+ RESET\l|}" alt="" coords="2137,6,2260,245"/>
+<area shape="rect" id="node58" href="$_d_s_p2803x___adc_8h.html#union_a_d_c_i_n_t_s_o_c_s_e_l2___r_e_g" title="{ADCINTSOCSEL2_REG\n|+ all\l|}" alt="" coords="2273,309,2436,387"/>
+<area shape="rect" id="node60" href="$_d_s_p2803x___adc_8h.html#struct_a_d_c_i_n_t_s_o_c_s_e_l2___b_i_t_s" title="{ADCINTSOCSEL2_BITS\n|+ SOC8\l+ SOC9\l+ SOC10\l+ SOC11\l+ SOC12\l+ SOC13\l+ SOC14\l+ SOC15\l|}" alt="" coords="2285,35,2448,215"/>
+<area shape="rect" id="node62" href="$_d_s_p2803x___adc_8h.html#union_a_d_c_i_n_t___r_e_g" title="{ADCINT_REG\n|+ all\l|}" alt="" coords="2467,309,2569,387"/>
+<area shape="rect" id="node64" href="$_d_s_p2803x___adc_8h.html#struct_a_d_c_i_n_t___b_i_t_s" title="{ADCINT_BITS\n|+ ADCINT1\l+ ADCINT2\l+ ADCINT3\l+ ADCINT4\l+ ADCINT5\l+ ADCINT6\l+ ADCINT7\l+ ADCINT8\l+ ADCINT9\l+ rsvd1\l|}" alt="" coords="2473,21,2575,230"/>
+<area shape="rect" id="node66" href="$_d_s_p2803x___adc_8h.html#union_a_d_c_i_n_t_s_o_c_s_e_l1___r_e_g" title="{ADCINTSOCSEL1_REG\n|+ all\l|}" alt="" coords="2597,309,2760,387"/>
+<area shape="rect" id="node68" href="$_d_s_p2803x___adc_8h.html#struct_a_d_c_i_n_t_s_o_c_s_e_l1___b_i_t_s" title="{ADCINTSOCSEL1_BITS\n|+ SOC0\l+ SOC1\l+ SOC2\l+ SOC3\l+ SOC4\l+ SOC5\l+ SOC6\l+ SOC7\l|}" alt="" coords="2600,35,2763,215"/>
+</map>
