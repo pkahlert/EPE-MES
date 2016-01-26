@@ -69,11 +69,19 @@ EPWM_INFO epwm3_info;
 #define EPWM_START_CMP 200 // default cmp
 #define EPWM_START_DUTY 0.2
 
-signed int sinus[] = { 0, 256, 507, 750, 981, 1196, 1391, 1563, 1709, 1828,
+/*signed int sinus[] = { 0, 256, 507, 750, 981, 1196, 1391, 1563, 1709, 1828,
 		1916, 1973, 1998, 1990, 1949, 1876, 1772, 1640, 1480, 1296, 1091, 867,
 		630, 382, 128, -128, -382, -630, -867, -1091, -1296, -1480, -1640,
 		-1772, -1876, -1949, -1990, -1998, -1973, -1916, -1828, -1709, -1563,
 		-1391, -1196, -981, -750, -507, -256, 0 };
+*/
+
+// 0.8
+signed int sinus[] = {0, 205, 406, 600, 785, 957, 1113, 1250, 1367, 1462, 1533, 1578, 1598, 1592, 1559, 1501, 1418, 1312, 1184, 1037, 873, 694, 504, 306, 102, -102, -306, -504, -694, -873, -1037, -1184, -1312, -1418, -1501, -1559, -1592, -1598, -1578, -1533, -1462, -1367, -1250, -1113, -957, -785, -600, -406, -205, 0};
+
+// 0.5
+//signed int sinus[] = {0, 128, 254, 375, 491, 598, 696, 782, 855, 914, 958, 987, 999, 995, 975, 938, 886, 820, 740, 648, 546, 434, 315, 191, 64, -64, -191, -315, -434, -546, -648, -740, -820, -886, -938, -975, -995, -999, -987, -958, -914, -855, -782, -696, -598, -491, -375, -254, -128, 0};
+
 
 void InitEPwm1Example() {
 	EPwm1Regs.TBPRD = EPWM_TIMER_TBPRD;           // Set timer period 801 TBCLKs
@@ -346,106 +354,20 @@ void main(void) {
 short int t1 = 0;
 float f_timer0 = 1000; // Hz
 float n = 0;
+float sollN = 20; // Hz
+float reglerErgebnis = 1;
+const float P = 0.05;
+const float I = 0;
 
 #define ON 1998
 #define OFF 1
 
-float Ism = 0.0;
-float Isl = 0.0;
-float wS = 0.0;
-float wR = 0.0;
-float wN = 0.0;
-float Usm = 0.0;
-float Usl = 0.0;
-
-float sumWn = 0.0;
-float cosWn = 0.0;
-float sinWn = 0.0;
-
-float sumWr = 0.0;
-float cosWr = 0.0;
-float sinWr = 0.0;
-
-float hin1In1 = 0.0;
-float hin1In2 = 0.0;
-float hin1Out1 = 0.0;
-float hin1Out2 = 0.0;
-float hin2In1 = 0.0;
-float hin2In2 = 0.0;
-float hin2Out1 = 0.0;
-float hin2Out2 = 0.0;
-float rueckOut1 = 0.0;
-float rueckOut2 = 0.0;
-
-// Reglerparameter, Reglerhilfsvariablen
-const float I1 = 0.0;
-const float I2 = 0.0;
-const float P1 = 1.0;
-const float P2 = 1.0;
-float e1 = 0.0;
-float e2 = 0.0;
-float integr1 = 0.0;
-float integr2 = 0.0;
-
-// Modellkonstanten
-const float SollwertM = 20.0; // pascal und robby sagen 20 vorgeben ist gut
-const float L_Gain = 0.0;
-const float Rr_Gain = 0.0;
-const float Lsigmal_Gain = 0.01;
-const float Lsigmam_Gain = 0.01;
-const float Rsm_Gain = 1.0;
-const float Rsl_Gain = 1.0;
-const float Psi = 0;
 const double pi = 3.141592653589793;
 
 __interrupt void cpu_timer0_isr(void) {
 	CpuTimer0.InterruptCount++;
 	// Every 1 ms
 	t1++;
-
-	// Strommodel steppen (Sachen aus Eingabe strukt
-	Ism = L_Gain * Psi;
-	Isl = SollwertM / Psi;
-	wR = Isl / Psi * Rr_Gain;
-
-	// ws bilden
-	wS = wR + (2*pi*n);
-
-	// das rechts neben Strommodell
-	sumWr += wR;
-	sumWr -= (2*pi) * ((int) sumWr/(2*pi)); // float modulo #yolo
-	cosWr = cos(sumWr);
-	sinWr = sin(sumWr);
-
-	// inverses spannungsmodell
-	Usm = Rsm_Gain * Ism - Lsigmal_Gain * Isl * wS;
-	Usl = (Lsigmam_Gain * Ism + Psi) * wS + Rsl_Gain * Isl;
-
-	// PI regler und Addition danach
-	e1 = Ism - rueckOut1;
-	e2 = Isl - rueckOut2;
-	integr1 += e1 * I1;
-	integr2 += e2 * I2;
-	hin1In1 = e1 * (P1 + integr1) + Usm;
-	hin1In2 = e2 * (P2 + integr2) + Usl;
-
-	// das rechts neben Koordinatentransfer2
-	sumWn += wN;
-	sumWn -= (2*pi) * ((int) sumWn/(2*pi)); // float modulo #yolo
-	cosWn = cos(sumWn);
-	sinWn = sin(sumWn);
-
-	// Koordinatentransfer2
-	hin2Out1 = cosWr * cosWn - sinWr * sinWn;
-	hin2Out2 = sinWr * cosWn + cosWr * sinWn;
-
-	// Koordinatentransfer1
-	hin1Out1 = hin1In1 * hin2Out1 - hin1In2 * hin2Out2;
-	hin1Out2 = hin1In2 * hin2Out1 + hin1In1 * hin2Out2;
-
-	// Rücktransfer
-	rueckOut1 = R_U.in1 * hin2Out1 + R_U.in2 * -hin2Out2;
-	rueckOut2 = R_U.in2 * hin2Out1 - R_U.in1 * -hin2Out2;
 
 	// Acknowledge this interrupt to receive more interrupts from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
@@ -455,6 +377,12 @@ __interrupt void xint2_isr(void) {
 	// Umdrehung detektiert
 	n = f_timer0/t1;
 	t1 = 0;
+
+	static short e = 20;
+	e = sollN - n;
+	static long sumE = 0;
+	sumE += e;
+	reglerErgebnis = P * e - I * sumE;
 
 	static short ledUmdrehung = 0;
 	GpioDataRegs.GPACLEAR.bit.GPIO23 = 1;   // GPIO26 is low
@@ -515,7 +443,7 @@ void update_compare1(EPWM_INFO *epwm_info) {
 	if (t == 50) {
 		t = 0;
 	}
-	int x = sinus[t];
+	int x = reglerErgebnis * sinus[t]; //reglerErgebnis * sinus[t]; // reglerErgebnis sollte zwischen 0.6 .. 1.5 sein
 	if (x < 0) {
 		EPwm1Regs.CMPA.half.CMPA = ON; //1;
 		EPwm1Regs.CMPB = ON + x; //-x;
