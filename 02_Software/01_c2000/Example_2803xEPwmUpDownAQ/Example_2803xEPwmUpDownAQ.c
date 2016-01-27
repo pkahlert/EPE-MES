@@ -356,7 +356,7 @@ float f_timer0 = 1000; // Hz
 float n = 0;
 float sollN = 20; // Hz
 float reglerErgebnis = 1;
-const float P = 0.05;
+const float P = -0.05;
 const float I = 0;
 
 #define ON 1998
@@ -383,6 +383,14 @@ __interrupt void xint2_isr(void) {
 	static long sumE = 0;
 	sumE += e;
 	reglerErgebnis = P * e - I * sumE;
+
+	// Deckeln des Reglerausgangs
+	if (reglerErgebnis > 1.5) {
+		reglerErgebnis = 1.5;
+	} else if (reglerErgebnis < 0.6) {
+		reglerErgebnis = 0.6;
+	}
+
 
 	static short ledUmdrehung = 0;
 	GpioDataRegs.GPACLEAR.bit.GPIO23 = 1;   // GPIO26 is low
@@ -462,7 +470,8 @@ void update_compare2(EPWM_INFO *epwm_info) {
 	if (t == 50) {
 		t = 0;
 	}
-	int x = sinus[t];
+	int x = reglerErgebnis * sinus[t];
+	//int x = sinus[t];
 	if (x < 0) {
 		EPwm2Regs.CMPA.half.CMPA = ON; //1;
 		EPwm2Regs.CMPB = ON + x; //-x;
@@ -480,7 +489,8 @@ void update_compare3(EPWM_INFO *epwm_info) {
 	if (t == 50) {
 		t = 0;
 	}
-	int x = sinus[t];
+	int x = reglerErgebnis * sinus[t];
+	//int x = sinus[t];
 	if (x < 0) {
 		EPwm3Regs.CMPA.half.CMPA = ON; //1;
 		EPwm3Regs.CMPB = ON + x; //-x;
