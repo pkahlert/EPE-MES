@@ -9,11 +9,11 @@
 #define RT_LOG10EF     0.43429449F
 #define RT_E           2.7182818284590452354
 #define RT_EF          2.7182817F
-#ifndef UNUSED_PARAMETER  
-#if defined(__LCC__)  
-#define UNUSED_PARAMETER(x)    
+#ifndef UNUSED_PARAMETER  
+#if defined(__LCC__)  
+#define UNUSED_PARAMETER(x)    
 #else
-#define UNUSED_PARAMETER(x) (void) (x)  
+#define UNUSED_PARAMETER(x) (void) (x)  
 #endif
 #endif
 #endif
