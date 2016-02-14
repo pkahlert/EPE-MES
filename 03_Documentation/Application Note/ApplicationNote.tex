@@ -64,8 +64,6 @@
 % (uncomment the ones you want to load)
 
 \usepackage[utf8]{inputenc}
-\usepackage{float}
-\usepackage{hyperref}
 
 % *** MISC UTILITY PACKAGES ***
 %
@@ -434,7 +432,7 @@
 % As a general rule, do not put math, special symbols or citations
 % in the abstract or keywords.
 \begin{abstract}
-Dieser Anwendungshinweis beschäftigt sich mit der einfachen Inbetriebnahme einer Asynchronmaschine vom Typ \todo[inline]{Bitte eintragen Robby}.
+Dieser Anwendungshinweis beschäftigt sich mit der einfachen Inbetriebnahme einer Asynchronmaschine vom Typ MDFMAIG071-12D von Lenze.
 Außerdem wird in diesem Dokument die Benutzung eines passendes Models behandelt.
 \end{abstract}
 
@@ -485,12 +483,35 @@ I wish you the best of success.
 \hfill Nic Siebenborn, Robby Kozok, Lukas Tetzlaff, Pascal Kahlert
  
 \hfill 14 Februar, 2016
+\subsection{Modellierung der Asynchronmaschine}
 
-\include{Modellierung.tex}
+-Modell besteht aus
+	-Feldorientierter Regelung
+	-Transformation
+	-Motormodell
+-Parameter werden im Model Explorer festgelegt
+Feld Regelung:
+-Es wird die Drehzahl geregelt
+-Daraus Moment daraus stromsollwert
 
+Transformation:
+clark und park
+
+motormodel:
+-basierend auf ab
+-machinen model mit last
 
 \subsection{Inbetriebnahme der Asynchronmaschine}
 \todo[inline]{Schreib euren Teil bitte hierher Verstrippung sollte Robby machen}.
+Verstrippung: 
+Da der in diesem Projekt verwendete Motor, schon einmal von einer anderen Gruppe in Betrieb genommen wurde, mussten wir lediglich die schon verdrahteten Anschlusskabel, anschließen. Folgende Verbindungen m\"ussen gesteckt werden:
+\begin{itemize}
+\item Die Leitungen U,V und W der Asynchronmaschine werden an das TI Kit geklemmt
+\item Die Leitungen des Drehimpulsgebers werden an den Anschluss "QEP Connector" angeschlossen.
+\item Die 12V Spannungsversorgung wird an das TI Kit angeschlossen
+\item Das USB Kabel ist an das TI Kit und den PC anzuschliessen
+\item Die Kaltger\"atestecker des TI Kits und des L\"ufters sind zu stecken
+\end{itemize}
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
