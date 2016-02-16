@@ -346,6 +346,20 @@
 % (Unless specifically asked to do so by the journal or conference you plan
 % to submit to, of course. )
 
+% ick will aber sourcecode!
+\usepackage{listings}
+\lstset{
+  belowcaptionskip=4pt,  
+  captionpos=b,
+  language=C,
+  basicstyle=\ttfamily\color{black}\small,
+  keywordstyle=\color{HKS51}\bfseries,
+  commentstyle=\color{gray}\slshape,,
+  identifierstyle=\color{black},
+  numbers=left,
+  stepnumber= 1
+}
+
 
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
@@ -425,7 +439,6 @@
 
 
 
-
 % make the title area
 \maketitle
 
@@ -486,7 +499,6 @@ I wish you the best of success.
 
 
 \section{Inbetriebnahme der Asynchronmaschine}
-\todo{Robbys Teil finalisieren - zB Verstrippung evtl umbenennen}
 \subsection{Verkabelung}
 
 Da der in diesem Projekt verwendete Motor, schon einmal von einer anderen Gruppe in Betrieb genommen wurde, mussten wir lediglich die schon verdrahteten Anschlusskabel, anschließen. Folgende Verbindungen müssen gesteckt werden:
@@ -499,7 +511,8 @@ Da der in diesem Projekt verwendete Motor, schon einmal von einer anderen Gruppe
 \end{itemize}
 
 \subsection{Software-Realisierung}
-\include{n7b}
+\input{lt}
+%\input{n7b}
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
