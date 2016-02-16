@@ -1,4 +1,3 @@
-
 %% bare_jrnl.tex
 %% V1.4b
 %% 2015/08/26
@@ -13,10 +12,9 @@
 %% Support sites:
 %% http://www.michaelshell.org/tex/ieeetran/
 %% http://www.ctan.org/pkg/ieeetran
-%% and
-%% http://www.ieee.org/
+%% and%% http://www.ieee.org/
 
-%%*************************************************************************
+%%****t4g*********************************************************************
 %% Legal Notice:
 %% This code is offered as-is without any warranty either expressed or
 %% implied; without even the implied warranty of MERCHANTABILITY or
@@ -344,6 +342,20 @@
 % (Unless specifically asked to do so by the journal or conference you plan
 % to submit to, of course. )
 
+% ick will aber sourcecode!
+\usepackage{listings}
+\lstset{
+  belowcaptionskip=4pt,  
+  captionpos=b,
+  language=C,
+  basicstyle=\ttfamily\color{black}\small,
+  keywordstyle=\color{HKS51}\bfseries,
+  commentstyle=\color{gray}\slshape,,
+  identifierstyle=\color{black},
+  numbers=left,
+  stepnumber= 1
+}
+
 
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
@@ -423,7 +435,6 @@
 
 
 
-
 % make the title area
 \maketitle
 
@@ -455,7 +466,6 @@ IEEE, IEEEtran, journal, \LaTeX, paper, template.
 \IEEEpeerreviewmaketitle
 
 
-
 \section{Introduction}
 % The very first letter is a 2 line initial drop letter followed
 % by the rest of the first word in caps.
@@ -485,7 +495,6 @@ I wish you the best of success.
 
 
 \section{Inbetriebnahme der Asynchronmaschine}
-\todo{Robbys Teil finalisieren - zB Verstrippung evtl umbenennen}
 \subsection{Verkabelung}
 
 Da der in diesem Projekt verwendete Motor, schon einmal von einer anderen Gruppe in Betrieb genommen wurde, mussten wir lediglich die schon verdrahteten Anschlusskabel, anschließen. Folgende Verbindungen müssen gesteckt werden:
@@ -498,8 +507,8 @@ Da der in diesem Projekt verwendete Motor, schon einmal von einer anderen Gruppe
 \end{itemize}
 
 \subsection{Software-Realisierung}
-\include{lt}
-\include{n7b}
+\input{lt}
+%\input{n7b}
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
