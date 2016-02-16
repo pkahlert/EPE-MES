@@ -1,0 +1,22 @@
+\subsubsection{erster Ansatz}
+  - Matlab importieren
+  - gescheitert an elektr. Modell und dependency-Problemen
+  - wie in Simulink feldorientiert regeln mit Drehzahl als input und Ausgabe der sechs PWM-Duty-Cycles die die Mosfets beschalten
+  
+
+\subsubsection{tatsächliche Realisierung}
+ - Inkrementieren einer Zählvariable
+  - Nutzen der Zählvariable als Index für ein vorgeneriertes Array mit Sinuswerten
+  - diese Sinuswerte werden jeweils um ein Drittel verschoben in Form von Duty-Cycles auf die sechs PWMs gegeben, bei denen jeweils zwei zu Schalter-Paaren zusammengefasst und sich zueinander entgegengesetzt verhalten
+  - die Duty-Cycle-Werte sind Dezimal bezogen auf eine festgelegte Periode von 2000 ausgerechnet
+  - Beim Übertragen der Werte wird so der Reload-Wert des jeweiligen ePWM-Registers gesetzt, der damit die Zeit für beide logischen Zustände festlegt
+  - unmodifiziert wäre das der Betrieb auf fester Drehzahl mit Stellreserve (nicht übermoduliert)
+ 
+ \subsubsection{Hinweise zum CCS-Projekt}
+ # TI's Fehler ausbaden
+
+Das Makefile des Demoprogramms nutzt teilweise fehlerhaft (s. http://e2e.ti.com/support/microcontrollers/c2000/f/171/p/326227/1136098 ) absolute Pfade, zum Beheben haben wir einen symbolischen Link auf das "angebliche" Verzeichnis gesetzt:
+
+```cmd
+mklink /D "C:\TI\controlSUITE2_DMC Rev" "C:\Beuth\ti_controlSUITE\"
+```
