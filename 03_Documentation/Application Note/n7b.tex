@@ -1,31 +1,16 @@
-09:28] 
-7b kann mir bitte jemand sagen was ich in der doku beschreiben soll? wie immer w�rde ich f�r ecuh alles tun :heart:
-[09:36] 
-lt Du k�nntest unsere Messungen und Signale vom letzten Stand da beschreiben.. Also was man da sieht, modulationsgrad, wie verhalten die sich zueinander etc
-[09:36] 
-Ich schreib so: wie wollten wir erst implementieren, warum ging das nicht, was haben wir stattdessen gemacht
-[09:37] 
-7b jawohl
-[09:38] 
-wir haben doch keinen modulationsgrad m�usschen
-[09:41] 
-lt Kp gib iwelche ablesbaren Parameter an
-[09:51] 
-7b hat jemand bock nochmal in die beuth zu hucken alles anzuschlie�en und die phasenverschiebung zwischen strom und spannung an einer leitung zu messen?
-[11:50] 
-lt :upside_down_face: :-1:
-[15:14] 
-robby1990 Ne
-[15:21] 
-pkahlert ih strom
-[15:21] 
-7b Dann wohl nicht
 
+\section{Test und Messung}
 
-
-P = 0.5 ; 2408 ; 1451
-
-P Wert ab jetzt negativ
-P = 0.05; 2373 ; 1447
-
-Faktor laser berechnung 2,89
+Am Ende der Inbetriebnahme haben wir verschieden Tests und Messungen gemacht. 
+Unter anderem wurden die Ansteuersignale zweier Schalter aufgezeichnet. Man sieht gut, dass sich der Duty Cycle sinuidal verändert und es lange Aus-Zeiten gibt(ein hoher Pegel öffnet den Schalter). Die Phasenverschiebung der beiden Sinui beträgt 120 Grad, was sich aus dem Bild näherungsweise ermitteln lässt.
+\begin{figure}[H]
+		\includegraphics[width=0.5\textwidth]{uwgeregelt.png}
+		\caption{Schaltmomente)}
+		\label{fig:rreibChart}
+	\end{figure}
+	Des Weiteren wurde der Strom durch eine Phase im Leerlauf mit einer Stromzange ermittelt. Leerlauf heißt, dass die Terminals des Generators offen waren. Hierbei gilt, dass 100mV einem A entsprechen. Zu sehen sind neben mehren Messfehlern vor Allem die Sinuskurvenförmigkeit des Stroms. Messaufbaubedingt war es leider nicht möglich Spannung und Strom zum selben Zeitpunkt zu messen, wir würden dabei eine Phasenverschiebung auf Grund der Induktivität der Motorinduktivität erwarten.  
+	\begin{figure}[H]
+		\includegraphics[width=0.5\textwidth]{strom1Phase.png}
+		\caption{Zeitlicher Verlauf der Drehzahl im Vergleich zur Nenndrehzahl(hier Solldrehzahl)}
+		\label{fig:rreibChart}
+	\end{figure}
