@@ -482,36 +482,26 @@ I wish you the best of success.
 
 \hfill Nic Siebenborn, Robby Kozok, Lukas Tetzlaff, Pascal Kahlert
  
-\hfill 14 Februar, 2016
-\subsection{Modellierung der Asynchronmaschine}
+\hfill 17 Februar, 2016
+\section{Modellierung der Asynchronmaschine}
 
--Modell besteht aus
-	-Feldorientierter Regelung
-	-Transformation
-	-Motormodell
--Parameter werden im Model Explorer festgelegt
-Feld Regelung:
--Es wird die Drehzahl geregelt
--Daraus Moment daraus stromsollwert
 
-Transformation:
-clark und park
+\section{Inbetriebnahme der Asynchronmaschine}
+\todo{Robbys Teil finalisieren - zB Verstrippung evtl umbenennen}
+\subsection{Verstrippung}
 
-motormodel:
--basierend auf ab
--machinen model mit last
-
-\subsection{Inbetriebnahme der Asynchronmaschine}
-\todo[inline]{Schreib euren Teil bitte hierher Verstrippung sollte Robby machen}.
-Verstrippung: 
-Da der in diesem Projekt verwendete Motor, schon einmal von einer anderen Gruppe in Betrieb genommen wurde, mussten wir lediglich die schon verdrahteten Anschlusskabel, anschließen. Folgende Verbindungen m\"ussen gesteckt werden:
+Da der in diesem Projekt verwendete Motor, schon einmal von einer anderen Gruppe in Betrieb genommen wurde, mussten wir lediglich die schon verdrahteten Anschlusskabel, anschließen. Folgende Verbindungen müssen gesteckt werden:
 \begin{itemize}
 \item Die Leitungen U,V und W der Asynchronmaschine werden an das TI Kit geklemmt
 \item Die Leitungen des Drehimpulsgebers werden an den Anschluss "QEP Connector" angeschlossen.
 \item Die 12V Spannungsversorgung wird an das TI Kit angeschlossen
 \item Das USB Kabel ist an das TI Kit und den PC anzuschliessen
-\item Die Kaltger\"atestecker des TI Kits und des L\"ufters sind zu stecken
+\item Die Kaltgerätestecker des TI Kits und des Lüfters sind zu stecken
 \end{itemize}
+
+\subsection{Software-Realisierung}
+\include{lt}
+\include{n7b}
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
