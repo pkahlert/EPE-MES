@@ -1,3 +1,6 @@
 *.lock
 02_Software/01_c2000/.metadata/
 02_Software/01_c2000/Example_F2802xLaunchPadDemo/.settings/
+ApplicationNote.aux
+ApplicationNote.log
+ApplicationNote.synctex.gz
