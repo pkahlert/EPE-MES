@@ -346,6 +346,20 @@
 % (Unless specifically asked to do so by the journal or conference you plan
 % to submit to, of course. )
 
+% ick will aber sourcecode!
+\usepackage{listings}
+\lstset{
+  belowcaptionskip=4pt,  
+  captionpos=b,
+  language=C,
+  basicstyle=\ttfamily\color{black}\small,
+  keywordstyle=\color{HKS51}\bfseries,
+  commentstyle=\color{gray}\slshape,,
+  identifierstyle=\color{black},
+  numbers=left,
+  stepnumber= 1
+}
+
 
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
@@ -425,7 +439,6 @@
 
 
 
-
 % make the title area
 \maketitle
 
@@ -486,21 +499,20 @@ I wish you the best of success.
 
 
 \section{Inbetriebnahme der Asynchronmaschine}
-%\todo{Robbys Teil finalisieren - zB Verstrippung evtl umbenennen}
-\subsection{Verstrippung}
+\subsection{Verkabelung}
 
 Da der in diesem Projekt verwendete Motor, schon einmal von einer anderen Gruppe in Betrieb genommen wurde, mussten wir lediglich die schon verdrahteten Anschlusskabel, anschließen. Folgende Verbindungen müssen gesteckt werden:
-%\begin{itemize}
-%\item Die Leitungen U,V und W der Asynchronmaschine werden an das TI Kit geklemmt
-%\item Die Leitungen des Drehimpulsgebers werden an den Anschluss "QEP Connector" angeschlossen.
-%\item Die 12V Spannungsversorgung wird an das TI Kit angeschlossen
-%\item Das USB Kabel ist an das TI Kit und den PC anzuschliessen
-%\item Die Kaltgerätestecker des TI Kits und des Lüfters sind zu stecken
-%\end{itemize}
+\begin{itemize}
+\item Die Leitungen U,V und W der Asynchronmaschine werden an das TI Kit geklemmt
+\item Die Leitungen des Drehimpulsgebers werden an den Anschluss "QEP Connector" angeschlossen.
+\item Die 12V Spannungsversorgung wird an das TI Kit angeschlossen
+\item Das USB Kabel ist an das TI Kit und den PC anzuschliessen
+\item Die Kaltgerätestecker des TI Kits und des Lüfters sind zu stecken
+\end{itemize}
 
 \subsection{Software-Realisierung}
-%\include{lt}
-\include{n7b}
+\input{lt}
+%\input{n7b}
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
