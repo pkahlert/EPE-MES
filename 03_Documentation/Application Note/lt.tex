@@ -1,9 +1,22 @@
-\subsubsection{Erster Ansatz}
-  Als ersten Ansatz wählten wir die naheliegende Idee die Exportfunktion von Matlab/Simulink Modellen zu legitimem C-Code zu nutzen. Hierbei ließ sich die C2000-Architektur auswählen und augenscheinlich korrekte Abbildungen der Simulationsblöcke wurden in einzelnen C-Sourcecodedateien erstellt. Die Blöcke wurden modular mit einem Eingangs- und Ausgangsstruct des jeweiligen, meist etwas kryptischen Typs, versehen, deren Member den Datenflüssen aus der Simulation entsprechen. Jedes dieser Modelle beinhaltete zudem eine Funktion {\lstinline[breaklines=true]$<Modellname>_step$}, die einen Simulationsschritt darstellt und so bei uns nach Konfiguration des entsprechenden Schrittintervalls in einer Timerroutine benutzt worden wäre. Final scheiterte der Ansatz jedoch daran, dass das elektrische Modell des Motors nicht nachgestellt und exportiert werden konnte und so der komplexeste Teil der Simulation noch immer übrig geblieben wäre. Diese kurze Ausführung soll daher gern als Abschreckung gesehen werden und zur Vorsicht in Bezug auf modellgenerierten Code für die C2000-Reihe aufrufen.
+\subsubsection{erster Ansatz}
+  - Matlab importieren
+  - gescheitert an elektr. Modell und dependency-Problemen
+  - wie in Simulink feldorientiert regeln mit Drehzahl als input und Ausgabe der sechs PWM-Duty-Cycles die die Mosfets beschalten
+  
 
-\subsubsection{Tatsächliche Realisierung}
-  Die tatsächlich genutzte Implementierung benutzt 6 PWMs aus dem TI-ePWM-Modul \todo{link zu http://www.ti.com/lit/ug/spruge9e/spruge9e.pdf .. wie am besten?}, durch deren Dutycycle-Veränderung über Zeit ein Pulsmuster erzeugt wird, mit dem die 6 MosFETs so beschaltet werden, dass der Motor sich dreht. Dies geschieht durch ein sukzessives Inkrementieren einer Zählvariablen in der ISR-Routine jedes der drei EPWM-Handlers (alle 0.4ms). Diese Zählvariable dient dann als Index für ein vorgeneriertes Array mit Sinuswerten, dezimal normiert auf +/- 1600 (2000 ist der eingestellte Registerwert, der die Periode darstellt, eine 1600 steht bspw. für einen Duty Cycle von 20\% (1-(1600/2000))). Der Wert war bewusst nicht auf die volle Aussteuerung ausgelegt, um als Test einen gemäßgten Betrieb zu nutzen und Übermodulation beziehungsweise Blocktaktung zu vermeiden. Beim übertragen der Werte aus dem Sinus-Array wird also der Reload-Wert des jeweiligen ePWM-Registers gesetzt, der damit die Zeit für beide logischen Zustände festlegt. Da es sich um 6 PWMs handelt, verhalten sich jeweils zwei zueinander entgegengesetzt und diese 3 Paare wiederum um ein Drittel verschoben voneinander.  
+\subsubsection{tats�chliche Realisierung}
+ - Inkrementieren einer Z�hlvariable
+  - Nutzen der Z�hlvariable als Index f�r ein vorgeneriertes Array mit Sinuswerten
+  - diese Sinuswerte werden jeweils um ein Drittel verschoben in Form von Duty-Cycles auf die sechs PWMs gegeben, bei denen jeweils zwei zu Schalter-Paaren zusammengefasst und sich zueinander entgegengesetzt verhalten
+  - die Duty-Cycle-Werte sind Dezimal bezogen auf eine festgelegte Periode von 2000 ausgerechnet
+  - Beim �bertragen der Werte wird so der Reload-Wert des jeweiligen ePWM-Registers gesetzt, der damit die Zeit f�r beide logischen Zust�nde festlegt
+  - unmodifiziert w�re das der Betrieb auf fester Drehzahl mit Stellreserve (nicht �bermoduliert)
  
  \subsubsection{Hinweise zum CCS-Projekt}
-  Das Makefile des Demoprogramms, das wir als Framework nutzten, sucht teilweise fehlerhaft \todo{link zu http://e2e.ti.com/support/microcontrollers/c2000/f/171/p/326227/1136098 .. wie am besten?} an absoluten Pfaden, zum Beheben haben wir einen symbolischen Link auf das "angebliche" Verzeichnis gesetzt: {\lstinline[breaklines=true]$mklink /D "C:\TI\controlSUITE2_DMC Rev" "C:\Beuth\ti_controlSUITE\"$}. Das Projekt nutzt zahlreiche Includes, teiweise aus DSP2803x\_headers und DSP2803x\_common, aber häufig auch aus den TI-Installationsverzeichnissen beziehungsweise wieder absolute Pfade, daher empfiehlt es sich wahrscheinlich meistens TI-Produkte nur mit Standardeinstellungen (ggf. in VM) zu installieren. 
- 
+ # TI's Fehler ausbaden
+
+Das Makefile des Demoprogramms nutzt teilweise fehlerhaft (s. http://e2e.ti.com/support/microcontrollers/c2000/f/171/p/326227/1136098 ) absolute Pfade, zum Beheben haben wir einen symbolischen Link auf das "angebliche" Verzeichnis gesetzt:
+
+```cmd
+mklink /D "C:\TI\controlSUITE2_DMC Rev" "C:\Beuth\ti_controlSUITE\"
+```
