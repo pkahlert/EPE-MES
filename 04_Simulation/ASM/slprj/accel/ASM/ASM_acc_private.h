@@ -22,6 +22,6 @@
 #endif
 #endif
 #ifndef __RTWTYPES_H__
-#error This file requires rtwtypes.h to be included
+#error This file requires rtwtypes.h to be included
 #endif
 #endif

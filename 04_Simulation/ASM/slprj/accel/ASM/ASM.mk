@@ -1,32 +1,30 @@
 # Copyright 1994-2010 The MathWorks, Inc.
 #
-# File    : accel_lcc64.tmf   
+# File    : accel_unix.tmf   
 #
 # Abstract:
-#	Accelerator template makefile for building a PC-based,
-#       generated mex-file of Simulink model using generated C code. 
-#	     LCC compiler version 2.4.
+#	Accelerator template makefile for building a UNIX-based,
+#       generated mex-file of Simulink model using generated C code.
 #
 # 	This makefile attempts to conform to the guidelines specified in the
 # 	IEEE Std 1003.2-1992 (POSIX) standard. It is designed to be used
-#       with GNU Make (gmake) which is located in matlabroot/bin/win64.
+#       with GNU Make which is located in matlabroot/rtw/bin.
 #
-# 	Note that this template is automatically customized by the Real-Time
-#	Workshop build procedure to create "<model>.mk"
+# 	Note that this template is automatically customized by the build 
+#       procedure to create "<model>.mk"
 #
 #       The following defines can be used to modify the behavior of the
 #	build:
 #
 #         MEX_OPTS       - User specific mex options.
-#	  OPT_OPTS       - Optimization options. Default is none. To enable 
-#                          debugging specify as OPT_OPTS=-g. 
+#	  OPT_OPTS       - Optimization options. Default is -O.
 #	  USER_SRCS      - Additional user sources, such as files needed by
 #			   S-functions.
 #	  USER_INCLUDES  - Additional include paths
 #			   (i.e. USER_INCLUDES="-Iwhere-ever -Iwhere-ever2")
-#			   (For Lcc, have a '/'as file seperator before the 
-#			   file name instead of a '\' . 
-#			   i.e.,  d:\work\proj1/myfile.c - reqd for 'gmake')
+#       To enable debugging:
+#         set DEBUG_BUILD = 1 below, which will trigger MEX_OPTS=-g and
+#          LDFLAGS += -g (may vary with compiler version, see compiler doc) 
 #
 #       This template makefile is designed to be used with a system target
 #       file that contains 'rtwgensettings.BuildDirSuffix' see accel.tlc
@@ -41,14 +39,11 @@
 #  BUILD           - Invoke make from the build procedure (yes/no)?
 #  SYS_TARGET_FILE - Name of system target file.
 
-MAKECMD         = "%MATLAB%\bin\win64\gmake"
-SHELL           = cmd
-HOST            = PC
+MAKECMD         = /Applications/MATLAB_R2014a.app/bin/maci64/gmake
+HOST            = UNIX
 BUILD           = yes
 SYS_TARGET_FILE = accel.tlc
-COMPILER_TOOL_CHAIN = lcc
-
-MAKEFILE_FILESEP = /
+COMPILER_TOOL_CHAIN = unix
 
 #---------------------- Tokens expanded by make_rtw ----------------------------
 #
@@ -59,7 +54,6 @@ MAKEFILE_FILESEP = /
 #  MODEL_MODULES   - Any additional generated source modules
 #  MAKEFILE_NAME   - Name of makefile created from template makefile <model>.mk
 #  MATLAB_ROOT     - Path to where MATLAB is installed.
-#  MATLAB_BIN      - Path to MATLAB executable.
 #  S_FUNCTIONS     - List of S-functions.
 #  S_FUNCTIONS_LIB - List of S-functions libraries to link.
 #  SOLVER          - Solver source file name
@@ -67,184 +61,215 @@ MAKEFILE_FILESEP = /
 #  TID01EQ         - yes (1) or no (0): Are sampling rates of continuous task
 #                    (tid=0) and 1st discrete task equal.
 #  NCSTATES        - Number of continuous states
-#  BUILDARGS       - Options passed in at the command line.
+#  COMPUTER        - Computer type. See the MATLAB computer command.
 #  MEXEXT          - extension that a mex file has. See the MATLAB mexext 
 #                    command
+#  BUILDARGS       - Options passed in at the command line.
 
 MODEL              = ASM
 MODULES            = ASM_acc_data.c 
 MAKEFILE           = ASM.mk
-MATLAB_ROOT        = C:/Program Files/MATLAB/R2014a
-ALT_MATLAB_ROOT    = C:/PROGRA~1/MATLAB/R2014a
+MATLAB_ROOT        = /Applications/MATLAB_R2014a.app
+ALT_MATLAB_ROOT    = /Applications/MATLAB_R2014a.app
 MASTER_ANCHOR_DIR  = 
-START_DIR          = C:/Users/nicsi/Documents/GitHub/EPE-MES/04_Simulation/ASM
-MATLAB_BIN         = C:/Program Files/MATLAB/R2014a/bin
-ALT_MATLAB_BIN     = C:/PROGRA~1/MATLAB/R2014a/bin
+START_DIR          = /Users/Pascal/Documents/Beuth\ Hochschule/EPE-MES/04_Simulation/ASM
 S_FUNCTIONS        = 
 S_FUNCTIONS_LIB    = 
 SOLVER             = 
-NUMST              = 2
+NUMST              = 3
 TID01EQ            = 0
 NCSTATES           = 10
 MEM_ALLOC          = RT_STATIC
+COMPUTER           = MACI64
+MEXEXT             = mexmaci64
 BUILDARGS          = 
-MEXEXT             = mexw64
-
+PURIFY             = 0
 MODELREFS          = 
 SHARED_SRC         = 
 SHARED_SRC_DIR     = 
 SHARED_BIN_DIR     = 
 SHARED_LIB         = 
-SHARED_LIB_LINK      = $(subst /,\,$(SHARED_LIB))
-MEX_OPT_FILE       = -f $(MATLAB_BIN)/sys/lcc64/lcc64/mex/lcc64opts.bat
-OPTIMIZATION_FLAGS = -DNDEBUG
+TARGET_LANG_EXT    = c
+OPTIMIZATION_FLAGS = -O0 -DNDEBUG
 ADDITIONAL_LDFLAGS = 
 
+# To enable debugging:
+# set DEBUG_BUILD = 1
+DEBUG_BUILD        = 0
+
+
 #--------------------------- Model and reference models -----------------------
-MODELLIB                  = ASMlib.lib
+MODELLIB                  = ASMlib.a
 MODELREF_LINK_LIBS        = 
 MODELREF_INC_PATH         = 
 RELATIVE_PATH_TO_ANCHOR   = ../../..
-MODELREF_TARGET_TYPE      = NONE
+# NONE: standalone, SIM: modelref sim, RTW: modelref coder target
+MODELREF_TARGET_TYPE       = NONE
 
 #-- In the case when directory name contains space ---
 ifneq ($(MATLAB_ROOT),$(ALT_MATLAB_ROOT))
 MATLAB_ROOT := $(ALT_MATLAB_ROOT)
 endif
-ifneq ($(MATLAB_BIN),$(ALT_MATLAB_BIN))
-MATLAB_BIN := $(ALT_MATLAB_BIN)
-endif
 
-#--------------------------- Tool Specifications ------------------------------
+#--------------------------- Tool Specifications -------------------------------
+include $(MATLAB_ROOT)/rtw/c/tools/unixtools.mk
 
-LCC = $(MATLAB_ROOT)\sys\lcc64\lcc64
-include $(MATLAB_ROOT)\rtw\c\tools\lcc64tools.mak
-
-MEX = $(MATLAB_BIN)\mex.bat
+CC = $(MATLAB_ROOT)/bin/mex
 
 #------------------------------ Include Path -----------------------------------
+MATLAB_INCLUDES = \
+	-I$(MATLAB_ROOT)/simulink/include \
+	-I$(MATLAB_ROOT)/extern/include \
+	-I$(MATLAB_ROOT)/rtw/c/src
 
 # Additional includes
 
 ADD_INCLUDES = \
-	-I$(START_DIR)/slprj/accel/ASM \
+	-I. \
 	-I$(START_DIR) \
 
-
-# see MATLAB_INCLUES and COMPILER_INCLUDES from lcctool.mak
 
 SHARED_INCLUDES =
 ifneq ($(SHARED_SRC_DIR),)
 SHARED_INCLUDES = -I$(SHARED_SRC_DIR) 
 endif
 
-INCLUDES = -I. -I$(RELATIVE_PATH_TO_ANCHOR) $(MATLAB_INCLUDES) $(ADD_INCLUDES) \
-           $(COMPILER_INCLUDES) $(USER_INCLUDES) $(MODELREF_INC_PATH) $(SHARED_INCLUDES)
+INCLUDES = -I. -I$(RELATIVE_PATH_TO_ANCHOR) $(MATLAB_INCLUDES) $(ADD_INCLUDES) $(USER_INCLUDES) \
+	$(MODELREF_INC_PATH) $(SHARED_INCLUDES)
 
-#------------------------ C and MEX optimization options -----------------------
-MEX_OPTS  =
+#-------------------------------- Mex Options  ---------------------------------
+# General User Options
+ifeq ($(DEBUG_BUILD),0)
+MEX_OPTS =
+else
+#   Set OPTS=-g and any additional flags for debugging
+MEX_OPTS = -g
+LDFLAGS += -g
+endif
+
+ifndef MEX_OPT_FILE
+MEX_OPT_FILE = 
+endif
+
+ifndef OPT_OPTS
 OPT_OPTS  = $(DEFAULT_OPT_OPTS)
+endif
+
+GCC_WARN_OPTS := 
 
 ifneq ($(ADDITIONAL_LDFLAGS),)
-MEX_LDFLAGS = LINKFLAGS="$$LINKFLAGS $(ADDITIONAL_LDFLAGS)"
+MEX_LDFLAGS = CLIBS='$$CLIBS $(ADDITIONAL_LDFLAGS)' 
 else
 MEX_LDFLAGS =
 endif
 
-ifneq ($(OPTIMIZATION_FLAGS),)
-MEX_OPT_OPTS = OPTIMFLAGS="$(OPTIMIZATION_FLAGS)"    # passed to 'mex -c'
+# See rtw/c/tools/unixtools.mk for the definition of GCC_WARN_OPTS
+ifeq ($(PURIFY),1)
+   MEX_FLAGS = $(MEX_OPTS) -g COPTIMFLAGS="$(GCC_WARN_OPTS) $(ANSI_OPTS)" $(MEX_LDFLAGS) $(MEX_OPT_FILE) 
 else
-MEX_OPT_OPTS = $(OPT_OPTS)    # passed to 'mex -c'
+  ifeq ($(MEX_OPTS),-g)
+    MEX_FLAGS = -g COPTIMFLAGS="$(GCC_WARN_OPTS) $(ANSI_OPTS)" $(MEX_LDFLAGS) $(MEX_OPT_FILE)
+  else
+    ifeq ($(OPT_OPTS),-g)
+     MEX_FLAGS = $(MEX_OPTS) -g COPTIMFLAGS="$(GCC_WARN_OPTS) $(ANSI_OPTS)" $(MEX_LDFLAGS) $(MEX_OPT_FILE)
+    else
+       ifneq ($(OPTIMIZATION_FLAGS),)	
+           MEX_FLAGS = $(MEX_OPTS) COPTIMFLAGS="$(OPTIMIZATION_FLAGS) $(GCC_WARN_OPTS) $(ANSI_OPTS)" $(MEX_LDFLAGS) $(MEX_OPT_FILE)
+       else
+           MEX_FLAGS = $(MEX_OPTS) COPTIMFLAGS="$(OPT_OPTS) -DNDEBUG $(GCC_WARN_OPTS) $(ANSI_OPTS)" $(MEX_LDFLAGS) $(MEX_OPT_FILE)
+       endif
+    endif
+  endif
 endif
-
-ifeq "$(MEX_OPTS)" "-g"
-MEX_OPT_OPTS =
-endif
-
-#-------------------------------- Mex Options  ---------------------------------
-MEX_FLAGS = -dll -noregistrylookup  -c -Zp8 -DLCC_WIN64 -DMATLAB_MEX_FILE -DMX_COMPAT_32 -nodeclspec $(MEX_OPT_OPTS) $(MEX_LDFLAGS) $(MEX_OPTS)
-
-DEF_FILE = $(MODEL)_acc.def
 
 #----------------------------- Source Files -----------------------------------
 USER_SRCS =
 
-USER_OBJS       = $(USER_SRCS:.c=.obj)
+USER_OBJS       = $(USER_SRCS:.c=.o)
 LOCAL_USER_OBJS = $(notdir $(USER_OBJS))
 
-SRCS      = lccstub.c $(MODEL)_acc.c $(MODULES)
-OBJS      = $(SRCS:.c=.obj) $(USER_OBJS)
-LINK_OBJS = $(SRCS:.c=.obj) $(LOCAL_USER_OBJS)
+SRCS      = $(MODEL)_acc.$(TARGET_LANG_EXT) $(MODULES)
+SRCS_OBJS = $(addsuffix .o, $(basename $(SRCS)))
+OBJS      = $(SRCS_OBJS) $(USER_OBJS)
+LINK_OBJS = $(SRCS_OBJS) $(LOCAL_USER_OBJS)
 
-SHARED_OBJS := $(addsuffix .obj, $(basename $(wildcard $(SHARED_SRC))))
-FMT_SHARED_OBJS = $(subst /,\,$(SHARED_OBJS))
+SHARED_SRC := $(wildcard $(SHARED_SRC))
+SHARED_OBJS = $(addsuffix .o, $(basename $(SHARED_SRC)))
 
-#------------------------- Additional Libraries -------------------------------
+#-------------------------- Additional Libraries ------------------------------
 
 LIBS =
+ 
+LIBS += $(S_FUNCTIONS_LIB)
 
+ifeq ($(PURIFY),1)
+LIBUT = -L$(MATLAB_ROOT)/bin/PURIFY/$(ARCH) -lut
+LIBMWMATHUTIL = -L$(MATLAB_ROOT)/bin/PURIFY/$(ARCH) -lmwmathutil
+else
+LIBUT = -L$(MATLAB_ROOT)/bin/$(ARCH) -lut
+LIBMWMATHUTIL = -L$(MATLAB_ROOT)/bin/$(ARCH) -lmwmathutil
+endif
 
+LIBMWIPP = -L$(MATLAB_ROOT)/bin/$(ARCH) -lippmwipt
 
-LIBUT = $(MATLAB_ROOT)\extern\lib\win64\microsoft\libut.lib
-LIBMWMATHUTIL = $(MATLAB_ROOT)\extern\lib\win64\microsoft\libmwmathutil.lib
-LIBMWSL_FILEIO = $(MATLAB_ROOT)\extern\lib\win64\microsoft\libmwsl_fileio.lib
-LIBMWIPP = 
-LIBMX = $(MATLAB_ROOT)\extern\lib\win64\microsoft\libmx.lib
-LIBMEX = $(MATLAB_ROOT)\extern\lib\win64\microsoft\libmex.lib
-LIBS += $(LIBUT) $(LIBMWMATHUTIL) $(LIBMWSL_FILEIO) $(LIBMWIPP) $(LIBMX) $(LIBMEX)
+MATHLIBS = $(LIBUT) $(LIBMWMATHUTIL) $(LIBMWIPP)
+
+LIBSLFILEIO = -L$(MATLAB_ROOT)/bin/$(ARCH) -lmwsl_fileio
 
 PROGRAM = ../$(MODEL)_acc.$(MEXEXT)
 
 #--------------------------------- Rules --------------------------------------
 
-$(PROGRAM) : $(OBJS) $(LIBS) $(SHARED_LIB) $(DEF_FILE)
-	@echo ### Linking ...
-	$(LD) -s -dll -o $(RELATIVE_PATH_TO_ANCHOR)/$(MODEL)_acc.$(MEXEXT) -L"$(MATLAB)/sys/lcc64/lcc64/lib64" -entry LibMain $(DEF_FILE) $(LINK_OBJS) $(S_FUNCTIONS_LIB) $(SHARED_LIB_LINK) $(LIBS)  -map sfun.map 
-	@echo ### Created mex file: $(MODEL)_acc.$(MEXEXT)
+$(PROGRAM) : $(OBJS) $(SHARED_LIB) $(LIBS)
+	@echo "### Linking ..."
+	$(CC) $(MEX_FLAGS) -MATLAB_ARCH=$(ARCH) -silent -outdir $(RELATIVE_PATH_TO_ANCHOR) $(LINK_OBJS) $(SHARED_LIB) $(LIBS) $(MATHLIBS) $(LIBSLFILEIO)
+	@echo "### Created mex file: $(MODEL)_acc.$(MEXEXT)"
 
-%.obj : %.c
-	$(CC) $(MEX_FLAGS) $(INCLUDES) -Fo$(@F) $<
+%.o : %.c
+	$(CC) -c $(MEX_FLAGS) $(INCLUDES) "$<"
 
-%.obj : $(RELATIVE_PATH_TO_ANCHOR)/%.c
-	$(CC) $(MEX_FLAGS) $(INCLUDES) -Fo$(@F) $<
+%.o : %.cpp
+	$(CC) -c $(MEX_FLAGS) $(INCLUDES) "$<"
 
-%.obj : $(MATLAB_ROOT)/rtw/c/src/%.c
-	$(CC) $(MEX_FLAGS) $(INCLUDES) -Fo$(@F) $<
+%.o : $(RELATIVE_PATH_TO_ANCHOR)/%.c
+	$(CC) -c $(MEX_FLAGS) $(INCLUDES) "$<"
 
-%.obj : $(MATLAB_ROOT)/simulink/src/%.c
-	$(CC) $(MEX_FLAGS) $(INCLUDES) -Fo$(@F) $<
+%.o : $(RELATIVE_PATH_TO_ANCHOR)/%.cpp
+	$(CC) -c $(MEX_FLAGS) $(INCLUDES) "$<"
+
+%.o : $(MATLAB_ROOT)/rtw/c/src/%.c
+	$(CC) -c $(MEX_FLAGS) $(INCLUDES) "$<"
+%.o : $(MATLAB_ROOT)/simulink/src/%.c
+	$(CC) -c $(MEX_FLAGS) $(INCLUDES) "$<"
 
 
+%.o : $(MATLAB_ROOT)/rtw/c/src/%.cpp
+	$(CC) -c $(MEX_FLAGS) $(INCLUDES) "$<"
+%.o : $(MATLAB_ROOT)/simulink/src/%.cpp
+	$(CC) -c $(MEX_FLAGS) $(INCLUDES) "$<"
 
-%.obj : $(MATLAB_ROOT)/simulink/src/%.c
-	$(CC) $(MEX_FLAGS) $(INCLUDES) -Fo$(@F) $<
 
-lccstub.obj : $(LCC)/mex/lccstub.c
-	$(CC) $(MEX_FLAGS) $(INCLUDES) $(LCC)/mex/lccstub.c -o ./lccstub.obj
+%.o : $(MATLAB_ROOT)/simulink/src/%.c
+	$(CC) -c $(MEX_FLAGS) $(INCLUDES) "$<"
 
-# Libraries:
+#------------------------------- Libraries -------------------------------------
+
 
 
 
 
 
 clean :
-	@echo ### Deleting the objects and $(PROGRAM)
-	@del $(OBJS) ..\$(MODEL)_acc.$(MEXEXT) $(wildcard *.obj) $(wildcard *.lib)
+	@echo "### Deleting the objects, libraries and $(PROGRAM)"
+	@\rm -f $(wildcard *.o) $(PROGRAM)
 
 #----------------------------- Dependencies -------------------------------
 
-$(DEF_FILE) : $(OBJS)
-	@echo LIBRARY $(RELATIVE_PATH_TO_ANCHOR)/$(MODEL)_acc.$(MEXEXT) EXPORTS mexFunction > $(DEF_FILE)
-
 $(OBJS) : $(MAKEFILE) rtw_proj.tmw
 
-$(SHARED_OBJS) : $(SHARED_BIN_DIR)/%.obj : $(SHARED_SRC_DIR)/%.c 
-	$(CC) -outdir $(SHARED_BIN_DIR) $(MEX_FLAGS) $(INCLUDES) $<
-
-$(SHARED_LIB) : $(SHARED_OBJS)
-	@echo ### Creating $@ 
-	$(LIBCMD) /out:$(SHARED_LIB_LINK) $(FMT_SHARED_OBJS)
-	@echo ### $@ Created   
-
+$(SHARED_LIB) : $(SHARED_SRC)
+	@echo "### Creating $@ "
+	cd $(SHARED_BIN_DIR); $(CC) -c $(MEX_FLAGS) $(INCLUDES) $(notdir $?)
+	$(AR) ruvs $@ $(SHARED_OBJS)
+	@echo "### $@ Created "
 
